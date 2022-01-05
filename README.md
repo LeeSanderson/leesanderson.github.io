@@ -1,2 +1,2 @@
-# LeeSanderson.github.io
+# leesanderson.github.io
 Content for github.io site
