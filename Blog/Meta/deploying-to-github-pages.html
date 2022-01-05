@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Deploying to GitHub Pages - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css" integrity="sha256-h/qtq9bUnXbOOwP4EcbLtYM9Mk3iQQcHZAZ+Jz5y0WQ=" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./../site.css">
+    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <span class="logo">
+                        <i class="fas fa-dice-one"></i>
+                        <i class="fas fa-dice-two"></i>
+                        <i class="fas fa-dice-three"></i>
+                        <i class="fas fa-dice-four"></i>
+                        <i class="fas fa-dice-five"></i>
+                        <i class="fas fa-dice-six"></i>
+                    </span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    Jan 05, 2022
+
+        <span class="badge badge-info">Blogging</span>
+        <span class="badge badge-info">GitHub</span>
+        <span class="badge badge-info">Azure DevOps</span>
+</div>
+
+<h1 id="deploying-to-github-pages">Deploying to GitHub Pages</h1>
+<p><a href="https://docs.github.com/en/pages" target="_blank">GitHub Pages</a> is a way to freely host a static website. It has a <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#prohibited-uses" target="_blank">few restrictions</a> but is ideal for a developer to host a personal website. It requires a <a href="https://github.com/signup" target="_blank">GitHub Account</a> but as developers we already have one of those, right?</p>
+<ol>
+<li><p>Create a repository called <code>&lt;user&gt;.github.io</code> - this will be where content is published.</p>
+</li>
+<li><p>Disable the default <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> site generation by adding an empty <code>.nojekyll</code> text file in the root of the repository.</p>
+</li>
+<li><p>Create a <a href="https://github.com/settings/tokens" target="_blank">personal access token</a> to be used by Azure DevOps</p>
+</li>
+<li><p>Create a Variable Group and Variable in the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/library" target="_blank">Azure DevOps Pipelines -&gt; Library</a> so that the token can be securely consumed by any build pipelines - making sure that the variable is marked as <em>secure</em>. Make sure any pipelines that need to access the group are set up in the &quot;Pipeline Permissions&quot; tab.</p>
+</li>
+</ol>
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container-fluid">
+            &copy; 2022 - SixSidedDice.com - <a href="/Privacy.html">Privacy</a>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true });
+        });
+    </script>
+</body>
+</html>
