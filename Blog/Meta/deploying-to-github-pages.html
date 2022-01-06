@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
     <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
     <script type="module" src="/js/header.js"></script>
     <script type="module" src="/js/footer.js"></script>
@@ -27,6 +28,9 @@
 </div>
 
 <h1 id="deploying-to-github-pages">Deploying to GitHub Pages</h1>
+<blockquote class="blockquote">
+<p>A guide to publishing static content</p>
+</blockquote>
 <p><a href="https://docs.github.com/en/pages" target="_blank">GitHub Pages</a> is a way to freely host a static website. It supports HTTPS (so your site is always secure) and uses a content delivery network to ensure your site is always available globally and is responsive. It has a <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#prohibited-uses" target="_blank">few restrictions</a> but is ideal for a developer to host a personal website. It requires a <a href="https://github.com/signup" target="_blank">GitHub Account</a> but as developers we already have one of those, right?</p>
 <p>In my <a href="blogging-with-github-and-markdown.html">Blogging with GitHub and Markdown</a> article I discussed using Markdown to author content for your blog and in my <a href="generating-a-static-website-using-markdown.html">Generating a Static Website Using Markdown</a> article I showed how to use C#, <a href="https://github.com/xoofx/markdig" target="_blank">Markdig</a>, and <a href="https://github.com/fouadmess/RazorEngine" target="_blank">RazorEngine.NetCore</a> to convert the Markdown content to HTML.</p>
 <p>In this follow up article, I will show how to publish the generated HTML content to <a href="https://docs.github.com/en/pages" target="_blank">GitHub Pages</a> using <a href="https://azure.microsoft.com/en-us/services/devops/pipelines/?nav=min" target="_blank">Azure DevOps pipelines</a>.</p>
