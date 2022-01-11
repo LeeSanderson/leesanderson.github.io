@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/favicon.ico" rel="icon" type="image/x-icon">
     <title>Deploying to GitHub Pages - SixSidedDice.com - Blog</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/site.css">
-    <link rel="stylesheet" href="/Blog/site.css">
+    <link rel="stylesheet" href="./../site.css">
     <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
     <script type="module" src="/js/header.js"></script>
     <script type="module" src="/js/footer.js"></script>
@@ -43,7 +43,7 @@
 </li>
 <li><p>Create a basic index.html file in the root directory of the repository - this will be the front page to the site and provide links to other content. Also set up a 404 page by creating a 404.html file in the root directory to gracefully handle requests for missing content.</p>
 </li>
-<li><p>[Optional] Set up a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages" target="_blank">custom domain</a>. I would recommend setting up both an <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain" target="_blank">Apex domain</a> (i.e. <a href="https://sixsideddice.com" target="_blank">sixsideddice.com</a>) and <code>www</code> <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain" target="_blank">subdomain</a> (i.e. <a href="https://www.sixsideddice.com" target="_blank">www.sixsideddice.com</a>).</p>
+<li><p>[Optional] Set up a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages" target="_blank">custom domain</a>. I would recommend setting up both an <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain" target="_blank">Apex domain</a> (i.e. <a href="https://sixsideddice.com" target="_blank">sixsideddice.com</a>) and a <code>www</code> <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-a-subdomain" target="_blank">subdomain</a> (i.e. <a href="https://www.sixsideddice.com" target="_blank">www.sixsideddice.com</a>).</p>
 </li>
 </ol>
 <h2 id="the-simplest-micro-frontend-architecture">The Simplest Micro-frontend Architecture</h2>
@@ -120,7 +120,7 @@
     
     <script>
         $(function() {
-            mermaid.initialize({ startOnLoad: true });
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
         });
     </script>
 </body>
