@@ -1,3 +1,17 @@
 .logo {
-    font-size: 2em;
+    font-size: 1.3em;
+}
+
+a[target=_blank][href^="http://"]:after, a[target=_blank][href^="https://"]:after {
+    content: "\f35d";
+    display: inline-block;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 700;
+    font-size: 0.6em;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+    padding-left: 3px;
+    padding-right: 3px;
 }

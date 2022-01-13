@@ -2,8 +2,17 @@ const footerTemplate = document.createElement('template');
 footerTemplate.innerHTML = `
 <footer class="footer bg-primary">
 <div class="container-fluid pt-3 pb-2 mt-5">
-    <div>Disclaimer: The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</div>
-    <div class="text-muted mt-2">&copy; 2022 - SixSidedDice.com</div>
+    <div class="container">
+        <div>Disclaimer: The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</div>
+        <div class="clearfix">
+        <div class="float-right">
+            <a class="pr-3" target="twitter" href="https://twitter.com/SixSidedDev"><i class="fab fa-twitter fa-3x"></i></a>            
+            <a class="pr-3" target="github" href="https://github.com/LeeSanderson"><i class="fab fa-github fa-3x"></i></a>
+            <a class="pr-3" target="linkedin" href="https://www.linkedin.com/in/lee-sanderson"><i class="fab fa-linkedin fa-3x"></i></a>
+        </div>
+        </div>
+        <div class="text-muted mt-2">&copy; 2022 - SixSidedDice.com</div>
+    </div>
 </div>
 </footer>`
 
