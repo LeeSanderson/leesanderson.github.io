@@ -54,8 +54,6 @@ In 2010, Microsoft realised they needed to build something very different to SQL
 </ul>
 <h2 id="use-cases">Use cases</h2>
 <ul>
-<li>Highly distributed</li>
-<li>Highly available</li>
 <li>IoT</li>
 <li>Retail and marketing</li>
 <li>Gaming</li>
@@ -67,15 +65,16 @@ In 2010, Microsoft realised they needed to build something very different to SQL
 <li>Key-value -&gt; Table API</li>
 <li>Wide-column (table/columnar) -&gt; Cassandra API</li>
 <li>Graph -&gt; Gremlin API</li>
-<li>Document -&gt; SQL(Core) API and MongoDB API</li>
+<li>Document -&gt; Core(SQL) API and MongoDB API</li>
 </ul>
 <h3 id="document-apis">Document APIs</h3>
-<p>The SQL(Core) API is the original Document DB platform API and support storage of Json documents. 
+<p>The Core(SQL) API is the original Document DB platform API and support storage of Json documents. 
 The SQL API is also the only API that supports a SQL-like query language and a server-side programming model for transactional stored procedures.</p>
-<p><code>Exam tip: any question references a SQL-like query language then SQL(Core) API will be the answer.</code></p>
+<p><code>Exam tip: any question references a SQL-like query language then Core(SQL) API will be the answer.</code></p>
 <p>MongoDB API is an API that is fully compatible with MongoDB (implementing the same wire protocol and supporting storage of documents in BSON format).
 This API allows migration of existing MongoDB solutions to Cosmos DB with minimal changes to the connection string.</p>
-<p>Microsoft advise that the SQL(Core) API should be used for new developments.</p>
+<p>Microsoft advise that the Core(SQL) API should be used for new developments.</p>
+<p><code>Note: Although both the Core(SQL) and MongoDB APIs are Document-oriented they store data in different formats and cannot both be used on the same database.</code></p>
 <h3 id="cosmos-db-table-api">Cosmos DB Table API</h3>
 <p>The Cosmos DB Table API provides a key-value store API that supported the same protocol as Azure Table Storage API. It can be viewed as a premium offering for this API.
 Existing customers using Azure Table Storage can migrate to Cosmos DB using the Table API.
@@ -88,14 +87,13 @@ Cassandra to Cosmos DB and the use of Cassandra tools such as Data Explorer and 
 <p>The Cosmos DB Gremlin API supports the Gremlin Graph data model. Again, the Gremlin wire protocol is supported (allowing easy migration from Gremlin to Cosmos DB).
 Efficient for graph traversal (e.g. friends in social networks, device connections in IoT solution, etc.)</p>
 <h2 id="provisioning-a-cosmos-db-account">Provisioning a Cosmos DB Account</h2>
-<p>When provisioning a Cosmos DB account you need to select the storage model/API that the Cosmos DB will support. Only one storage model is supported per account and
-this value cannot be changed. Properties such as multi-region support and multi-master writes can be configured during account creation and can be modified later.</p>
-<p>An account must have a unique name as this is used as part of the public URL to access the account (e.g. https://[Cosmos_DB_Account_Name].documents.azure.com).</p>
+<p>When provisioning a Cosmos DB account you need to select the API that the Cosmos DB will support. Only one API is supported per account and this value cannot be changed. Properties such as multi-region support and multi-master writes can be configured during account creation and can be modified later.</p>
+<p>An account must have a unique name as this is used as part of the public URL to access the account (e.g. https://[Resource_group_name][Cosmos_DB_Account_Name][Region].documents.azure.com).</p>
 <p>The account is the top level component of data organisation.</p>
 <ul>
 <li>The Account contains Databases (also known as Keyspaces in the Cassandra API).</li>
-<li>Databases/Keyspaces contain Containers which are realised as Collections (SQL API and MongoDB API), Tables (Cassandra API and Table API), or Graphs (Gremlin API)</li>
-<li>Containers contain Items which are realised as Documents (SQL API and MongoDB API), Rows (Cassandra API), Items (Table API), or Nodes and Edges (Gremlin API)</li>
+<li>Databases/Keyspaces contain Containers which are realised as Collections (Core API and MongoDB API), Tables (Cassandra API and Table API), or Graphs (Gremlin API)</li>
+<li>Containers contain Items which are realised as Documents (Core API and MongoDB API), Rows (Cassandra API), Items (Table API), or Nodes and Edges (Gremlin API)</li>
 <li>Containers can also contain stored procedures, user-defined functions, triggers, conflicts, and merge procedures (note this is <em>not</em> at the database level like with traditional SQL server)</li>
 </ul>
 <h3 id="creating-a-database-container">Creating a database container</h3>
@@ -127,7 +125,7 @@ this value cannot be changed. Properties such as multi-region support and multi-
 </ul>
 <h3 id="avoiding-hot-partitions">Avoiding hot partitions</h3>
 <p>Container RUs are divided between the logical partitions. RUs allocated to one partition cannot be used by other partitions. This means that if one partition is very active then it may reach the RU threshold and cause <code>429 - Too Many Requests</code> error even if RUs are available in other partitions.</p>
-<p>To ensure logical partitions are used effectively, a partition key that evenly distributes data amongst partitions should be used If one partition has the majority of the data then it will consume more RUs and may be rate limited - this is a 'hot' partition on store.</p>
+<p>To ensure logical partitions are used effectively, a partition key that evenly distributes data amongst partitions should be used. If one partition has the majority of the data then it will consume more RUs and may be rate limited - this is a 'hot' partition on store.</p>
 <p>Similarly, we should try to ensure all queries can be distributed evenly across all available partitions. A query that just queries one partition can result in that partition consuming all available RUs and being rate limited - this is a 'hot' partition on throughput. Using a date as a partition key and having a system where most users are querying on the current day could cause a hot partition on throughput.</p>
 <h3 id="single-partition-and-cross-partition-queries">Single partition and cross partition queries</h3>
 <p>A single partition query is one where CosmosDB can infer (from the partition key of the container) that data matching the query being performed can be retrieved from a single partition. This is efficient.</p>
@@ -136,8 +134,48 @@ this value cannot be changed. Properties such as multi-region support and multi-
 <p>CosmosDB has some limits with regards to data:</p>
 <ul>
 <li>A single document cannot exceed 2MB of data.</li>
-<li>A single partition cannot exceed 20GB of data.</li>
+<li>A single logical partition cannot exceed 20GB of data.</li>
 </ul>
+<p>Partition keys that result in data that exceeds these limits should be redesigned. One way to do this is to create a <code>composite key</code> from the underlying data that can be used as a partition key with a high degree of cardinality/variability which will result in a large number of logical partitions.</p>
+<p>For example, in an application where we track web site activity we may be able to create a composite key that consists of the unique <code>userid</code> and the day that the user visited the site in <code>ddmmyyyy</code> format. This results in more, smaller logical partitions as we create data for the same user on different days in different partitions. This avoids the partition size limit and and allows us to scale further.</p>
+<p>The main disadvantage of a highly cardinality partition key is that it can lead to more cross-partition queries.</p>
+<h3 id="partition-key-best-practices">Partition key best practices</h3>
+<ul>
+<li>Evenly distribute storage
+<ul>
+<li>Make sure you pick you partition key that does not result in hot spots within the application</li>
+<li>Have high cardinality</li>
+<li>Use partition key with large number of values</li>
+<li>Examples: user id, product id, GUID</li>
+</ul>
+</li>
+<li>Evenly distribute request
+<ul>
+<li>RUs evenly distributed across all partitions</li>
+<li>Review <code>where</code> clauses of top queries</li>
+</ul>
+</li>
+<li>Consider document and partition limit while designed partition key
+<ul>
+<li>Max document size = 2MB</li>
+<li>Max logical partition = 20GB</li>
+</ul>
+</li>
+</ul>
+<h2 id="time-to-live">Time to live</h2>
+<p>CosmosDB has a time to live feature that can automatically delete data after a given period of time. Time to live is configured against each container's settings and has 3 possible settings:</p>
+<ol>
+<li>Off - items are not automatically deleted</li>
+<li>On - items are deleted after the defined the number of seconds</li>
+<li>On (no default) - items must define a <code>ttl</code> property and only items with a <code>ttl</code> are deleted (after <code>ttl</code> seconds)</li>
+</ol>
+<p>The time to live process works in the background and uses leftover RUs. Data deletion may be delayed if there is not enough RUs. However, even if the time to live process has not executed, queries will not return rows where the <code>ttl</code> has expired.</p>
+<h2 id="global-distribution">Global Distribution</h2>
+<p>CosmosDB allows data to be easily replicated to different data centres around the world. Simply go into the Azure portal and select the <code>Replicate Data globally</code>, then select the Azure data centres to replicate to. By default any new data centres will be a read replica.</p>
+<p>Certain Azure data centres are <a href="https://docs.microsoft.com/en-us/azure/availability-zones/cross-region-replication-azure#azure-cross-region-replication-pairings-for-all-geographies" target="_blank">paired</a> (e.g. UK West and UK South). Regions are paired for cross-region replication based on proximity and other factors.</p>
+<p>If we are replicating data for disaster recovery or business continuity purposes then we should choose centres that form a pair to maximise the benefits of the fast connections between these pairs.</p>
+<p>If we are replicating data to reduce latency then we should replicate the data to the data centre that is closest to the user (even if this is not a paired region).</p>
+<p>Costs for globally distributed CosmosDB increases with the number of replicates - 2 replicas costs twice the price of the primary database, 3 costs three times etc. You cannot replicate to a database that has a lower 'spec' than the primary.</p>
 
         </main>
     </div>
