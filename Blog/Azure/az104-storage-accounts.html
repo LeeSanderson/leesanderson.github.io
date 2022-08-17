@@ -449,6 +449,15 @@ Both the source and destination container need to be the same access tier.</p>
 <p>Diagnostic settings for Recovery Services Vaults are turned off by default. These settings allow you to run queries on backup activities. Diagnostic settings can be archived to a storage account (as a log file that can be viewed later), sent to a log analytics workspace, streamed to an event hub, or sent to a partner solution.</p>
 <p>Once Diagnostic settings are turned on and events are being sent to a log analytics workspace, the Logs section allows you to view Recovery Services Vault logs using the <a href="https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank">Kusto query language</a>.</p>
 <p>The Backup Reports menu item in the Recovery Services Vault blade can also be used to view reports.</p>
+<h3 id="deleting-a-recovery-services-vault">Deleting a Recovery Services Vault</h3>
+<p>Deleting a Recovery Services Vault is tricky because the soft delete settings on the vault and storage accounts mean the vault may have backup data for 14 days even after the resources that were being backed up have been deleted.</p>
+<p>To delete a Recovery Services Vault prior to the expiry of the soft delete period you must:</p>
+<ul>
+<li>Disable soft deleted (from the Properties menu of the RSV blade)</li>
+<li>Delete, undelete and then re-delete any VM backups</li>
+<li>Unregister any Storage Account file by going to the Backup Infrastructure menu of the RSV blade, selecting Storage Accounts and unregistering it.</li>
+<li>Delete the RSV</li>
+</ul>
 
         </main>
     </div>
