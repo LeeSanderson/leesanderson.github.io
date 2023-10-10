@@ -11,7 +11,7 @@ footerTemplate.innerHTML = `
             <a class="pr-3" target="linkedin" href="https://www.linkedin.com/in/lee-sanderson"><i class="fab fa-linkedin fa-3x"></i></a>
         </div>
         </div>
-        <div class="text-muted mt-2">&copy; 2022 - SixSidedDice.com</div>
+        <div class="text-muted mt-2">&copy; 2023 - SixSidedDice.com</div>
     </div>
 </div>
 </footer>`
