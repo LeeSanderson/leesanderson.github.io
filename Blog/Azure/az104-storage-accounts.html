@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>AZ-104 Study Guide part 5 - Storage Accounts - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="./../site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="/js/header.js"></script>
+    <script type="module" src="/js/footer.js"></script>
+    
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    Aug 10, 2022
+
+        <span class="badge badge-info">AZ104</span>
+        <span class="badge badge-info">Concepts</span>
+        <span class="badge badge-info">Storage</span>
+</div>
+
+<h1 id="azure-storage-accounts">Azure Storage Accounts</h1>
+<p>The <a href="https://docs.microsoft.com/en-us/certifications/azure-administrator/" target="_blank">AZ-104: Azure Administrator Associate</a> certification requires subject matter expertise in implementing, managing, and monitoring an organization's Microsoft Azure environment, including virtual networks, storage, compute, identity, security, and governance.</p>
+<p>In part 5 of the guide we will cover managing storage accounts. Storage accounts are a fundamental part of Azure. Many services in Azure require a storage account or are abstractions built on top of storage accounts (e.g. recovery service key vaults). A storage account is a place where you can store files and unstructured data in Azure. Storage accounts can store files using a container metaphor (blobs stored in a container) or a file system metaphor (files stored in a folder structure like on Windows). In addition to files, storage accounts store key-value data in Tables, events and messages in Queues, and are also the underlying technology used to create drives on Virtual Machines (managed storage accounts).</p>
+<h2 id="azure-storage-services-overview">Azure Storage Services Overview</h2>
+<p>Azure storage consists of the following components:</p>
+<ul>
+<li><p><a href="https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction" target="_blank">Queue storage</a>. Azure Queue Storage is a service for storing large numbers of messages. You access messages from anywhere in the world via authenticated calls using HTTP or HTTPS. A queue message can be up to 64 KB in size. A queue may contain millions of messages, up to the total capacity limit of a storage account. Queues are commonly used to create a backlog of work to process asynchronously.</p>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-us/azure/storage/tables/table-storage-overview" target="_blank">Table storage</a>. Azure Table storage is a service that stores non-relational structured data. Because Table storage is schemaless, it's easy to adapt your data as the needs of your application evolve. Access to Table storage data is fast and cost-effective for many types of applications, and is typically lower in cost than traditional SQL for similar volumes of data.</p>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction" target="_blank">File storage</a>. Azure Files offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol, Network File System (NFS) protocol, and the Azure Files REST API. Each file share within a storage account can be created with one of four access tiers:</p>
+<ul>
+<li><p><strong>Cool</strong>: optimised for online archive storage scenarios. Cool optimises the price for workloads that don't have much activity, offering the lowest data at-rest storage price, but the highest transaction prices. Files in a Cool access tier must remain there for at least 30 days.</p>
+</li>
+<li><p><strong>Hot</strong>: optimised for general purpose file sharing scenarios such as team shares and Azure File Sync. Hot is for active workloads that don't involve a large number of transactions, and has a slightly lower data at-rest storage price, but slightly higher transaction prices as compared to transaction optimised (see below). Think of it as the middle ground between the transaction optimized and cool tiers. Data at rest costs are around x2 more that Cold and transaction costs are around 1/2 that of Cold.</p>
+</li>
+<li><p><strong>Transactional</strong>: suitable for transaction heavy workloads e.g. applications that require file storage as a backend store. Transaction optimised shares have a high data at-rest storage price, but a low transaction prices for reads, writes and deletes. Data at rest costs are around x3 more that Hot and transaction costs are around 1/4 that of Hot.</p>
+</li>
+<li><p><strong>Premium</strong> (only if the account is created with the Premium performance tier as <a href="#types-of-storage-account">described below</a>). Premium shares have a highest data at-rest storage price, but no transaction fees for reads,writes and deletes. Data at rest costs are around x2 more that Transactional but transactions costs are zero.</p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction" target="_blank">Blob storage</a> (also known as Containers). Azure Blob storage is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data. Blob storage is further composed of 3 types:</p>
+<ul>
+<li><p><strong>Block blobs</strong> store text and binary data. Block blobs are made up of blocks of data that can be managed individually. Block blobs can store up to about 190.7 TiB. Block blobs can only use the Hot, Cool or Archive access tier.</p>
+</li>
+<li><p><strong>Append blobs</strong> are made up of blocks like block blobs, but are optimized for append operations. Append blobs are ideal for scenarios such as logging data from virtual machines. Append blobs can only use the Hot access tier.</p>
+</li>
+<li><p><strong>Page blobs</strong> store random access files up to 8 TiB in size. Page blobs store virtual hard drive (VHD) files and serve as disks for Azure virtual machines. For more information about page blobs, see <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-pageblob-overview" target="_blank">Overview of Azure page blobs</a>. Page blobs can only use the Hot access tier.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="updating-access-tier-settings">Updating Access Tier Settings</h3>
+<p>The Default Access Tier Settings for Blob storage can be updated after the storage account has been created by going to the Configuration menu of the Storage Account blade. Defaults can be changed for Hot to Cool and vice versa.</p>
+<p>Note that the Cool access tier is approximately half the price of the Hot tier for storage but twice the price for read/write/delete operations. In addition a file in the Cool tier must be in the tier for a minimum of 30 days. Files removed before the 30 day minimum are still charged.</p>
+<p>In addition, the access tier of individual blobs in a container can be modified by selecting the <code>Change tier</code> menu item from the <code>...</code> menu. Individual blobs may be archived. The storage cost of archived blobs is 1/10th of blobs in the Hot tier, however the blob will be inaccessible until it is rehydrated back to &quot;Hot&quot; or &quot;Cool&quot;, which may take several hours. The archive tier is recommended only for log term archiving of data (e.g. backup files that may not be needed for over a year). Blobs that are archived must be in the tier for a minimum of 180 days. Files removed before the 180 day minimum are still charged.</p>
+<p>The access tier of Azure File Shares cannot be changed after the share has been created. Files in a file share inherit their access tier from the parent file share and therefore cannot be changed either.</p>
+<h2 id="capacity-and-limits">Capacity and Limits</h2>
+<p>By default a storage account can contain <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#storage-limits" target="_blank">5 PiB of data</a>.</p>
+<h2 id="data-redundancy">Data Redundancy</h2>
+<p>Azure Storage always stores multiple copies of your data so that it's protected from planned and unplanned events, including transient hardware failures, network or power outages, and massive natural disasters. Redundancy ensures that your storage account meets its availability and durability targets even in the face of failures.</p>
+<p>The redundancy setting for a storage account is shared for all storage services exposed by that account. All storage resources deployed in the same storage account have the same redundancy setting. You may want to isolate different types of resources in separate storage accounts if they have different redundancy requirements.</p>
+<p>The following types of redundancy settings are supported:</p>
+<ul>
+<li><p>Locally redundant storage (LRS) = 3 synchronous copies in the same data centre (in one availability zone and one region).  LRS provides at least 99.999999999% (11 nines) durability of objects over a given year.</p>
+</li>
+<li><p>Zone redundant storage (ZRS) = 3 synchronous copies in the three different availability zones (different buildings in one region). ZRS offers durability for storage resources of at least 99.9999999999% (12 9's) over a given year.</p>
+</li>
+<li><p>Geo-redundant storage (GRS) = LRS + asynchronous copy to <a href="https://docs.microsoft.com/en-us/azure/availability-zones/cross-region-replication-azure" target="_blank">secondary/paired region</a> (3 more copies in second region using LRS). The copy in the secondary region can only be accessed when primary region is unavailable and only as a read-only/recovery copy. GRS offers durability for storage resources of at least 99.99999999999999% (16 9's) over a given year.</p>
+</li>
+<li><p>Read-access geo-redundant storage (RA-GRS) - GRS + read access to secondary region (without failure of primary region).</p>
+</li>
+<li><p>Geo-zone-redundant storage (GZRS) = ZRS + asynchronous copy to second region (3 more copies in second region using LRS). The copy in the secondary region can only be accessed when primary region is unavailable and only as a read-only/recovery copy. GZRS is designed to provide at least 99.99999999999999% (16 9's) durability of objects over a given year.</p>
+</li>
+<li><p>Read-access geo-zone-redundant storage (RA-GZRS) - GZRS + read access to secondary region (without failure of primary region).</p>
+</li>
+</ul>
+<p>The available redundancy options will be dependent on the region and type of storage account being created (see below). ZRS, GZRS, and RA-GZRS are available only in certain regions. For more information, see <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy" target="_blank">Azure Storage redundancy</a>.</p>
+<h3 id="updating-data-redundancy-settings">Updating Data Redundancy Settings</h3>
+<p>The Data Redundancy Settings of a storage account can be updated after the storage account has been created by going to the Configuration menu of the Storage Account blade.</p>
+<p>Locally redundant (LRS) storage accounts can be upgraded to Geo-redundant (GRS and RA-GRS) but cannot  be migrated to zone redundant storage (ZRS, GZRS, or RA-GZRS).</p>
+<h2 id="types-of-storage-account">Types of Storage Account</h2>
+<p>Azure Storage offers several <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview#types-of-storage-accounts" target="_blank">types of storage accounts</a>. Each type supports different features and has its own pricing model.</p>
+<ul>
+<li><p><strong>Standard</strong> general-purpose v2 storage accounts support Blob Storage (including Data Lake Storage), Queue Storage, Table Storage, and Azure Files. All redundancy options are supported. This type of storage account is recommended for most storage scenarios.</p>
+</li>
+<li><p><strong>Premium block blobs</strong> support Blob Storage (including Data Lake Storage) and LRS or ZRS redundancy options. Premium storage account type for block blobs and append blobs. Recommended for scenarios with high transaction rates or that use smaller objects or require consistently low storage latency. Premium block blob storage accounts are ideal for workloads that require fast and consistent response times and/or have a high number of input output operations per second (IOP).</p>
+</li>
+<li><p><strong>Premium file shares</strong> support Azure Files and LRS or ZRS redundancy options. Recommended for enterprise or high-performance scale applications. Use this account type if you want a storage account that supports both Server Message Block (SMB) and NFS file shares (Standard file shares only support SMB).</p>
+</li>
+<li><p><strong>Premium page blobs</strong> supports Page blobs and LRS redundancy. Page blobs are ideal for storing index-based and sparse data structures like OS and data disks for Virtual Machines and Databases.</p>
+</li>
+</ul>
+<p>Premium performance storage accounts use SSDs for low latency and high throughput.</p>
+<h2 id="creating-storage-accounts">Creating Storage Accounts</h2>
+<p>To create a new storage account via the Azure portal you need to:</p>
+<ul>
+<li><p>Go to the create storage account wizard. There are many ways to start the wizard including:</p>
+<ul>
+<li>Select new resource -&gt; storage account from the menu</li>
+<li>Search for storage accounts</li>
+<li>Select add resource from within a resource group</li>
+</ul>
+</li>
+<li><p>Select the basic options:</p>
+<ul>
+<li><p>Select the subscription and resource group that the storage account belongs to (or create a new resource group)</p>
+</li>
+<li><p>Enter a unique name (all lowercase, no spaces, between 3 and 24 characters in length). The name forms part of the URI for the storage account and therefore must be globally unique.</p>
+</li>
+<li><p>Select the region that the storage account will be created in.</p>
+</li>
+<li><p>Select the desired Performance level. Either Standard or Premium. If Premium was selected, select either Premium block blobs, Premium file shares, or Premium page blobs.</p>
+</li>
+<li><p>Select the redundancy options. The available redundancy options will be dependent on the region and type of storage account being created (Standard or Premium).</p>
+</li>
+</ul>
+</li>
+<li><p>Select Advanced Options:</p>
+<ul>
+<li><p>Security</p>
+<ul>
+<li><p>Require secure transfer for REST API operations (selected by default). If enabled this setting means that a secure connection must be used to transfer data to/from the storage account. The secure transfer option enhances the security of your storage account by only allowing REST API operations on the storage account using HTTPS. When you are using the Azure file service, connections without encryption will fail, including scenarios using SMB 2.1, SMB 3.0 without encryption, and some flavors of the Linux SMB client. Because Azure storage doesn't support HTTPS for custom domain names, this option is not applied when using a custom domain name. Connections via NFSv3 for blobs over TCP will succeed but will not be secured.</p>
+</li>
+<li><p>Enable blob public access. When blob public access is enabled, one is permitted to configure container ACLs to allow anonymous access to blobs within the storage account. When disabled, no anonymous access to blobs within the storage account is permitted, regardless of underlying ACL configurations.</p>
+</li>
+<li><p>Enable storage account key access. When storage account key access is disabled, any requests to the account that are authorized with Shared Key, including shared access signatures (SAS), will be denied. Client applications that currently access the storage account using shared key will no longer work.</p>
+</li>
+<li><p>Default to Azure Active Directory authorization in the Azure portal. When this property is enabled, the Azure portal authorizes requests to blobs, queues, and tables with Azure Active Directory by default.</p>
+</li>
+<li><p>Minimum TLS version. Sets the minimum TLS version needed by applications using your storage account's data. Default to TLS 1.2.</p>
+</li>
+<li><p>Permitted scope for copy operations. Restrict copy operations from source storage accounts that are within the same Azure AD tenant or that have a private link to the same virtual network as this storage account. Defaults to &quot;From any storage account&quot; but can be restricted to &quot;From storage accounts in the same Azure AD tenant&quot; or  &quot;From storage accounts that have a private endpoint to the same virtual network&quot;.</p>
+</li>
+</ul>
+</li>
+<li><p>Data Lake Storage Gen2 settings (affecting Blob storage):</p>
+<ul>
+<li><p>Enable hierarchical namespaces. This allows the collection of objects/files within an account to be organized into a hierarchy of directories and nested subdirectories in the same way that the file system on your computer is organized. With a hierarchical namespace enabled, a storage account becomes capable of providing the scalability and cost-effectiveness of object storage, with file system semantics that are familiar to analytics engines and frameworks. Hierarchical namespace accelerates big data analytics workloads and enables file-level access control lists (ACLs). If this option is disabled then blob containers can only contain files.</p>
+</li>
+<li><p>Enable SFTP (requires hierarchical namespaces to be enabled). Enables the SSH File Transfer Protocol for your storage account that allows users to access blobs via an SFTP endpoint. Local users need to be created before the SFTP endpoint can be accessed</p>
+</li>
+<li><p>Enable network file system v3 (requires hierarchical namespaces to be enabled, is only supported with LRS or ZRS redundancy options, and is not supported for any geo redundancy option). Enables the Network File System Protocol for your storage account that allows users to share files across a network. This option must be set during storage account creation.</p>
+</li>
+<li><p>Allow cross-tenant replication (requires hierarchical namespaces to be disabled). Allow object replication to copy blobs to a destination account on a different Azure Active Directory (Azure AD) tenant.</p>
+</li>
+<li><p>(Blob storage) Access tier. The account access tier is the default tier that is inferred by any blob without an explicitly set tier. The hot access tier is ideal for frequently accessed data, and the cool access tier is ideal for infrequently accessed data. The archive access tier can only be set at the blob level and not on the account.</p>
+</li>
+</ul>
+</li>
+<li><p>Azure Files (settings only affecting Azure File Shares)</p>
+<ul>
+<li>Enable large file shares (not supported for any geo redundancy option). Provides file share support up to a maximum of 100 TiB. Large file share storage accounts do not have the ability to convert to geo-redundant storage offerings and upgrade is permanent.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Select networking options:</p>
+<ul>
+<li><p>Network Access. Three options are supported:</p>
+<ul>
+<li><p>Enable public access. Enabling public access from all networks might make this resource available publicly. Unless public access is required, Microsoft recommend using a more restricted access type.</p>
+</li>
+<li><p>Enable public access from selected virtual networks and IP addresses.  Only the selected network will be able to access this storage account.</p>
+</li>
+<li><p>Disable public access and use private access. Create a private endpoint to allow a private connection to this resource. Additional private endpoint connections can be created within the storage account or private link center.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>-Network routing. Determine how to route your traffic as it travels from the source to its Azure endpoint. Microsoft network routing will direct your traffic traverse the Microsoft cloud and exit as close to the external user as possible. Internet routing will direct your traffic to enter the Internet closest to the storage account and traverse the Internet to the external user. Microsoft routing is considered more private but does incur some additional data transfer costs. Internet routing is cheaper but less secure. Microsoft network routing is recommended for most customers.</p>
+</li>
+<li><p>Select data protection options:</p>
+<ul>
+<li><p>Enable point-in-time restore for containers (requires hierarchical namespaces to be disabled). Point-in-time restore can be used to restore one or more containers to an earlier state. If point-in-time restore is enabled, then versioning, change feed, and blob soft delete must also be enabled.</p>
+</li>
+<li><p>Enable soft delete for blobs. Soft delete enables you to recover blobs and directories that were previously marked for deletion. The soft delete retention period default to 7 days and can be set to between 1 and 365 days.</p>
+</li>
+<li><p>Enable soft delete for containers. Soft delete enables you to recover containers that were previously marked for deletion. The soft delete retention period default to 7 days and can be set to between 1 and 365 days.</p>
+</li>
+<li><p>Enable soft delete for file shares. Soft delete enables you to recover file shares that were previously marked for deletion.  The soft delete retention period default to 7 days and can be set to between 1 and 365 days.</p>
+</li>
+<li><p>Enable versioning for blobs (requires hierarchical namespaces to be disabled). Use versioning to automatically maintain previous versions of your blobs.</p>
+</li>
+<li><p>Enable blob change feed (requires hierarchical namespaces to be disabled). Keep track of create, modification, and delete changes to blobs in your account. Logs can be kept forever or deleted after between 1 and 365 days.</p>
+</li>
+<li><p>Enable version-level immutability support (requires Enable versioning for blobs to be enabled and therefore requires hierarchical namespaces to be disabled). Allows you to set time-based retention policy on the account-level that will apply to all blob versions. Enable this feature to set a default policy at the account level. Without enabling this, you can still set a default policy at the container level or set policies for specific blob versions.</p>
+</li>
+</ul>
+</li>
+<li><p>Encryption options:</p>
+<ul>
+<li><p>Encryption type. Data is encrypted by default using Microsoft-managed keys (MMK). For additional control, data can be encrypted using customer-managed keys (CMK) via the Azure Key Vault.</p>
+</li>
+<li><p>Enable support for customer-managed keys. Customer-managed key (CMK) support can be limited to blob service and file service only, or to all service types. After the storage account is created, this support cannot be changed.</p>
+</li>
+<li><p>Enable infrastructure encryption. By default, Azure encrypts storage account data at rest. Infrastructure encryption adds a second layer of encryption to your storage account’s data</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="data-lake-storage-gen2-blob-storage">Data Lake Storage Gen2 Blob Storage</h2>
+<p>Data Lake Storage Gen2 Blob Storage is a special type of Blob storage that is enabled when the <code>Enable hierarchical namespaces</code> option or other Data Lake Storage Gen2 options are enabled when creating a storage account.</p>
+<p>Data Lake Storage Gen2 Blob Storage has some additional capabilities to standard Blob storage but also <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/storage-feature-support-in-storage-accounts" target="_blank">some addition restrictions</a>.</p>
+<p>Data Lake Storage Gen2 Blob Storage do not support:</p>
+<ul>
+<li>Point-in-time restore for containers</li>
+<li>Blob versioning</li>
+<li>Blob change tracking</li>
+<li>Version-level immutability support</li>
+</ul>
+<h2 id="storage-account-capabilities">Storage Account Capabilities</h2>
+<p>Storage Account have a number of capabilities. These can be seen and configured via the Capabilities tab on the Overview screen of the Storage Account blade.</p>
+<p>Capabilities include:</p>
+<ul>
+<li><p>Static website. Allow hosting of static content on the blob service. When enabled a new <code>$web</code> container. Any static content uploaded to this container can then be viewed via the URL: https://[storage_account_name].z33.web.core.windows.net/. This default domain can be mapped to a more user friendly domain using the Custom domain feature.</p>
+</li>
+<li><p>Custom domains allow you to configure a custom domain for accessing blob data in your Azure storage account, like <a href="http://www.contoso.com" target="_blank">www.contoso.com</a>. There are two methods you can use to set up a custom domain and both require creating CNAME records in the DNS provider to prove that you own the domain.</p>
+</li>
+<li><p>Azure CDN. The Azure Content Delivery Network (CDN) is designed to send audio, video, images, and other files faster and more reliably to customers using servers that are closest to the users. This dramatically increases speed and availability, resulting in significant user experience improvements.</p>
+</li>
+<li><p>Security via Microsoft Defender. Microsoft Defender for Storage detects potentially harmful attempts to access or exploit Blob containers and File shares in your storage accounts. Microsoft Defender is offered as a free trial for 30 days. And is charged at $0.02 per 10,000 transactions in Blob containers and File shares after the trail expires.</p>
+</li>
+<li><p>Data protection. Data protection provides options for recovering your data when it is erroneously modified or deleted. These options are the same as those assigned when the storage account was initially created.</p>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview" target="_blank">Lifecycle Management</a>. Lifecycle management offers a rich, rule-based policy for general purpose v2 and blob storage accounts. Policies can be defined to transition data to the appropriate access tiers or expire at the end of the data's lifecycle. A new or updated policy may take up to 48 hours to complete. With the lifecycle management policy, you can:</p>
+<ul>
+<li><p>Transition blobs from cool to hot immediately when they're accessed, to optimize for performance.</p>
+</li>
+<li><p>Transition current versions of a blob, previous versions of a blob, or blob snapshots to a cooler storage tier if these objects haven't been accessed or modified for a period of time, to optimize for cost. In this scenario, the lifecycle management policy can move objects from hot to cool, from hot to archive, or from cool to archive.</p>
+</li>
+<li><p>Delete current versions of a blob, previous versions of a blob, or blob snapshots at the end of their lifecycles.</p>
+</li>
+<li><p>Define rules to be run once per day at the storage account level.</p>
+</li>
+<li><p>Apply rules to containers or to a subset of blobs, using name prefixes or blob index tags as filters.</p>
+</li>
+</ul>
+</li>
+<li><p><a href="https://docs.microsoft.com/en-gb/azure/private-link/private-endpoint-overview" target="_blank">Private endpoints</a>. Use private endpoints to privately connect to a service or resource. Your private endpoint must be in the same region as your virtual network, but can be in a different region from the private link resource that you are connecting to.</p>
+</li>
+</ul>
+<h2 id="secure-access-to-storage-accounts">Secure Access to Storage Accounts</h2>
+<p>Every request made against a secured resource in the Blob, File, Queue, or Table service must be authorized. Authorization ensures that resources in your storage account are accessible only when you want them to be, and only to those users or applications to whom you grant access.</p>
+<p>Each authorization option is briefly described below:</p>
+<ul>
+<li><p>Azure Active Directory (Azure AD) integration is available for the Blob, Queue and Table services. With Azure AD, you can assign fine-grained access to users, groups, or applications via role-based access control (RBAC).</p>
+</li>
+<li><p>Active Directory (AD) authorization for Azure Files supports identity-based authorization over SMB through AD. Your AD domain service can be hosted on on-premises machines or in Azure VMs. SMB access to Files is supported using AD credentials from domain joined machines, either on-premises or in Azure. You can use RBAC for share level access control and NTFS DACLs for directory and file level permission enforcement.</p>
+</li>
+<li><p>Shared Key authorization relies on your account access keys and other parameters to produce an encrypted signature string that is passed on the request in the Authorization header. Access keys allow full access to the storage account. Keys should be kept in a secure location like Azure Key Vault, and replace/rotated often with new keys. The two keys allow you to replace one while still using the other.</p>
+</li>
+<li><p>Shared access signatures (SAS) delegate access to a particular resource in your account with specified permissions, over a specified time interval, and (optionally) from a specific list of IP addresses. Shared access signature can be provided to clients who should not be trusted with your storage account key but whom you wish to delegate access to certain storage account resources. By distributing a shared access signature URI to these clients, you grant them access to a resource for a specified period of time. An account-level SAS can delegate access to multiple storage services (i.e. blob, file, queue, table). Note that stored access policies are currently not supported for an account-level SAS. Regenerating the access key used to create a SAS will invalidate the SAS.</p>
+<ul>
+<li><p>SAS tokens can be generated for the entire storage account via the Shared access signatures menu in the Storage account blade.</p>
+</li>
+<li><p>SAS tokens for individual containers, blobs, file shares, or files can also be generated by selecting the resource in the Containers or File shares menu in the Storage account blade and selecting the <code>Generate SAS</code> option from the <code>...</code> menu for the resource.</p>
+</li>
+</ul>
+</li>
+<li><p>Blob resources can optionally be made public at the container or blob level. A public container or blob is accessible to any user for anonymous read access. Read requests to public containers and blobs do not require authorization.</p>
+</li>
+</ul>
+<h2 id="log-analytics">Log Analytics</h2>
+<p>Basic monitoring information can be seen via the Monitoring tab on the Overview screen of the Storage Account blade. The monitoring tab allows you to view the Total egress (outbound traffic), Total ingress (inbound traffic), Average latency, and number of Requests across the entire storage account or just the blobs, files, queues or tables. Key metrics can be pinned to the dashboard.</p>
+<p>The Monitoring section of the menu allows viewing more detailed information. This includes:</p>
+<ul>
+<li><p>Insights. Shows a more detailed summary of the failures, performance, availability, and capacity of the storage account.</p>
+</li>
+<li><p>Alerts. Allow you to configure rules and receive alerts when a given condition or threshold is breached (e.g. if used capacity exceeds 100 GiB).</p>
+</li>
+<li><p>Metrics. Allows you to configure a chart to monitor a specific aspect of a storage account.</p>
+</li>
+<li><p>Workbooks are predefined templates of charts showing information about the storage account. You can create and share your own workbooks.</p>
+</li>
+<li><p>Diagnostic settings are turned off by default. These settings allow you to run queries on who is accessing data and how frequently. Diagnostic settings can be archived to a storage account (as a log file that can be viewed later), sent to a log analytics workspace, streamed to an event hub, or sent to a partner solution.</p>
+</li>
+<li><p>Logs. Once Diagnostic settings are turned on and events are being sent to a log analytics workspace, the Logs section allows you to view storage account logs using the <a href="https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank">Kusto query language</a>. Depending on the Diagnostic settings tables for StorageBlogLogs, StorageFileLogs, StorageQueueLogs, and/or StorageTableLogs may be available.</p>
+</li>
+</ul>
+<h1 id="geo-redundant-storage">Geo-Redundant Storage</h1>
+<p>Geo-redundant storage (GRS, RA-GRS, GZRS, and RA-GZRS) store copies of data in 2 data centres. The status of geo-redundant storage accounts can be seen on the Geo-replication menu of the Storage Account blade.</p>
+<p>Access Endpoints can be viewed on the Endpoints menu of the Storage Account blade. The format of end points follows a standard naming convention:</p>
+<ul>
+<li>Primary Blob Service Endpoint = https://[storage_account_name].blob.core.windows.net/</li>
+<li>Primary File Service Endpoint = https://[storage_account_name].file.core.windows.net/</li>
+<li>Primary Queue Service Endpoint = https://[storage_account_name].queue.core.windows.net/</li>
+<li>Primary Table Service Endpoint = https://[storage_account_name].table.core.windows.net/</li>
+<li>Primary Azure Data Lake Storage file system endpoint = https://[storage_account_name].dfs.core.windows.net/</li>
+<li>Primary static website Endpoint = https://[storage_account_name].z33.web.core.windows.net/</li>
+</ul>
+<p>For RA-GRS and RA-GZRS secondary endpoints are also available for read-only access:</p>
+<ul>
+<li>Secondary Blob Service Endpoint = https://[storage_account_name]-secondary.blob.core.windows.net/</li>
+<li>Secondary File Service Endpoint = https://[storage_account_name]-secondary.file.core.windows.net/</li>
+<li>Secondary Queue Service Endpoint = https://[storage_account_name]-secondary.queue.core.windows.net/</li>
+<li>Secondary Table Service Endpoint = https://[storage_account_name]-secondary.table.core.windows.net/</li>
+<li>Secondary Azure Data Lake Storage file system endpoint = https://[storage_account_name]-secondary.dfs.core.windows.net/</li>
+<li>Secondary static website Endpoint = https://[storage_account_name]-secondary.z33.web.core.windows.net/</li>
+</ul>
+<p>The Geo-replication menu of the Storage Account blade can also be used to failover from the primary endpoint to the secondary endpoint in the event of a failure of the primary data centre. Failover converts the secondary storage account to a LRS account (which can be upgraded to a GRS or RA-GRS once the primary data centre has recovered). As data replication is asynchronous, failover could lead to some data loss. Failover should only be initiated if the primary is down for an extended period of time.</p>
+<h2 id="copying-files-with-azcopy">Copying Files with AzCopy</h2>
+<p><a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10" target="_blank">AzCopy</a> is a command-line utility, available for Mac, Linux and Windows, that allows you to copy blobs or files to or from a storage account and between storage accounts (without needing to download the file locally first).</p>
+<p>AzCopy can use Azure AD or shared access signature authentication (but not storage account keys).</p>
+<h2 id="object-replication">Object Replication</h2>
+<p>When object replication is enabled, blobs are copied asynchronously from a source storage account to a destination account. Cross-tenant policies will appear under &quot;Other accounts&quot;, along with policies on accounts not in an active subscription or on deleted accounts. The storage accounts may be in different Azure regions.</p>
+<p>The destination container is marked as read-only by Azure. 
+Both the source and destination container need to be the same access tier.</p>
+<p>Replication rules define the source and destination of the replication. Filters can be applied to limit the files that are copied to those matching a given prefix. A prefix match will find items like folders and blobs under the specified container that start with the specified input. For example, inputting &quot;a&quot; would filter any folders or blobs that start with &quot;a&quot;. If multiple prefixes are specified, items that have any of these prefixes will be included.</p>
+<p>By default a replication rule only copies new object. This can be changed to copy everything or only files created after a given starting date and time.</p>
+<p>Object replication leverages the Blob change feed functionality of Blob containers (stored in the $blobchangefeed container) to determine which files should be copied.</p>
+<h2 id="importing-and-exporting-data-to-azure">Importing and Exporting Data to Azure</h2>
+<p>The Storage Explorer can be used to upload individual files into a storage account via the Azure Portal.</p>
+<p>A Storage Explorer application can also be downloaded.</p>
+<p>Utilities like AzCopy can also be used to move files.</p>
+<p>Uploading large amounts of data using these tools can take a long time and consume a lot of bandwidth.</p>
+<p>The <a href="https://docs.microsoft.com/en-us/azure/import-export/storage-import-export-service" target="_blank">Azure Import/Export service</a> is used to securely import large amounts of data to Azure Blob storage and Azure Files by shipping disk drives to an Azure data center. This service can also be used to transfer data from Azure Blob storage to disk drives and ship to your on-premises sites. Data from one or more disk drives can be imported either to Azure Blob storage or Azure Files.</p>
+<h2 id="azure-cdn-for-storage-accounts">Azure CDN for Storage Accounts</h2>
+<p>Azure CDN  is a distributed network of servers that can efficiently deliver web content to users. CDNs store cached content on edge servers in point-of-presence (POP) locations that are close to end users, to minimize latency.</p>
+<p>The benefits of using Azure CDN to deliver web site assets include:</p>
+<ul>
+<li><p>Better performance and improved user experience for end users, especially when using applications in which multiple round-trips are required to load content.</p>
+</li>
+<li><p>Large scaling to better handle instantaneous high loads, such as the start of a product launch event.</p>
+</li>
+<li><p>Distribution of user requests and serving of content directly from edge servers so that less traffic is sent to the origin server.</p>
+</li>
+</ul>
+<p><a href="https://docs.microsoft.com/en-gb/azure/cdn/cdn-features?WT.mc_id=Portal-Microsoft_Azure_CDN" target="_blank">Azure Content Delivery Network (CDN) includes four products</a>:</p>
+<ul>
+<li>Azure CDN Standard from Microsoft</li>
+<li>Azure CDN Standard from Akamai</li>
+<li>Azure CDN Standard from Verizon</li>
+<li>Azure CDN Premium from Verizon</li>
+</ul>
+<p>Azure CDN can be configured for an Azure Storage account by either:</p>
+<ul>
+<li><p>Searching for &quot;Front Door and CDN profiles&quot;, selected add, choosing &quot;Explore other offerings&quot; and choosing one of the Azure CDN options</p>
+</li>
+<li><p>Selecting &quot;Azure CDN&quot; from the Storage Account blade.</p>
+</li>
+</ul>
+<p>When created a CDN has an https://**.azureedge.net domain name.</p>
+<p>Azure CDN supports multiple endpoints. An endpoint can be:</p>
+<ul>
+<li>The blob containers belonging to a storage account.</li>
+<li>A storage account static website.</li>
+<li>A cloud service</li>
+<li>A web app</li>
+<li>Any custom origin</li>
+</ul>
+<h2 id="creating-and-updating-file-shares">Creating and Updating File Shares</h2>
+<p>When a new V2 storage account is first created no file shares exist. A new share can be created by going to the File Shares menu in the Storage account blade and clicking the <code>+ File Share</code> button.</p>
+<p>By default, file shares soft delete files for 7 days, have a maximum capacity of 5 TiB, and are configured for maximum compatibility (supporting SMB versions 2.1, 3.0 and 3.1.1; SMB channel encryption using AES-128-CCM, AES-128-GCM, or AES-256-GCM; Authentication via NTLM v2 or Kerberos; and Kerberos ticket encryption RC4-HMAC and AES-256).</p>
+<p>Note that SMB 2.1 support also requires Secure Transfer to be Disabled (via the Storage Account Configuration menu).</p>
+<p>Note also that 5 TiB is the maximum quota for a single file share unless Large file shares are enabled (via the Storage Account Configuration menu). Large file shares provides file share support up to a maximum of 100 TiB. Large file share storage accounts do not have the ability to convert to geo-redundant storage offerings and upgrade is permanent.</p>
+<p>After a file share has been created the quota be reduced to less that the maximum configured. The access tier can also be changed. Unlike blobs, all files within a given file share are charged at the same access tier.</p>
+<h3 id="connecting-to-file-shares">Connecting to File Shares</h3>
+<p>File shares can be connected/mounted on Window, Linux, and macOS devices. Scripts to mount a file share can be found by clicking the <code>Connect</code> button in the File share section of the Storage account blade.</p>
+<p>On Windows, this Powershell script will check to see if this storage account is accessible via TCP port 445, which is the port SMB uses. If port 445 is available, your Azure file share will be persistently mounted. Organization and some Internet service provider (ISP) may block port 445, however you may use Azure Point-to-Site (P2S) VPN, Azure Site-to-Site (S2S) VPN, or ExpressRoute to tunnel SMB traffic to your Azure file share over a different port.</p>
+<p>Note that the script uses the Storage Account key to authenticate access to the File share.</p>
+<h2 id="storage-sync-service-aka-azure-file-sync">Storage Sync Service AKA Azure File Sync</h2>
+<p>Storage Sync Service, also known as Azure File Sync, allows organisations to centralise file shares in Azure Files, while keeping the flexibility, performance, and compatibility of an on-premises file server. Azure File Sync transforms Windows Server into a quick cache of your Azure file share. You can use any protocol that is available on Windows Server to access your data locally, including SMB, NFS, and FTPS. You can have as many caches as you need across the world.</p>
+<ol>
+<li>Create a &quot;Storage Sync Service&quot; in Azure</li>
+<li>Create a Sync group to define a Azure Files file share to be synchronised. Each Storage Sync Service can have multiple Sync groups.</li>
+<li>Download the Azure File Sync agent and install it on all servers you want to sync. the agent is supported on Windows Server 2019, Windows Server 2016, Windows Server 2012 R2, and Windows Server 2022.</li>
+<li>Use the server registration utility that opens to register the server to this Storage Sync Service.</li>
+</ol>
+<h3 id="troubleshooting-azure-file-sync">Troubleshooting Azure File Sync</h3>
+<p>Microsoft provide an online <a href="https://docs.microsoft.com/en-us/azure/storage/file-sync/file-sync-troubleshoot" target="_blank">troubleshooting guide</a> for Azure File Sync issues. This covers installing the agent, ensuring pre-requisites such as Powershell 5.1 are installed, resolving authorisation problems, sync issues etc.</p>
+<h2 id="implementing-backup-and-recovery">Implementing Backup and Recovery</h2>
+<p><a href="https://docs.microsoft.com/en-us/azure/backup/backup-azure-recovery-services-vault-overview" target="_blank">Recovery services vault</a> is an Azure service for backup and site recovery (search for &quot;Recovery services vault&quot; in the Azure search bar).</p>
+<p>A recovery services vault must be in the same region as the Azure resource to be backed up. If there are Azure resources in multiple regions then multiple recovery services vaults are required.</p>
+<p>Configuration settings for Recovery services vaults can be accessed via the Properties menu in the Recovery services vault blade. After a Recovery services vault you can alter some setting here, including:</p>
+<ul>
+<li><p>Backup configuration.</p>
+<ul>
+<li><p>Storage replication type. By default RSV uses GRS storage for backups. This can be changed to ZRS or LRS to reduce costs. The Storage replication type cannot be changed after protecting any items.</p>
+</li>
+<li><p>For RSVs using GRS, cross-region restore can be enabled (it is disabled by default). Enabling this setting allows you to restore in the secondary region for both BCDR drills and outage scenarios.</p>
+</li>
+</ul>
+</li>
+<li><p>Encryption Settings. By default, the data in the Recovery Services vault is encrypted using Microsoft managed keys. However, you may choose to bring your own key to encrypt the backup data in this vault.</p>
+</li>
+<li><p>Multi-user Authorisation. Resource Guards provide an additional authorization layer to protect critical operations that can affect data availability. Before protecting the vault, ensure that you have Resource Guard Reader permissions on the Resource Guard. Removing Resource Guard protection will require additional authorisation.</p>
+</li>
+<li><p>Security settings.</p>
+<ul>
+<li><p>Soft Delete is enabled by default. Enable this setting to protect backup data for Azure VM, SQL Server in Azure VM and SAP HANA in Azure VM from accidental deletes.</p>
+</li>
+<li><p>Security features are enabled by default. Enable this setting to protect hybrid backups against accidental deletes and add additional layer of authentication for critical operations.</p>
+</li>
+</ul>
+</li>
+<li><p>Security PIN. Enter this PIN when prompted by Azure Backup.</p>
+</li>
+</ul>
+<h3 id="rvc-backup">RVC Backup</h3>
+<p>Recovery services vault backups can backup Azure, Azure Stack Hub, Azure Stack HCI, and on-premises workloads.</p>
+<p>Azure Stack Hub and Azure Stack HCI workloads require installation of a <a href="https://www.microsoft.com/en-us/download/details.aspx?id=57520" target="_blank">Microsoft Azure Backup Server (MABS)</a>.</p>
+<p>On-premises workloads backups of files and folders require installation of the <a href="https://go.microsoft.com/fwLink/?LinkID=288905&amp;clcid=0x0809" target="_blank">Recovery Services agent for Windows Server or Windows Client</a>.</p>
+<p>On-premises workloads backups of other types (including bare metal, Hyper-V, SQL server etc.) require installation of a Microsoft Azure Backup Server (MABS), System Center Data Protection Manager or other System Center product.</p>
+<p>Azure workloads can backup:</p>
+<ul>
+<li>Virtual Machines</li>
+<li>Azure file shares</li>
+<li>SQL Server (hosted in a VM)</li>
+<li>SAP HANA (hosted in a VM)</li>
+</ul>
+<h3 id="creating-azure-file-shares-backups">Creating Azure File Shares Backups</h3>
+<p>Creating an Azure file shares backup involves:</p>
+<ul>
+<li>Selecting the Azure workload and Azure file shares as the Backup Goal.</li>
+<li>Selecting a storage account with a file share to backup</li>
+<li>Setting the backup policy (default to Daily with retention of 30 days)</li>
+</ul>
+<p>Azure File Share Backup Policy uses snapshots for recovery point creation and restore operations. The snapshots are stored in the same storage account as the file share and not transferred to the vault.</p>
+<h3 id="creating-virtual-machine-backups">Creating Virtual Machine Backups</h3>
+<p>Creating an Azure VM backup involves:</p>
+<ul>
+<li>Selecting the Azure workload and Virtual Machine as the Backup Goal.</li>
+<li>Selecting a VM to backup</li>
+<li>Setting the backup policy (default to Standard daily backup with retention of 30 days and instant restore snapshots retained for 2 days)</li>
+</ul>
+<p>OR</p>
+<ul>
+<li>Selecting Backup menu from the Virtual Machine Blade</li>
+</ul>
+<p>The OS Disk only option allows you to backup Azure Virtual Machine with only OS disk and exclude all the data disks - which is cheaper.</p>
+<p>VM backups also support file recovery - allowing recovery of individual files from a backup.</p>
+<ul>
+<li>Select the <code>File recovery</code> button from the Backup menu in the Virtual Machine Blade</li>
+<li>Select the recovery point of the backup</li>
+<li>Download the script to mount the recovery services vault as a local hard drive.</li>
+</ul>
+<h3 id="backup-reports">Backup Reports</h3>
+<p>Diagnostic settings for Recovery Services Vaults are turned off by default. These settings allow you to run queries on backup activities. Diagnostic settings can be archived to a storage account (as a log file that can be viewed later), sent to a log analytics workspace, streamed to an event hub, or sent to a partner solution.</p>
+<p>Once Diagnostic settings are turned on and events are being sent to a log analytics workspace, the Logs section allows you to view Recovery Services Vault logs using the <a href="https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank">Kusto query language</a>.</p>
+<p>The Backup Reports menu item in the Recovery Services Vault blade can also be used to view reports.</p>
+<h3 id="deleting-a-recovery-services-vault">Deleting a Recovery Services Vault</h3>
+<p>Deleting a Recovery Services Vault is tricky because the soft delete settings on the vault and storage accounts mean the vault may have backup data for 14 days even after the resources that were being backed up have been deleted.</p>
+<p>To delete a Recovery Services Vault prior to the expiry of the soft delete period you must:</p>
+<ul>
+<li>Disable soft deleted (from the Properties menu of the RSV blade)</li>
+<li>Delete, undelete and then re-delete any VM backups</li>
+<li>Unregister any Storage Account file by going to the Backup Infrastructure menu of the RSV blade, selecting Storage Accounts and unregistering it.</li>
+<li>Delete the RSV</li>
+</ul>
+
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
