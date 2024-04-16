@@ -1,7 +1,7 @@
 const headerTemplate = document.createElement('template');
 headerTemplate.innerHTML = `
 <header>
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary box-shadow mb-3">
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow mb-3">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <span class="logo">

@@ -15,3 +15,23 @@ a[target=_blank][href^="http://"]:after, a[target=_blank][href^="https://"]:afte
     padding-left: 3px;
     padding-right: 3px;
 }
+
+h1 {
+    color: #bd93f9
+}
+
+h2 {
+    color: #ffb86c
+}
+
+h3 {
+    color: #50fa7b
+}
+
+strong {
+    color: #ffb86c
+}
+
+em {
+    color: #50fa7b
+}

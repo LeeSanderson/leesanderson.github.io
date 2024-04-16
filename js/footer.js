@@ -1,9 +1,9 @@
 const footerTemplate = document.createElement('template');
 footerTemplate.innerHTML = `
-<footer class="footer bg-primary">
+<footer class="footer bg-dark">
 <div class="container-fluid pt-3 pb-2 mt-5">
     <div class="container">
-        <div>Disclaimer: The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</div>
+        <div class="text-muted">Disclaimer: The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.</div>
         <div class="clearfix">
         <div class="float-right">
             <a class="pr-3" target="twitter" href="https://twitter.com/SixSidedDev"><i class="fab fa-twitter fa-3x"></i></a>            
