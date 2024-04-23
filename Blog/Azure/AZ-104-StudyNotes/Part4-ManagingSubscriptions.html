@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com;"
+    />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>AZ-104 Study Guide part 4 - Managing Subscriptions - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="./../../site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Aug 09, 2022</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AZ104</span>
+        <span class="badge badge-info">Concepts</span>
+        <span class="badge badge-info">Subscriptions</span>
+    </span>
+</div>
+
+<h1 id="managing-subscriptions">Managing Subscriptions</h1>
+<p>The <a href="https://docs.microsoft.com/en-us/certifications/azure-administrator/" target="_blank">AZ-104: Azure Administrator Associate</a> certification requires subject matter expertise in implementing, managing, and monitoring an organization's Microsoft Azure environment, including virtual networks, storage, compute, identity, security, and governance.</p>
+<p>In part 4 of the guide we will cover managing Subscriptions.</p>
+<h2 id="the-basis-of-billing">The Basis of Billing</h2>
+<p>Subscription are accessed via the <code>Subscription</code> icon in the portal and show the costs of all resources that are part of the subscription.</p>
+<h2 id="subscription-administrator">Subscription Administrator</h2>
+<p>Like other resources, permissions for a subscription can be configured via the <code>Access Control (IAM)</code> settings.</p>
+<h2 id="cost-center-and-tagging">Cost Center and Tagging</h2>
+<p>The <code>Cost analysis</code> settings within a subscription allow you to analyse which resources are the most expensive and show the accumulated costs over the selected period. Pie charts show cost breakdowns by service type, location (Azure region), and resource group. Naming resource groups around the application context can be useful to see how much a given application is costing.</p>
+<p>Tags can be used to further breakdown costs. Tags are typically used for billing codes (so projects can be assigned the appropriate costs), resource owner (so we can easily see who created and is responsible for a resource), and environment (so we can see which resources belong to production, dev and test).</p>
+<h2 id="resource-groups-and-resource-locks">Resource Groups and Resource Locks</h2>
+<p>A resource group contains resources (VMs, web apps, storage accounts, public IP addresses, network interface cards, network security groups etc.)</p>
+<p>When a resource group is deleted all resources in that group are also deleted.</p>
+<p>Deployments happen at the resource groups level.</p>
+<p>Policies can be applied at the resource groups level (see below).</p>
+<p>Resources and resource groups can have locks. A lock at the resource group level affects all resources within that group. There are two types of locks:</p>
+<ul>
+<li>Delete locks prevent the resource or resource group being deleted.</li>
+<li>Read-only locks prevent the resource or resource group being modified.</li>
+</ul>
+<p>Permissions can be set so that users cannot delete locks and therefore cannot delete or modify critical resources.</p>
+<h2 id="azure-policy">Azure Policy</h2>
+<p>Azure policies can be accessed by going to the <a href="https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyMenuBlade/%7E/Overview" target="_blank">Policy menu</a> or searching for the Policy service in the Azure Portal.</p>
+<p>Azure policy allows administrator to add governance to Azure subscriptions and resource groups to prevent users creating too many resources or expensive resources. A number of built in policies exist and custom policies can be created using a JSON notation. Resources can be restricted or audited if they do not comply with the policy. Audited resources can still be created but show up in a report whenever a resource does not meet the standards outlined in the policy.</p>
+<p>Policies can be used to:</p>
+<ul>
+<li>Limit allowed VM SKUs</li>
+<li>Require SQL server version 12.0</li>
+<li>Limit allowed storage account SKUs</li>
+<li>Limit allowed resource types</li>
+<li>Limit allowed regions</li>
+<li>Apply tag and its default value</li>
+<li>Enforce tag and its value</li>
+<li>Define not allowed resource types</li>
+</ul>
+<p>Existing policies can be viewed by going to the <code>Definitions</code> section of the <code>Policy</code> blade. New policies can be created by clicking the <code>+ Policy definition</code> button or from existing definitions by clicking on the <code>...</code> button next to the existing policy. For example the <code>Allow virtual machine size SKUs</code> can be duplicated and the <code>effect</code> changed from <code>Deny</code> to <code>Audit</code> to audit VMs that do not match a specific SKU size.</p>
+<p>Policies can be assigned to different scopes (either a subscription or a specific resource group) by going to the <code>Assignment</code> section of the <code>Policy</code> blade.</p>
+<p>Compliance with policies can be viewed on the <code>Compliance</code> section of the global <code>Policy</code> blade or the resource group <code>Policy</code> blade.</p>
+<p>When initially assigned a policy will be in a <code>Not started</code> status. Policies are executed periodically in the background. A policy can be force to execute by running the PowerShell applet <code>Start-AzPolicyComplianceScan</code> (optionally passing the <code>-ResourceGroup</code> parameter).</p>
+<h2 id="moving-resources">Moving Resources</h2>
+<p>The <code>Move</code> option within the Resource group Overview blade allows selected resources to be moved to another resource group or subscription or region.</p>
+<h1 id="managing-policy-using-powershell">Managing Policy Using PowerShell</h1>
+<p>Everything you can do in the portal you can do in PowerShell.</p>
+<p>The following PowerShell command can be used to search for policy definitions and return their resource id and display name where the display name contains the text 'SKU':</p>
+<pre><code class="language-powershell">
+ Get-AzPolicyDefinition | Select-Object ResourceId, @{Name='DisplayName'; Expression={$_.Properties.DisplayName}} | Where-Object {$_.DisplayName -cmatch 'SKU'} | Format-List
+</code></pre>
+<p>This will allow us to find the resource id of the policy with the name <code>Allow virtual machine size SKUs</code> and assign it to a new resource group:</p>
+<pre><code class="language-powershell">
+ $definition = Get-AzPolicyDefinition -ResourceId [Resource ID from above]
+
+New-AzResourceGroup -name 'testrg' -location 'uksouth'
+
+$rg = Get-AzResourceGroup -name 'testrg' -location 'uksouth'  
+
+$basicSKUs = Get-AzVMSize -Location 'uksouth' | Where-Object { $_.Name -clike 'Basic*' }
+
+$allowedSKUs = @{'listOfAllowedSKUs'=($basicSKUs.Name)}
+
+New-AzPolicyAssignment -Name 'TestRG_AllowVMSize' -DisplayName 'TestRG Allowed VM Size SKU' -Scope $rg.ResourceId -PolicyDefinition $definition -PolicyParameterObject $allowedSKUs
+</code></pre><h2 id="subscriptions-and-management-groups">Subscriptions and Management Groups</h2>
+<p>It is possible to create multiple Subscription and link them to a single Azure AD tenant. You might want to do this if you have different payment methods/departments responsible for different resources.</p>
+<p>When creating a resource you can select the subscription that the resource belongs to.</p>
+<p>Any given enterprise may have several subscription.</p>
+<p>Management groups help manage access, policy, and compliance by grouping multiple subscriptions together.</p>
+<blockquote class="blockquote">
+<p>Note that before you can create any Management groups you must enable Access Management for Azure resources in the <a href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/%7E/Properties" target="_blank">Properties section</a> of the Azure AD as described in the <a href="https://docs.microsoft.com/en-gb/azure/role-based-access-control/elevate-access-global-admin" target="_blank">instructions on the Microsoft docs website</a>. You can also rename the Tenant name here too.</p>
+</blockquote>
+<p>Management groups can contain child management groups and/or Subscriptions.</p>
+<p>Blueprints (not covered in the AZ-104 exam) enable quick creation of governed subscriptions. This allows Cloud Architects to design environments that comply with organizational standards and best practices – enabling your app teams to get to production faster. A number of predefined Blueprints are available to cover common usage scenarios that require locked down policies (e.g UK NHS, ISO 27001, etc.)</p>
+
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>

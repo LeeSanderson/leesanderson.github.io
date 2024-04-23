@@ -3,15 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com;"
+    />
+
     <link href="/favicon.ico" rel="icon" type="image/x-icon">
     <title>Latest Blog Articles - SixSidedDice.com - Blog</title>
-    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/site.css">
-    <link rel="stylesheet" href="./site.css">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="./../../site.css">
     <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
-    <script type="module" src="/js/header.js"></script>
-    <script type="module" src="/js/footer.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
     
 </head>
 <body>
@@ -24,7 +29,19 @@
 
 <ul class="list-group list-group-flush">
     <li class="list-group-item">
-        <h4><a href=".//Azure/az104-storage-accounts.html">AZ-104 Study Guide part 5 - Storage Accounts</a></h4>
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part6-VirtualMachines.html">AZ-105 Study Guide part 6 - Virtual Machines</a></h4>
+        <div>
+            <span class="badge badge-info">AZ104</span>
+            <span class="badge badge-info">Concepts</span>
+            <span class="badge badge-info">VM</span>
+        </div>
+
+            <p>Part 6 of the Azure Administrator study guide focusing on managing virtual machines</p>
+
+            <p class="text-muted">Aug 17, 2022</p>
+    </li>
+    <li class="list-group-item">
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part5-StorageAccounts.html">AZ-104 Study Guide part 5 - Storage Accounts</a></h4>
         <div>
             <span class="badge badge-info">AZ104</span>
             <span class="badge badge-info">Concepts</span>
@@ -36,7 +53,7 @@
             <p class="text-muted">Aug 10, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//Azure/az104-concepts.html">AZ-104 Study Guide part 1 - Concepts</a></h4>
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part1-Concepts.html">AZ-104 Study Guide part 1 - Concepts</a></h4>
         <div>
             <span class="badge badge-info">AZ104</span>
             <span class="badge badge-info">Concepts</span>
@@ -47,31 +64,7 @@
             <p class="text-muted">Aug 09, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//Azure/az104-manage-azure-active-directorties.html">AZ-104 Study Guide part 3 - Azure Identities and Governance</a></h4>
-        <div>
-            <span class="badge badge-info">AZ104</span>
-            <span class="badge badge-info">Concepts</span>
-            <span class="badge badge-info">AD</span>
-        </div>
-
-            <p>Part 3 of the Azure Administrator study guide focusing on managing Azure Identities and governance</p>
-
-            <p class="text-muted">Aug 09, 2022</p>
-    </li>
-    <li class="list-group-item">
-        <h4><a href=".//Azure/az104-managing-subscriptions.html">AZ-104 Study Guide part 4 - Managing Subscriptions</a></h4>
-        <div>
-            <span class="badge badge-info">AZ104</span>
-            <span class="badge badge-info">Concepts</span>
-            <span class="badge badge-info">Subscriptions</span>
-        </div>
-
-            <p>Part 4 of the Azure Administrator study guide focusing on managing Azure Subscriptions</p>
-
-            <p class="text-muted">Aug 09, 2022</p>
-    </li>
-    <li class="list-group-item">
-        <h4><a href=".//Azure/az104-powershell-and-cli.html">AZ-104 Study Guide part 2 - PowerShell</a></h4>
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part2-PowershellAndCLI.html">AZ-104 Study Guide part 2 - PowerShell</a></h4>
         <div>
             <span class="badge badge-info">AZ104</span>
             <span class="badge badge-info">Concepts</span>
@@ -84,9 +77,34 @@
             <p class="text-muted">Aug 09, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//Dotnet/creating-packages-for-nuget.html">Creating Packages For NuGet.org</a></h4>
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part3-ManagingAzureIdentitiesAndGovernace.html">AZ-104 Study Guide part 3 - Azure Identities and Governance</a></h4>
+        <div>
+            <span class="badge badge-info">AZ104</span>
+            <span class="badge badge-info">Concepts</span>
+            <span class="badge badge-info">AD</span>
+        </div>
+
+            <p>Part 3 of the Azure Administrator study guide focusing on managing Azure Identities and governance</p>
+
+            <p class="text-muted">Aug 09, 2022</p>
+    </li>
+    <li class="list-group-item">
+        <h4><a href=".//Azure/AZ-104-StudyNotes/Part4-ManagingSubscriptions.html">AZ-104 Study Guide part 4 - Managing Subscriptions</a></h4>
+        <div>
+            <span class="badge badge-info">AZ104</span>
+            <span class="badge badge-info">Concepts</span>
+            <span class="badge badge-info">Subscriptions</span>
+        </div>
+
+            <p>Part 4 of the Azure Administrator study guide focusing on managing Azure Subscriptions</p>
+
+            <p class="text-muted">Aug 09, 2022</p>
+    </li>
+    <li class="list-group-item">
+        <h4><a href=".//Dotnet/CreatingPackagesForNuGet.html">Creating Packages For NuGet.org</a></h4>
         <div>
             <span class="badge badge-info">NuGet</span>
+            <span class="badge badge-info">dotnet</span>
         </div>
 
             <p>A guide to creating and deploying packages to NuGet.org</p>
@@ -94,10 +112,11 @@
             <p class="text-muted">Jun 01, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//MachineLearning/dp203-study-cosmosdb.html">DP-203 Study Guide part 2 - Cosmos DB</a></h4>
+        <h4><a href=".//Azure/DP-203-StudyNotes/Pat2-CosmosDB.html">DP-203 Study Guide part 2 - Cosmos DB</a></h4>
         <div>
             <span class="badge badge-info">DP203</span>
-            <span class="badge badge-info">Cosmos DB</span>
+            <span class="badge badge-info">Cosmos</span>
+            <span class="badge badge-info">DB</span>
         </div>
 
             <p>Part 2 of the Azure Data Engineering Associate study guide focusing on Cosmos DB</p>
@@ -105,38 +124,29 @@
             <p class="text-muted">May 16, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//MachineLearning/dp203-study-non-relational-data-stores.html">DP-203 Study Guide part 1 - non-relational data stores</a></h4>
+        <h4><a href=".//Azure/DP-203-StudyNotes/Part1-StorageAccounts.html">DP-203 Study Guide part 1 - storage accounts</a></h4>
         <div>
             <span class="badge badge-info">DP203</span>
-            <span class="badge badge-info">Azure Storage</span>
+            <span class="badge badge-info">Azure</span>
+            <span class="badge badge-info">Storage</span>
         </div>
 
-            <p>Part 1 of the Azure Data Engineering Associate study guide focusing on non-relational data stores</p>
+            <p>Part 1 of the Azure Data Engineering Associate study guide focusing on storage accounts</p>
 
             <p class="text-muted">Apr 20, 2022</p>
     </li>
     <li class="list-group-item">
-        <h4><a href=".//Meta/deploying-to-github-pages.html">Deploying to GitHub Pages</a></h4>
+        <h4><a href=".//Meta/DeployingAStaticWebsiteToGitHubPages.html">Deploying to GitHub Pages</a></h4>
         <div>
             <span class="badge badge-info">Blogging</span>
             <span class="badge badge-info">GitHub</span>
-            <span class="badge badge-info">Azure DevOps</span>
+            <span class="badge badge-info">Azure</span>
+            <span class="badge badge-info">DevOps</span>
         </div>
 
             <p>Publishing content to GitHub Pages using Azure DevOps pipelines</p>
 
             <p class="text-muted">Jan 05, 2022</p>
-    </li>
-    <li class="list-group-item">
-        <h4><a href=".//AgileTechnicalPractices/styles-of-test-driven-development.html">Styles of Test Driven Development</a></h4>
-        <div>
-            <span class="badge badge-info">TDD</span>
-            <span class="badge badge-info">Agile Technical Practices</span>
-        </div>
-
-            <p>An overview of the two main styles of TDD</p>
-
-            <p class="text-muted">Oct 06, 2021</p>
     </li>
 </ul>
 

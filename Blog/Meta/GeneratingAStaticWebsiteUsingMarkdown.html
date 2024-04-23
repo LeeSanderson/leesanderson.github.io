@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com;"
+    />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Generating a Static Website Using Markdown - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="./../../site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">May 28, 2021</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">Blogging</span>
+        <span class="badge badge-info">Markdown</span>
+        <span class="badge badge-info">CSharp</span>
+        <span class="badge badge-info">Markdig</span>
+    </span>
+</div>
+
+<h1 id="generating-a-static-website-using-markdown">Generating a Static Website Using Markdown</h1>
+<blockquote class="blockquote">
+<p>A guide to generating content for a static website</p>
+</blockquote>
+<p>In my <a href="BloggingWithGithubAndMarkdown.html">Blogging with GitHub and Markdown</a> article, I discussed using Markdown to author content for your blog. In this follow up article, I will use C#, <a href="https://github.com/xoofx/markdig" target="_blank">Markdig</a>, and <a href="https://github.com/fouadmess/RazorEngine" target="_blank">RazorEngine.NetCore</a> to convert the Markdown content to HTML so that it can be published on to the Internet.</p>
+<p>The diagram below outlines how a raw Markdown source files are processed:</p>
+<div class="mermaid">
+graph TD;
+    MD(Markdown Source) --> Markdig[[Markdig Processor]]
+    Markdig--> HTML(Raw HTML + Metadata)
+    Razor(Razor Template)-->Razor_Engine[[Razor Engine]]
+    HTML --> Razor_Engine
+    Razor_Engine --> Article(Article HTML)
+</div>
+<p>Here we can see:</p>
+<ol>
+<li>The Markdig processor parses the raw Markdown source file, extracts and Yaml metadata, and converts the remaining Markdown to HTML</li>
+<li>The raw HTML and metadata are then processed by the Razor Engine which embeds the article into a Razor template.</li>
+</ol>
+<h2 id="markdig-the-markdown-engine">Markdig - the Markdown engine</h2>
+<p>The basic process for converting the Markdown into a model that can be passed to the Razor engine is shown in the C# code snippets below:</p>
+<pre><code class="language-csharp">// Create a processing pipeline
+var pipeline = new MarkdownPipelineBuilder()
+                .UseBootstrap()
+                .UseYamlFrontMatter()
+                .UseAdvancedExtensions()
+                .UsePrism()
+                .Build();
+
+// Load source from file
+var markdownSource = File.ReadAllText("Article.md");
+
+// Convert the markdownSource source string to a document object
+MarkdownDocument document = MarkdownParser.Parse(markdownSource, this.pipeline);
+
+// Rewrite links
+foreach (var descendant in document.Descendants())
+{
+    switch (descendant)
+    {
+        case LinkInline link when link.Url != null && !link.Url.StartsWith("http"):
+            // Internal links to other markdown documents
+            link.Url = link.Url.Replace(".md", ".html");
+            break;
+        case AutolinkInline:
+        case LinkInline:
+            // External links open in new window
+            descendant.GetAttributes().AddPropertyIfNotExist("target", "_blank");
+            break;
+    }
+}
+
+// Create an article view model to be passed to the template
+var model = new ArticleModel();
+model.Content = document.ToHtml(this.pipeline);</code></pre><h2 id="razor-engine-the-template-processor">Razor Engine - the template processor</h2>
+<p>The basic process for processing the <code>ArticleModel</code> and creating the output text is shown in the C# code snippets below:</p>
+<pre><code class="language-csharp">var config = new TemplateServiceConfiguration();
+var razorEngineService = RazorEngineService.Create(config);
+razorEngineService.Compile(templateKey, typeof(ArticleModel));
+var templateOutput = razorEngineService.Run(templateKey, typeof(ArticleModel), model, viewBag);</code></pre>
+<p>All that we need to do now is save the template output as a HTML file.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>A full working solution that expands on these topics and shows how to put all these components together is available on my <a href="https://github.com/LeeSanderson/Blog" target="_blank">GitHub Blog Project</a>.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>So, you have started your blog, you have written a number of articles, and you are generating content. The next step is to <a href="DeployingAStaticWebsiteToGitHubPages.html">publish your website</a>.</p>
+
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
