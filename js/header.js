@@ -12,6 +12,7 @@ headerTemplate.innerHTML = `
                 <i class="fas fa-dice-five"></i>
                 <i class="fas fa-dice-six"></i>
             </span>
+            <span class="sr-only">Home</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">

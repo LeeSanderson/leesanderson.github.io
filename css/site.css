@@ -35,3 +35,7 @@ strong {
 em {
     color: #50fa7b
 }
+
+.text-muted {
+    color: #aaa!important;
+}
