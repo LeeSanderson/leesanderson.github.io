@@ -29,9 +29,7 @@
     
     <span class="article-tags">
         <span class="badge badge-info">TDD</span>
-        <span class="badge badge-info">Agile</span>
-        <span class="badge badge-info">Technical</span>
-        <span class="badge badge-info">Practices</span>
+        <span class="badge badge-info">#AgileTechnicalPractices</span>
     </span>
 </div>
 
@@ -46,7 +44,7 @@
 <li>Outside-in TDD. Also known as the London school of TDD or Mockist TDD. In this school, unit tests perform behaviour verification.</li>
 </ol>
 <h2 id="classicist-tdd">Classicist TDD</h2>
-<p>TDD was popularized by <a href="https://en.wikipedia.org/wiki/Kent_Beck" target="_blank">Kent Beck</a> in the 2002 book <a href="https://www.amazon.co.uk/Test-Driven-Development-Addison-Wesley-Signature/dp/0321146530" target="_blank"> Test-driven Development By Example</a>.</p>
+<p>TDD was popularized by <a href="https://en.wikipedia.org/wiki/Kent_Beck" target="_blank">Kent Beck</a> in the 2002 book <a href="https://www.amazon.co.uk/Test-Driven-Development-Addison-Wesley-Signature/dp/0321146530" target="_blank">Test-driven Development By Example</a>.</p>
 <p>In the book, Kent quotes <a href="https://en.wikipedia.org/wiki/Ron_Jeffries" target="_blank">Ron Jeffries</a> who states that the goal of TDD is to create <code>clean code that works</code>. Kent suggests that TDD can achieve this if we follow two simple rules:</p>
 <ol>
 <li>Only write new code to fix a failed <a href="https://martinfowler.com/articles/practical-test-pyramid.html#UnitTests" target="_blank">unit test</a>.</li>
@@ -58,22 +56,13 @@
 <li>Write the <em>minimal</em> amount of code to stop the test failing. The code is now in the <code>green</code> state (so called because testing tools display in success i.e., zero teat failures, as green).</li>
 <li>Eliminate any duplication created in step 2 by <em>refactoring</em> the code <em>without changing its behaviour</em>.</li>
 </ol>
-<div class="mermaid">
-flowchart LR
-
+<div class="mermaid">flowchart LR
     subgraph as[ ]
-
         direction RL
-
         Red((Write a failing&lt;br/> unit test)) ---> Green
-
         Green((Make the test&lt;br/> pass)) ---> Refactor
-
         Refactor((.. Refactor ..)) --> Red
-
     end
-
-  
 
 linkStyle default interpolate basis stroke-width:3px,fill:none
 style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
@@ -105,44 +94,25 @@ style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
 <p>In <a href="https://www.amazon.co.uk/Growing-Object-Oriented-Software-Guided-Signature/dp/0321503627" target="_blank">Growing object-oriented software, guided by tests</a>, <a href="https://www.amazon.co.uk/Steve-Freeman/e/B002O21DQW" target="_blank">Steve Freeman</a> and <a href="https://www.amazon.co.uk/Nat-Pryce/e/B002PXWFIU" target="_blank">Nat Pryce</a> address these issues by using the golden rule of TDD: <em>write a failing test</em>. They suggest the best place to start when adding a new <em>feature</em> to an application (including the first feature) is to write a failing <em>acceptance</em> test.</p>
 <p>Here a <em>feature</em> can be a <a href="https://en.wikipedia.org/wiki/User_story" target="_blank">user story</a> or some other high level piece of functionality and an <em>acceptance</em> test is a test conducted to determine if the requirements of a feature are met.</p>
 <p>The combination of acceptance and unit testing leads to a double loop</p>
-<div class="mermaid">
-flowchart LR
-
+<div class="mermaid">flowchart LR
       subgraph as2[ ]
-
         direction LR
-
         Red2((Write a failing&lt;br/> acceptance test))
-
-  
-
         subgraph as[ Inner Loop ]
-
           direction LR  
-
           Red((Write a failing&lt;br/> unit test)) ---> Green
-
           Green((Make the test&lt;br/> pass)) ---> Refactor
-
           Refactor((.. Refactor ..)) --> Red
-
         end
-
-  
-
-        Green  ---> Red2
-
+        Green ---> Red2
         Red2 ---> Red
-
       end  
-
-  
+      
 linkStyle default interpolate basis stroke-width:3px,fill:none
 style Red2 fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00    
 style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Green fill:#0b9e52,color:#fff,stroke-width:4px,stroke:#0f0
 style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
-
 </div>
 <p>Because Outside-in TDD starts with an acceptance test, you need to do a small amount of up-front design first to define the public interface and <em>collaborators</em> of the system under test. Collaborators can then be <em>mocked</em> to implement the acceptance test. As collaborators are mocked, tests must use behaviour verification.</p>
 <p>For example, consider the &quot;forgot password&quot; process for a typical web site. The acceptance test for this functionality might state &quot;given a user has registered with their email address when the user requests a password reset then an email with a reset link will be sent&quot;.</p>
@@ -168,7 +138,7 @@ style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
 <h2 id="a-brief-history-of-names">A Brief History of Names</h2>
 <p>The Classicist style evolved from the <a href="https://en.wikipedia.org/wiki/Extreme_programming" target="_blank">XP</a> practices developed by <a href="https://en.wikipedia.org/wiki/Kent_Beck" target="_blank">Kent Beck</a> during his work on the <a href="https://en.wikipedia.org/wiki/Chrysler_Comprehensive_Compensation_System" target="_blank">C3 payroll project</a> for Chrysler in 1996. As Chrysler where based in Detroit, Michigan <a href="https://en.wikipedia.org/wiki/Chrysler#1925%E2%80%931998:_Chrysler_Corporation" target="_blank">at the time</a> the Classicist style is sometimes referred to as <code>Detroit style</code>.</p>
 <p>The Classicist style is also called the <code>Chicago style</code> of TDD due to its association with <a href="https://en.wikipedia.org/wiki/Thoughtworks" target="_blank">ThoughtWorks</a> whose head offices are based in Chicago, Illinois.</p>
-<p>Based on Google search results, the <code>Chicago style</code> naming seems more prevalent than  the ``Detroit style``` naming.</p>
+<p>Based on Google search results, the <code>Chicago style</code> naming seems more prevalent than  the <code>Detroit style</code> naming.</p>
 <p>In the beginning, the Classicist style of TDD was just called TDD - it was the only style and therefore did not need to be distinguished from any other style.</p>
 <p>The <code>Classicist</code> term was introduced to differentiate the Classicist style from the new <code>Outside-in</code> style of TDD.</p>
 <p>The Outside-in style evolved out of ideas discussed at the <a href="https://www.extremetuesday.com/" target="_blank">Extreme Tuesday club</a> - a meetup/community group for Agile, XP, Kanban and Scrum. As the group is based in London, the Outside-in style is sometimes referred to as the <code>London style</code></p>
