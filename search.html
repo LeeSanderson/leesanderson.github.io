@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>SixSidedDice.com - Search</title>
+    <link rel="stylesheet" href="/css/bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <script src="/pagefind/pagefind-ui.js"></script>
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="/js/header.js"></script>
+    <script type="module" src="/js/footer.js"></script>
+    <!-- Meta -->
+    <meta name="description" content="Lee Sanderson is a software engineer and advocate of software craftsmanship. He blogs about may topics including craftsmanship, .NET and Azure">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="software craftsmanship dotnet azure blog">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Lee Sanderson">
+    <meta name="twitter:description" content="Lee Sanderson is a software engineer and advocate of software craftsmanship. He blogs about may topics including craftsmanship, .NET and Azure">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/index.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Lee Sanderson">
+    <meta name="description" property="og:description" content="Lee Sanderson is a software engineer and advocate of software craftsmanship. He blogs about may topics including craftsmanship, .NET and Azure">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/index.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/index.html">
+
+    <style>
+        body {
+            --pagefind-ui-primary: #eeeeee;
+            --pagefind-ui-text: #eeeeee;
+            --pagefind-ui-background: #152028;
+            --pagefind-ui-border: #152028;
+            --pagefind-ui-tag: #152028;
+        }
+
+        mark {
+            background-color: #ff0;
+        }
+
+        .pagefind-ui__search-input {
+            color: #fff;
+        }
+
+        .pagefind-ui__search-clear {
+            border: 0;
+        }
+
+        .pagefind-ui__result-link {
+            color: #00bc8c!important;
+        }
+
+        .pagefind-ui__result-thumb {
+            max-width: 100%!important;
+        }
+    </style>
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div id="search"></div>            
+        </main>
+    </div>
+
+    <six-sided-footer/>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+                new PagefindUI({ 
+                    element: "#search", 
+                    resetStyles: false,
+                    showSubResults: true,
+                    processResult: function (result) {
+                        result.meta.image = result.url.replace(/.[^.]+$/, ".png");
+                        console.log(result);
+                        return result;
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

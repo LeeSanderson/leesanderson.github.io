@@ -1,0 +1,4 @@
+# run "npx --yes pagefind --site ." in root directory to regenerate search index
+verbose: true
+exclude_selectors:
+  - .mermaid
