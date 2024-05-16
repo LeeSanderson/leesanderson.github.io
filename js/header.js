@@ -26,6 +26,9 @@ headerTemplate.innerHTML = `
                 <li class="nav-item">
                     <a class="nav-link" href="/Blog">Blog</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/search.html">Search</a>
+                </li>                
             </ul>
         </div>
     </div>
