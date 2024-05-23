@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com;"
+    />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Blogging With Obsidian - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="Leveraging Obsidian to increase the quality and quantity of your blog articles">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="Blogging Obsidian">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Blogging With Obsidian">
+    <meta name="twitter:description" content="Leveraging Obsidian to increase the quality and quantity of your blog articles">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Blogging With Obsidian">
+    <meta name="description" property="og:description" content="Leveraging Obsidian to increase the quality and quantity of your blog articles">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.html">
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">May 23, 2024</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">Blogging</span>
+        <span class="badge badge-info">Obsidian</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="blogging-with-obsidian" class="sr-only" data-hero-heading="true">Blogging With Obsidian</h1>
+<img class="hero-image" src="BloggingWithObsidian.png" alt="Blogging With Obsidian"/>
+<p>In previous articles I've wrote about <a href="BloggingWithGithubAndMarkdown.html">Blogging with GitHub and Markdown</a>, <a href="GeneratingAStaticWebsiteUsingMarkdown.html">Generating a Static Website Using Markdown</a>, and <a href="DeployingAStaticWebsiteToGitHubPages.html">Deploying a Static Website to GitHub Pages</a>.</p>
+<p>In this article I discuss taking this to the next level by leveraging the capabilities of the <a href="https://obsidian.md/" target="_blank">Obsidian</a> note taking tool to create and manage your blog content.</p>
+<h2 id="vscode-versus-obsidian-for-markdown-editing">VSCode versus Obsidian for Markdown editing</h2>
+<p>Previously I had recommended using <a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a> to create the Markdown content for your blog. <strong>VSCode</strong>  is a great tool. As a developer, you are already probably already using and it natively <a href="https://code.visualstudio.com/docs/languages/markdown" target="_blank">supports Markdown</a>.</p>
+<p>However, since I started <a href="KnowledgeManagementWithObsidian.html">using Obsidian for personal knowledge management</a> I found that the Markdown editing experience in <strong>Obsidian</strong> is far superior.</p>
+<ul>
+<li>Obsidian has much better support for <a href="https://help.obsidian.md/Editing+and+formatting/Properties" target="_blank">frontmatter properties</a> - allowing you to define and validate that your blog articles have correct and valid attributes and tags</li>
+<li>The auto complete functionality in Obsidian makes linking articles super simple and error free</li>
+<li>The general Markdown editing experience is better with Obsidian's live preview (no need to switch between VSCode's editing and preview modes)</li>
+<li>You can leverage Obsidian's templating features using the <a href="https://silentvoid13.github.io/Templater/introduction.html" target="_blank">Templater</a> community plugin to help create consistent articles that follow a predefined structure</li>
+</ul>
+<p>In addition, its easy to transition from raw Markdown to Obsidian notes. You should be able to copy and paste from any existing Markdown file into a new Obsidian note.</p>
+<h2 id="constructing-articles-with-obsidian">Constructing Articles with Obsidian</h2>
+<p>Constructing blog articles with Obsidian is straight forward and simple.</p>
+<p>If you are following the <a href="https://en.wikipedia.org/wiki/Zettelkasten" target="_blank">Zettelkasten</a> note taking method then do your research and create atomic notes as you would usually do.</p>
+<p>Once you have organised your thoughts, create an <code>Output</code> folder in your Obsidian knowledge base for your blog content and create a new note.</p>
+<p>If you have a well-defined structure to your articles, use a template to create the basic outline of the article. As a minimum this template should contain a standard <a href="https://help.obsidian.md/Editing+and+formatting/Properties" target="_blank">frontmatter properties </a> such as title, description, publication date, tags, and status.</p>
+<p>Using a status property with values of Draft and Published can help control when articles are published to your blogs. Set the status to Draft when working on the article.</p>
+<p>Use your notes to guide your writing.</p>
+<p>Finally update the article's status to Published when the article is ready to appear on your blog. The tooling that generates your blog content can use the status to know which articles to generated (see <a href="GeneratingAStaticWebsiteUsingMarkdown.html">Generating a Static Website using Markdown</a>)</p>
+<h2 id="publishing-articles-created-with-obsidian">Publishing Articles Created with Obsidian</h2>
+<p>Publishing articles created with Obsidian follows a similar process to the flow that I outlined in <a href="GeneratingAStaticWebsiteUsingMarkdown.html">Generating a Static Website using Markdown</a> and  <a href="DeployingAStaticWebsiteToGitHubPages.html">Deploying a Static Website to GitHub Pages</a>.</p>
+<p>Use the <a href="https://www.reddit.com/r/ObsidianMD/comments/13qpe0b/obsidian_git_is_an_amazing_plugin/" target="_blank">Obsidian Git</a> community plugin to publish your personal knowledge base and blog articles to GitHub.</p>
+<p>Once your blog article Markdown files are published in a GitHub repository it should be easy to transform the content to HTML and publish to GitHub pages.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>If you are already following my guidelines and using GitHub and Markdown to build your blog then transitioning to using Obsidian as your Markdown editor of choice should be simple and straight forward.</p>
+<p>If you are not publishing your thoughts yet then why not start today?</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
