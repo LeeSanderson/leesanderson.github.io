@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Data Science for Developers: Part 1 - Foundations - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="Part 1 of my series of developer guides on understanding and applying data science. This part focuses on the foundational skills and knowledge I believe every developer needs to get started with data science.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="DataScience ML AI DeveloperGuide">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Data Science for Developers: Part 1 - Foundations">
+    <meta name="twitter:description" content="Part 1 of my series of developer guides on understanding and applying data science. This part focuses on the foundational skills and knowledge I believe every developer needs to get started with data science.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Data Science for Developers: Part 1 - Foundations">
+    <meta name="description" property="og:description" content="Part 1 of my series of developer guides on understanding and applying data science. This part focuses on the foundational skills and knowledge I believe every developer needs to get started with data science.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jun 11, 2024</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">DataScience</span>
+        <span class="badge badge-info">ML</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">DeveloperGuide</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="foundations-of-data-science-for-developers" class="sr-only" data-hero-heading="true">Foundations of Data Science for Developers</h1>
+<img class="hero-image" src="Part1-Foundations.png" alt="Foundations of Data Science for Developers"/>
+<p>Software development is changing. More and more of the project I work on are becoming more data driven. Developing an understanding for data science is becoming essential for all software engineering professionals.</p>
+<p>In part 1 of this guide we will cover the fundamental foundational skills I believe any developer needs in order to get started with, understand, and apply data science, machine learning, and AI to their everyday work.</p>
+<h2 id="python">Python</h2>
+<p>The two main programming languages used by data scientists: <a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank">Python</a> and <a href="https://en.wikipedia.org/wiki/R_(programming_language)" target="_blank">R</a>. Both languages have there place in data science and there is plenty of <a href="https://www.datacamp.com/blog/python-vs-r-for-data-science-whats-the-difference" target="_blank">healthy debate</a> over which of this languages is better for specific data science use cases.</p>
+<p><strong>R</strong> is an programming language specifically created for statistical computing and data visualisation. As the language is specifically designed for data science, <strong>R</strong> makes it easy to perform complex tasks with a few lines of code.</p>
+<p>In contrast, <strong>Python</strong> is a high-level, general purpose programming language with a philosophy that emphasises code readability. Statistical computing and data visualisation are supported in <strong>Python</strong> thanks to the large ecosystem of open-source packages. This ecosystem also allow <strong>Python</strong> to be used in a vast number of different scenarios from <a href="https://auth0.com/blog/developing-restful-apis-with-python-and-flask/" target="_blank">Building RESTful APIs</a> to <a href="https://www.datacamp.com/tutorial/how-to-train-a-llm-with-pytorch" target="_blank">Training Large Language Models</a>.</p>
+<p>From my experience <strong>R</strong> is primarily used for standalone data analysis whereas <strong>Python</strong> is used for data analysis and <em>everything else you could possible think of</em>. As a developer, I am much more likely to need to integrate with data analysis that has been done in <strong>Python</strong> and serve <strong>Python</strong> machine learning models. I firmly believe a solid foundational understanding of <strong>Python</strong> is essential for today's modern developer.</p>
+<p>Unless you are already working in an environment that uses <strong>R</strong> heavily, I recommend focusing on <strong>Python</strong>. It will feel more like other programming languages that you already know (making it easier to pick up) and will most likely be more useful. If, at some point in the future, you need to work with <strong>R</strong>, the data analysis skills you already know from working with <strong>Python</strong> will be mostly transferable.</p>
+<p>Finally, many online data science and AI courses state that no specific programming skills are required. In my experience, this is wrong. Having completed many of these types of course, I found that I got more out of them once I had taken a step back and spent some time learning the fundamentals of the <strong>Python</strong> language.</p>
+<h3 id="getting-started-with-python">Getting Started with Python</h3>
+<p>The free, self-paced, online <a href="https://www.netacad.com/courses/programming/pcap-programming-essentials-python" target="_blank">Learn to Code with Python Essentials Course</a> is a great place to start for developers new to programming. The course assumes no prior programming knowledge and allows you to prepare for the <a href="https://pythoninstitute.org/pcep" target="_blank">Python Certified Entry-Level Programmer</a> and <a href="https://pythoninstitute.org/pcap" target="_blank">Python Certified Associate Programmer</a> exams (should you wish to take them).</p>
+<p>The W3C <a href="https://www.w3schools.com/python/" target="_blank">Python Tutorial</a> is also a good alternative starting point.</p>
+<p>Learning the fundamentals is a great starting point but mastering a new programming language requires practice. The <a href="https://www.hackerrank.com/domains/python" target="_blank">HackerRank Python Preparation Challenge</a> can help solidify the basics of the language. Once the basics are well understood, continuing to practice with <a href="https://www.codurance.com/katas" target="_blank">Coding Katas</a> is essential to keeping your newly acquired skills and moving towards mastery.</p>
+<h2 id="statistics-and-probability">Statistics and Probability</h2>
+<p>Mathematical thinking is fundamental to data science. In particular a good understanding of statistics and probability is very important.</p>
+<p>If you do not have a background in mathematics or are a bit rusty them spending some time with the basics is highly recommended.</p>
+<p>For starters take a look at the <a href="https://www.hackerrank.com/domains/tutorials/10-days-of-statistics" target="_blank">HackerRank 10 Days of Statistics Challenge</a>. This should be a gentle introduction to the basics which can be followed up with the free online course from <a href="https://khanacademy.org/" target="_blank">Khan Academy</a> on <a href="https://www.khanacademy.org/math/statistics-probability" target="_blank">Statistics and Probability</a>.</p>
+<p>Alternatively <a href="https://www.amazon.co.uk/Statistics-Terrified-Biologists-Helmut-Emden/dp/1119563674" target="_blank">Statistics for Terrified Biologists</a> is a great introduction to the topic.</p>
+<h2 id="jupyter">Jupyter</h2>
+<p><a href="https://en.wikipedia.org/wiki/Project_Jupyter" target="_blank">Jupyter</a> is a tool for interactive, <a href="https://en.wikipedia.org/wiki/Literate_programming" target="_blank">literate programming</a> via a notebook interface.</p>
+<p>The notebook development paradigm provides an interactive environment that allows data scientists and developers to run code in a step-by-step manner. Being able to interactively interact with and visualise data, record notes alongside code, and reliably repeat experiments is extremely valuable when exploring and analysing data, especially as it enables users to execute portions of the code and immediately see the results immediately.</p>
+<p>For data scientists <strong>Jupyter</strong> is an essential tool and typically <strong>Jupyter</strong> notebooks will be the medium used to share code between data scientists and developers. Because of this, having a familiarity with <strong>Jupyter</strong> is important.</p>
+<p>The easiest way for a developer to get familiar with notebooks is to use the <a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks" target="_blank">Jupyter Notebooks extensions for Visual Studio Code</a>.</p>
+<p>In addition, because of their popularity, many cloud providers and machine learning platforms provide notebook interfaces. Notably <a href="https://colab.research.google.com/" target="_blank">Google Colab</a>, <a href="https://learn.microsoft.com/en-gb/azure/machine-learning/how-to-run-jupyter-notebooks?view=azureml-api-2" target="_blank">Microsoft Azure Notebooks for ML</a>, <a href="https://aws.amazon.com/sagemaker/" target="_blank">Amazon SageMaker</a>, <a href="https://docs.databricks.com/en/notebooks/index.html" target="_blank">Databricks notebooks</a>, and <a href="https://doc.dataiku.com/dss/latest/notebooks/index.html" target="_blank">Dataiku Code Notebooks </a> all have notebook offerings.</p>
+<p>Of all these offerings, <a href="https://colab.research.google.com/" target="_blank">Google Colab</a> is probably the easiest to use as it has the least friction to getting started. It provides a zero cost way to access its notebook interface with minimal setup needed and supports limited but free access to GPUs for accelerating ML workloads.</p>
+<h2 id="pandas-and-numpy">Pandas (and NumPy)</h2>
+<p><a href="https://pandas.pydata.org/" target="_blank">Pandas</a> is Python's most popular data analysis library allowing data to be manipulated via <a href="https://pandas.pydata.org/docs/user_guide/dsintro.html#basics-dataframe" target="_blank">DataFrames</a> - which are 2-dimentional labelled data structures with columns that can be different types. DataFrames are similar in concept to a spreadsheets or database tables.</p>
+<p><strong>Pandas</strong> is so popular that even alternatives (such as <a href="https://pola.rs/" target="_blank">Polars</a> and <a href="https://github.com/databricks/koalas" target="_blank">Databricks Koalas for Apache Spark</a>) support APIs similar, if not identical, to <strong>Pandas</strong>.</p>
+<p><strong>Pandas</strong> depends on another very commonly used <strong>Python</strong> library: <a href="https://numpy.org/" target="_blank">NumPy</a>. <strong>NumPy</strong> is a fast and versatile n-dimensional array manipulation library supporting vectorisation, indexing and broadcasting concepts.</p>
+<p>Learning the fundamentals of <strong>Pandas</strong> and <strong>NumPy</strong> is essential for the developer working with data scientists. The <a href="https://www.w3schools.com/python/pandas/default.asp" target="_blank">W3C Schools Pandas Tutorial</a> and <a href="https://www.kaggle.com/learn/pandas" target="_blank">Kaggle Learn Pandas Tutorial</a> are great places to start.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Once you have a grip of the basic foundations, practical application is the best way to cement these new skills. I would strongly recommend starting a personal project and building up a portfolio of work. <a href="https://www.kaggle.com/competitions?hostSegmentIdFilter=5" target="_blank">Kaggle Getting Started Competitions</a> can be a great way to practice your data skills and inspire you to start your own project.</p>
+<p>Initially I would recommend focusing on classical machine learning techniques such as <a href="https://en.wikipedia.org/wiki/Linear_regression" target="_blank">linear</a> and <a href="https://en.wikipedia.org/wiki/Logistic_regression" target="_blank">logistic</a> regression, <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a>, <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a>, <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank">k-nearest neighbours </a>, and <a href="https://en.wikipedia.org/wiki/Support_vector_machine" target="_blank">support vector machine</a>. These are most likely to have practical applications in smaller projects. An understanding of the data science workflow, <a href="https://en.wikipedia.org/wiki/MLOps" target="_blank">MLOps</a> and getting models into production is also valuable.</p>
+<p>Having said that, general background knowledge of the wider machine learning space is also useful - particularly when understanding the limitations and applicability of more headline grabbing deep learning models and techniques. I find <a href="https://changelog.com/practicali" target="_blank">The Practical AI</a>and <a href="https://www.superdatascience.com/podcast" target="_blank">SuperDataScience</a> podcasts especially useful in this regard and would highly recommend subscribing to both.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
