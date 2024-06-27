@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Data Science for Developers: Part 2 - Fundamentals - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="Part 2 of my series of developer guides on understanding and applying data science. This part focuses on the fundamental and the core concepts of machine learning, providing developers with a comprehensive introduction to the field.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="DataScience ML AI DeveloperGuide">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Data Science for Developers: Part 2 - Fundamentals">
+    <meta name="twitter:description" content="Part 2 of my series of developer guides on understanding and applying data science. This part focuses on the fundamental and the core concepts of machine learning, providing developers with a comprehensive introduction to the field.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Data Science for Developers: Part 2 - Fundamentals">
+    <meta name="description" property="og:description" content="Part 2 of my series of developer guides on understanding and applying data science. This part focuses on the fundamental and the core concepts of machine learning, providing developers with a comprehensive introduction to the field.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jun 27, 2024</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">DataScience</span>
+        <span class="badge badge-info">ML</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">DeveloperGuide</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="fundamentals-of-data-science-for-developers" class="sr-only" data-hero-heading="true">Fundamentals of Data Science for Developers</h1>
+<img class="hero-image" src="Part2-Fundamentals.png" alt="Fundamentals of Data Science for Developers"/>
+<p>In <a href="Part1-Foundations.html">part 1 of this series</a> we covered the foundational skills a developer needs to get started with, understand, and apply data science, machine learning, and AI to their everyday work.</p>
+<p>In part 2 of the guide we will explore the language of data science and outline the various types of machine learning. The goal of this part is to enable developers to effectively communicate with data scientists and understand the core concepts behind machine learning models.</p>
+<h2 id="models">Models</h2>
+<p>Data scientists create machine learning <strong>models</strong>. But <em>what exactly is a <strong>model</strong>?</em></p>
+<p>As a developer, I find it useful to think of a <strong>model</strong> as an <strong>algorithm</strong>. An <strong>algorithm</strong> has input parameters, performs a set of operations on those input parameters and returns one or more output values. Machine learning and traditional programming represent two fundamentally different approaches to solving problems by creating <strong>algorithms</strong>.</p>
+<p>In traditional programming, a developer explicitly writes code to instruct a computer on how to perform a specific task. The program consists of a set of <strong>rules</strong> and <strong>logic</strong> defined by the developer and it operates strictly according to these predefined rules so that the output is <strong>deterministic</strong>. Because of the <strong>deterministic</strong> nature of the programmed algorithms, the developer can write tests to assert the behaviour of the program. Techniques such as <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">Test Driven Development</a> can be used to ensure the <strong>algorithm</strong> conforms to the expected behaviour whilst promoting good design and maintainability.</p>
+<h3 id="models-as-algorithms">Models as Algorithms</h3>
+<p>In machine learning, the data scientist create an <strong>algorithm</strong> (or <strong>model</strong>) that learns the relationship between the input and output during the <strong>training</strong> process from the provided <strong>data</strong>. The model identifies patterns and relationships within the <strong>data</strong> to make predictions or decisions without explicit instructions from a developer. Because the output is based on learned patterns and can vary with different input <strong>data</strong>, machine learning models are <strong>probabilistic</strong>. The behaviour of a <strong>model</strong> may not be entirely predictable and can change with new data. Testing machine learning models must also be <strong>probabilistic</strong> and generally involves validation against a known dataset and comparison of performance metrics against agreed thresholds.</p>
+<p>Extending the analogy further, you can think of the <strong>training</strong> process of machine learning as being equivalent to the <strong>compilation</strong> step in traditional programming. During this process the internal state of the <strong>model</strong> is created by the <strong>data</strong>. Model <strong>validation</strong> is the equivalent of <strong>unit testing</strong> - where we verify the <strong>model</strong> behaves correctly. And finally, <strong>inference</strong> is equivalent to <strong>running</strong> or <strong>executing</strong> the generated <strong>algorithm</strong>.</p>
+<p>To confuse things slightly, <strong>algorithm</strong> is a term in machine learning that is also used to describe the technique that is used to convert <strong>data</strong> into a <strong>model</strong>. There are many <strong>machine learning algorithms</strong> such as <a href="https://en.wikipedia.org/wiki/Linear_regression" target="_blank">linear</a> and <a href="https://en.wikipedia.org/wiki/Logistic_regression" target="_blank">logistic</a> regression, <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a>, <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a>, <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank">k-nearest neighbours </a>, <a href="https://en.wikipedia.org/wiki/Support_vector_machine" target="_blank">support vector machine</a>, and <a href="https://en.wikipedia.org/wiki/Deep_learning" target="_blank">deep learning</a>.</p>
+<p>To avoid this confusion, it can be helpful to think of a <strong>machine learning algorithm</strong> being like a <strong>compiler</strong>. A <strong>complier</strong> translates <strong>source code</strong> to create an <strong>executable</strong> whereas a <strong>machine learning algorithm</strong> translates <strong>data</strong> (the equivalent of the source code) to create a <strong>model</strong> (the executable).</p>
+<h3 id="when-to-use-machine-learning">When to use Machine Learning</h3>
+<p>Programming and machine learning both create algorithms, so <em>when should machine learning be used instead of traditional programming techniques?</em></p>
+<p>As a rule of thumb, machine learning can and should be used if:</p>
+<ul>
+<li>The problem involves complex pattern recognition that is difficult to describe with rules</li>
+<li>The environment is dynamic and the system needs to adapt to new data</li>
+<li>You have access to sufficiently large datasets that can be used for training</li>
+<li>Probabilistic predictions are acceptable and valuable</li>
+</ul>
+<h2 id="data">Data</h2>
+<p>Different machine learning tasks need to process different types of data. Data science generally groups data into two categories: <strong>structured</strong> and <strong>unstructured</strong>.</p>
+<p><strong>Unstructured</strong> data is information that is raw and unorganised. Text, images, video and audio are classified as unstructured.</p>
+<p><strong>Structured</strong> data is information that is organised. You can think of <strong>structured</strong> data as a table (i.e. a relational database table, spreadsheet or CSV file). It adheres to a pre-defined schema with fixed fields where each each row is a sample and each column represents a distinct value or measurement for the sample row.</p>
+<p>These definitions are not clear cut. It is possible to have <strong>unstructured</strong> data embedded within <strong>structured</strong> data. Examples of this include text or image fields within an otherwise <strong>structured</strong> database table.</p>
+<h3 id="data-encoding">Data Encoding</h3>
+<p>Computers inherently understand and process information in numerical form. To be able to train a machine learning model, <strong>data</strong> must be converted into numerical representations. There are many ways to encode <strong>data</strong>. Different data types require different encoding techniques to ensure that the information is accurately captured and understood by the algorithms.</p>
+<p>A <strong>structured</strong> data table may contain values that are either <strong>continuous</strong> or <strong>categorical</strong>.</p>
+<p><strong>Continuous</strong> data can take on any value within a <strong>defined range</strong>, is measured on a continuous scale, and represented in code as a numeric type (<code>int</code>, <code>float</code>, <code>double</code> etc.). Examples include age, salary, or house price. <strong>Continuous</strong> data can be directly used by machine learning algorithms.</p>
+<p><strong>Categorical</strong> data consists of <strong>discrete values</strong> that fall into distinct categories or groups, such as gender, country, or product types. In code a categorical data might be represented by an <code>enum</code> type or a set of constant string values. <strong>Categorical</strong> data can also be <strong>ordinal</strong> or <strong>nominal</strong>.</p>
+<p>In <strong>ordinal categorical</strong> data, categories have a meaningful order. For example, a rating may have values of &quot;bad&quot;, &quot;OK&quot;, and &quot;good&quot;. Good is better than OK and OK is better than bad. For this type of data <strong>label encoding</strong> is used to transform the values into numbers that can then be used by machine learning. This can be done manually by assigning a number to each unique value (bad=1, OK=2, good=3) or by using the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank">LabelEncoder from scikit-learn</a></p>
+<p>In <strong>nominal categorical</strong> data categories do not have a meaningful order - in a list of colours, containing the values &quot;red&quot;, &quot;green&quot; and &quot;blue&quot;, no one colour can be said to be better than another and all have equal value. For this type of data <strong>one-hot encoding</strong> is used to transform the values into numbers that can then be used by machine learning. <strong>One-hot encoding</strong> creates multiple values to represent each category. Given <strong>N</strong> unique categories <strong>N-1</strong> values are needed to encode them. In our colour example, we can use the values &quot;R&quot; and &quot;G&quot; to encode the 3 unique colours: Red = (R=1, G=0), Green = (R=0, G=1), Blue = (R=0, G=0). Encoding data in this manner can be done using the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank">OneHotEncoder from scikit-learn</a> or the <a href="https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html" target="_blank">get_dummies method from Pandas</a></p>
+<p><strong>Unstructured image</strong> data can be represented as numerical matrices where each pixel's intensity is a number. For colour images, three matrices representing the RGB channels are used.</p>
+<p>Transformation of <strong>unstructured text</strong> data is complicated subject area worthy of its own article in the series. Typically text is <strong>tokenised</strong> i.e. split into smaller tokens such as characters, words or subwords. Tokens may then be one-hot encoded, passed through other machine learning models to create word embeddings, classified using sentiment analysis, or processed by other classical encoding techniques such as <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf" target="_blank">TF-IDF</a></p>
+<h3 id="data-labelling">Data Labelling</h3>
+<p>Some machine learning tasks need their training data to be labelled i.e. both the input data and the corresponding correct output value are required.</p>
+<p>For <strong>structured</strong> data the expected output value is usually included directly in the training data as an extra column in the table of the dataset.</p>
+<p>For <strong>unstructured</strong> data, which is usually represented as files, the output labels are typically implicitly encoded in the folder structure (e.g. for a data set intended to be used to categorise images as cats or dogs, the images of cats may be in a &quot;cats&quot; folder and dogs in a &quot;dogs&quot; folder). Alternatively the mapping of files to expected outputs may be encoded in another <strong>structure</strong> data file.</p>
+<h2 id="types-of-machine-learning">Types of Machine Learning</h2>
+<p>Now that we've a basic understanding that machine learning <strong>models</strong> are <strong>algorithms</strong> that are <strong>trained</strong> from <strong>data</strong>, let's look at the types of problems machine learning excels at solving.</p>
+<h3 id="supervised-learning">Supervised Learning</h3>
+<p><strong>Supervised learning</strong> is a type of machine learning where the <strong>model</strong> is trained on a <strong>labelled</strong> dataset. In this approach, each training example consists of an input and the corresponding correct output (label). The goal is for the <strong>model</strong> to learn a mapping from inputs to outputs so that it can make accurate predictions on new, unseen data.</p>
+<p><strong>Supervised learning</strong> encompasses both <strong>classification</strong> and <strong>regression</strong> tasks.</p>
+<p><strong>Classification</strong> is where a <strong>model</strong> is used to predict a category. Examples of <strong>classification</strong> tasks include:</p>
+<ul>
+<li>Predicting if an image is a cat or a dog.</li>
+<li>Determining if an email is spam (or ham).</li>
+<li>Deducing which passengers survived the <a href="https://www.kaggle.com/competitions/titanic" target="_blank">Titanic</a> shipwreck based on attributes such as age, gender, ticket price and cabin number.</li>
+</ul>
+<p><strong>Regression</strong> is where a <strong>model</strong> is used to predict a continuous value. Examples of <strong>regression</strong> tasks include:</p>
+<ul>
+<li>Estimating <a href="https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques" target="_blank">house prices</a> based on attributes such as location, number of rooms, and overall square footage.</li>
+<li>Predicting a person's age based on an image of their face.</li>
+<li>Calculate the rating of a film given a set of textual reviews.</li>
+</ul>
+<h3 id="unsupervised-learning">Unsupervised Learning</h3>
+<p><strong>Unsupervised learning</strong> is a type of machine learning where the <strong>model</strong> is trained on a <strong>unlabelled</strong> data without any specific outputs or target variables to guide the learning process. The goal of unsupervised learning is to find patterns, relationships, or structures within the data.</p>
+<p><strong>Unsupervised learning</strong> tasks are varied. Most can be classified as <strong>clustering</strong>, <strong>dimensionality reduction</strong>, or <strong>autoregression</strong> tasks.</p>
+<p><strong>Clustering</strong> involves grouping similar data points together based on their features. Examples of <strong>clustering</strong> tasks include:</p>
+<ul>
+<li>Segmenting customers into groups based on purchasing behaviour, demographics, or browsing patterns</li>
+<li>Partition an image into segments or clusters of pixels that represent different objects or regions within the image</li>
+<li>Fraud detection by identifying anomalies, outliers or unusual data points that do not fit into any of the established clusters.</li>
+<li>Recommender systems that group users or items based on similarity to provide personal recommendations.</li>
+</ul>
+<p><strong>Dimensionality reduction</strong> is a technique in machine learning and data analysis that is used to reduce the number of features (variables, attributes) in a dataset while preserving as much of the relevant information as possible. This process simplifies the dataset, making it easier to visualize, understand, and analyse, while often improving the performance of machine learning models. <strong>Dimensionality reduction</strong> techniques include <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">principal component analysis</a>, <a href="https://en.wikipedia.org/wiki/Linear_discriminant_analysis" target="_blank">linear discriminant analysis</a>, and <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding" target="_blank">t-distributed stochastic neighbour embedding</a>.</p>
+<p><strong>Autoregressive models</strong> predict the next element in a sequence based on previous elements. <strong>Autoregression</strong> is arguable the most important learning algorithm today as many large language models (LLMs) are fundamentally based on autoregressive principles. Examples of <strong>autoregression</strong> tasks include:</p>
+<ul>
+<li>Given a sequence of words or tokens, predicts the probability distribution of the next word in the sequence.</li>
+<li>Modelling and predicting financial time series data such as stock prices, exchange rates, or interest rates.</li>
+<li>Forecasting future temperatures, precipitation, or other weather-related metrics based on past weather data.</li>
+</ul>
+<h3 id="comparison-of-supervised-and-unsupervised-learning">Comparison of Supervised and Unsupervised Learning</h3>
+<p><strong>Supervised</strong> and <strong>unsupervised</strong> learning are the two main types of machine learning. We know that these techniques differ in their <strong>data</strong> requirements: <strong>supervised learning</strong> requires <strong>labelled data</strong> whereas <strong>unsupervised learning</strong> can use <strong>unlabelled data</strong>. But, if we consider the major types of tasks these techniques can perform there are some similarities.</p>
+<p>Both <strong>supervised classification</strong> and <strong>unsupervised clustering</strong> aim to assign labels to data points. In <strong>classification</strong>, the labels are predefined and known, whereas in <strong>clustering</strong>, the labels (clusters) are discovered from the data itself.</p>
+<p>Both <strong>supervised regression</strong> and <strong>unsupervised autoregression</strong> aim to predict continuous values. <strong>Regression</strong> predicts a value based on input features, while <strong>autoregression</strong> predicts a value based on previous values.</p>
+<h3 id="other-types-of-machine-learning">Other Types of Machine Learning</h3>
+<p><strong>Supervised</strong> and <strong>unsupervised</strong> learning are not the only types of machine learning. Two other types of machine learning are <strong>semi-supervised learning</strong> and <strong>reinforcement learning</strong>.</p>
+<p><strong>Semi-supervised learning</strong> is a type of machine learning that falls between <strong>supervised</strong> and <strong>unsupervised</strong> learning. It involves training a model on a dataset that includes both <strong>labelled</strong> and <strong>unlabelled</strong> data. The goal is to leverage the large amount of <strong>unlabelled</strong> data, along with the smaller amount of <strong>labelled</strong> data, to improve learning accuracy. The small set of <strong>labelled</strong> data to provide initial guidance then a larger set of <strong>unlabelled</strong> data to enhance learning and improve model performance. This can reduces the need for extensive labelling, which can be expensive and time-consuming.</p>
+<p><strong>Reinforcement learning</strong> is a type of machine learning where an <strong>agent</strong> learns to make decisions by performing <strong>actions</strong> in an <strong>environment</strong> to maximize some notion of cumulative <strong>reward</strong>. Unlike <strong>supervised learning</strong>, which relies on a dataset of <strong>labelled</strong> examples, <strong>reinforcement learning</strong> is based on the interaction between the <strong>agent</strong> and the <strong>environment</strong>, where the <strong>agent</strong> learns from the consequences of its <strong>actions</strong>.</p>
+<p><strong>Reinforcement learning</strong> will be examined more closely in a future post in this series.</p>
+<h2 id="next-steps">Next Steps</h2>
+<p>Once you have a grip of the basic foundations and fundamentals, practical application is the best way to cement these new skills. I would strongly recommend starting a personal project and building up a portfolio of work. <a href="https://www.kaggle.com/competitions?hostSegmentIdFilter=5" target="_blank">Kaggle Getting Started Competitions</a> can be a great way to practice your data skills and inspire you to start your own project.</p>
+<p>Initially I would recommend focusing on classical machine learning techniques such as <a href="https://en.wikipedia.org/wiki/Linear_regression" target="_blank">linear</a> and <a href="https://en.wikipedia.org/wiki/Logistic_regression" target="_blank">logistic</a> regression, <a href="https://en.wikipedia.org/wiki/Random_forest" target="_blank">random forests</a>, <a href="https://en.wikipedia.org/wiki/Gradient_boosting" target="_blank">gradient boosting</a>, <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank">k-nearest neighbours </a>, and <a href="https://en.wikipedia.org/wiki/Support_vector_machine" target="_blank">support vector machine</a>. These are most likely to have practical applications in smaller projects. An understanding of the data science workflow, <a href="https://en.wikipedia.org/wiki/MLOps" target="_blank">MLOps</a> and getting models into production is also valuable.</p>
+<p>Having said that, general background knowledge of the wider machine learning space is also useful - particularly when understanding the limitations and applicability of more headline grabbing deep learning models and techniques. I find <a href="https://changelog.com/practicali" target="_blank">The Practical AI</a>and <a href="https://www.superdatascience.com/podcast" target="_blank">SuperDataScience</a> podcasts especially useful in this regard and would highly recommend subscribing to both.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
