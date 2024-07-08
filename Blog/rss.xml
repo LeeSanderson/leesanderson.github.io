@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <copyright>Lee Sanderson</copyright>
+    <description>Lee Sanderson is a software engineer and advocate of software craftsmanship. He blogs about may topics including craftsmanship, .NET and Azure</description>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>Blog Builder</generator>
+    <image>
+      <width>88</width>
+      <height>31</height>
+      <link>https://www.sixsideddice.com/index.png</link>
+      <title>Lee Sanderson</title>
+      <url>https://www.sixsideddice.com/blog</url>
+    </image>
+    <lastBuildDate>Mon, 08 Jul 2024 13:52:58 +0000</lastBuildDate>
+    <link>https://www.sixsideddice.com/blog</link>
+    <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
+    <title>SixSidedDice Blog</title>
+    <webMaster>lee@sixsideddice.com (Lee Sanderson)</webMaster>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>An overview of the two main styles of TDD</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/StylesOfTestDrivenDevelopment.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/StylesOfTestDrivenDevelopment.html</link>
+      <title>Styles of Test Driven Development</title>
+      <pubDate>Wed, 06 Oct 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 1 of my series of developer guides on understanding and applying data science. This part focuses on the foundational skills and knowledge I believe every developer needs to get started with data science.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.html</guid>
+      <link>https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.html</link>
+      <title>Data Science for Developers: Part 1 - Foundations</title>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 2 of my series of developer guides on understanding and applying data science. This part focuses on the fundamental and the core concepts of machine learning, providing developers with a comprehensive introduction to the field.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html</guid>
+      <link>https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html</link>
+      <title>Data Science for Developers: Part 2 - Fundamentals</title>
+      <pubDate>Thu, 27 Jun 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>A guide to creating and deploying packages to NuGet.org</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Dotnet/CreatingPackagesForNuGet.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Dotnet/CreatingPackagesForNuGet.html</link>
+      <title>Creating Packages For NuGet.org</title>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Instructions to help you set up minikube on a Windows 10 Home edition</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/K8s/SettingUpMinikubeOnWindows10.html</guid>
+      <link>https://www.sixsideddice.com/Blog/K8s/SettingUpMinikubeOnWindows10.html</link>
+      <title>Setting up minikube on Windows 10</title>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>A list of useful minikube commands</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/K8s/UsefulMinikubeCommands.html</guid>
+      <link>https://www.sixsideddice.com/Blog/K8s/UsefulMinikubeCommands.html</link>
+      <title>Useful minikube commands</title>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>An introduction to getting started using GitHub and Markdown for blogging</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/BloggingWithGithubAndMarkdown.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Meta/BloggingWithGithubAndMarkdown.html</link>
+      <title>Blogging with GitHub and Markdown</title>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Leveraging Obsidian to increase the quality and quantity of your blog articles</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.html</link>
+      <title>Blogging With Obsidian</title>
+      <pubDate>Thu, 23 May 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Publishing content to GitHub Pages using Azure DevOps pipelines</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/DeployingAStaticWebsiteToGitHubPages.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Meta/DeployingAStaticWebsiteToGitHubPages.html</link>
+      <title>Deploying to GitHub Pages</title>
+      <pubDate>Wed, 05 Jan 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>How to build a static website from a bunch of Markdown documents using C#, Markdig, and RazorEngine.NetCore</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/GeneratingAStaticWebsiteUsingMarkdown.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Meta/GeneratingAStaticWebsiteUsingMarkdown.html</link>
+      <title>Generating a Static Website Using Markdown</title>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>How to maintain a personal knowledge base with Obsidian</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</link>
+      <title>Knowledge Management With Obsidian</title>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 1 of the Azure Administrator study guide focusing on core concepts</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part1-Concepts.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part1-Concepts.html</link>
+      <title>AZ-104 Study Guide: Part 1 - Concepts</title>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 2 of the Azure Administrator study guide focusing on Powershell and the Azure CLI</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part2-PowershellAndCLI.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part2-PowershellAndCLI.html</link>
+      <title>AZ-104 Study Guide: Part 2 - PowerShell</title>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 3 of the Azure Administrator study guide focusing on managing Azure Identities and governance</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part3-ManagingAzureIdentitiesAndGovernace.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part3-ManagingAzureIdentitiesAndGovernace.html</link>
+      <title>AZ-104 Study Guide: Part 3 - Azure Identities and Governance</title>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 4 of the Azure Administrator study guide focusing on managing Azure Subscriptions</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part4-ManagingSubscriptions.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part4-ManagingSubscriptions.html</link>
+      <title>AZ-104 Study Guide: Part 4 - Managing Subscriptions</title>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 5 of the Azure Administrator study guide focusing on managing storage accounts</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part5-StorageAccounts.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part5-StorageAccounts.html</link>
+      <title>AZ-104 Study Guide: Part 5 - Storage Accounts</title>
+      <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 6 of the Azure Administrator study guide focusing on managing virtual machines</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part6-VirtualMachines.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part6-VirtualMachines.html</link>
+      <title>AZ-105 Study Guide: Part 6 - Virtual Machines</title>
+      <pubDate>Wed, 17 Aug 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 1 of the Azure Data Engineering Associate study guide focusing on storage accounts</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part1-StorageAccounts.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part1-StorageAccounts.html</link>
+      <title>DP-203 Study Guide: Part 1 - storage accounts</title>
+      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Part 2 of the Azure Data Engineering Associate study guide focusing on Cosmos DB</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part2-CosmosDB.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part2-CosmosDB.html</link>
+      <title>DP-203 Study Guide: Part 2 - Cosmos DB</title>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
