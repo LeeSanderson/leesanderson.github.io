@@ -21,14 +21,29 @@ headerTemplate.innerHTML = `
         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Blog">Blog</a>
+                    <a class="nav-link" href="/Blog">
+                        <i class="fas fa-blog"></i>
+                        Blog
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/search.html">Search</a>
+                    <a class="nav-link" href="/search.html">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </a>
                 </li>                
+                <li class="nav-item">
+                    <a class="nav-link" href="/Blog/rss.xml">
+                        <i class="fas fa-rss"></i>
+                        RSS
+                    </a>
+                </li>                                
             </ul>
         </div>
     </div>
