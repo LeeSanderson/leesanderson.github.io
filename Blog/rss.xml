@@ -12,11 +12,19 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 10 Sep 2024 07:07:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Sep 2024 07:10:35 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
     <webMaster>lee@sixsideddice.com (Lee Sanderson)</webMaster>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>A review of the classic DevOps lifecycle and a proposal for a cleaner model</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</link>
+      <title>DevOps Lifecycle</title>
+      <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <author>lee@sixsideddice.com</author>
       <description>An overview of the two main styles of TDD</description>

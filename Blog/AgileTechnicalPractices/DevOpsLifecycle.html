@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>DevOps Lifecycle - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="A review of the classic DevOps lifecycle and a proposal for a cleaner model">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="#DevOps AgileTechnicalPractices">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="DevOps Lifecycle">
+    <meta name="twitter:description" content="A review of the classic DevOps lifecycle and a proposal for a cleaner model">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="DevOps Lifecycle">
+    <meta name="description" property="og:description" content="A review of the classic DevOps lifecycle and a proposal for a cleaner model">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Sep 10, 2024</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">#DevOps</span>
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="devops-lifecycle" class="sr-only" data-hero-heading="true">DevOps Lifecycle</h1>
+<img class="hero-image" src="DevOpsLifecycle.png" alt="DevOps Lifecycle"/>
+<p><strong>DevOps</strong> is a set of practices, principles, and cultural philosophies aimed at improving collaboration and communication between software development (Dev) and IT operations (Ops) teams. The goal of <strong>DevOps</strong> is to enable organisations to deliver applications and services at high velocity, evolving and improving products faster than traditional software development and infrastructure management processes.</p>
+<p>In this article I want to try and take a deeper look and understand the stages of the <strong>DevOps</strong> lifecycle - the iterative process of software application development and operation. I will challenge some of the foundations of the classical <strong>DevOps</strong> lifecycle and propose a new version that is more robust and clearly defined.</p>
+<h2 id="key-principles-of-devops">Key Principles of DevOps</h2>
+<ul>
+<li><strong>Collaboration and communication</strong>. DevOps emphasizes breaking down silos between development and operations teams to foster a culture of collaboration and shared responsibility. This includes frequent communication, shared goals, and mutual trust.</li>
+<li><strong>Automation</strong> is critical in DevOps to streamline and accelerate processes. This includes automating code integration, testing, deployment, and infrastructure provisioning to reduce manual efforts and minimize errors.</li>
+<li><strong>Continuous Integration (CI)</strong> involves regularly merging code changes into a shared repository, followed by automated testing to detect issues early.</li>
+<li><strong>Continuous Delivery (CD)</strong> ensures that code changes are automatically built, tested, and prepared for release to production, allowing for frequent and reliable software updates.</li>
+<li><strong>Infrastructure as Code (IaC)</strong> treats infrastructure configuration and management as code, enabling version control, repeatability, and automation of infrastructure provisioning using tools like Terraform, AWS CloudFormation, or Azure ARM templates.</li>
+<li><strong>Continuous monitoring and observability</strong> provide insights into the performance and health of applications and infrastructure. This involves collecting and analysing metrics, logs, and traces to identify and resolve issues proactively.</li>
+</ul>
+<p><strong>DevOps</strong> is often augmented and integrated with security practices. Integrating security practices into the <strong>DevOps</strong> pipeline ensures that security is considered at every stage of the development lifecycle. This includes automated security testing and compliance checks. This approach is often referred to as <strong>DevSecOps</strong>.</p>
+<h2 id="the-devops-lifecycle">The DevOps Lifecycle</h2>
+<p>The <strong>DevOps</strong> lifecycle is often described by a set of interrelated stages forming a loop and represented by a infinity symbol.</p>
+<p>The diagram below is a typical representation.</p>
+<p><img src="TraditionalDevopsLifecycle.png" class="img-fluid" alt="" /></p>
+<p>The implication of this type of diagram is that the stages of the <strong>DevOps</strong> lifecycle are sequential and that the output of one feeds into the next. Output from the final stage loops back into the first stage to indicate that the process is continuous and iterative, allowing for ongoing improvements and refinements based on real-world performance and insights.</p>
+<p>There are <a href="https://www.google.com/search?q=devops+lifecycle" target="_blank">varying opinions</a> on which stages belong in the <strong>DevOps</strong> lifecycle loop diagram, but typically the sequence is defined as: Plan - Code - Build - Test - Release - Deploy - Operate - Monitor.</p>
+<p>The stages are often loosely defined as follows:</p>
+<ul>
+<li><strong>Plan:</strong> This stage involves defining the project's goals, scope, and requirements. It includes creating a roadmap, setting up timelines, and determining the resources needed.</li>
+<li><strong>Code:</strong> In this stage, developers write the application code. Version control systems like Git are used to manage code changes and collaboration among team members.</li>
+<li><strong>Build:</strong> The code is compiled, and builds are created. This stage includes automated tools to compile, package, and produce artifacts ready for deployment. Continuous Integration (CI) tools are commonly used to automate this process.</li>
+<li><strong>Test:</strong> Automated testing is performed to ensure code quality and functionality. This stage includes unit tests, integration tests, and performance tests to identify and fix bugs early in the development cycle.</li>
+<li><strong>Release:</strong> After successful testing, the code is prepared for release. This stage involves configuring the environment, managing release notes, and ensuring all components are ready for deployment.</li>
+<li><strong>Deploy:</strong> The application is deployed to the production environment. Continuous Deployment practices ensure that deployments are automated and reliable.</li>
+<li><strong>Operate:</strong> This stage focuses on monitoring and maintaining the application in the production environment. It includes infrastructure management, system administration, and monitoring performance.</li>
+<li><strong>Monitor:</strong> Continuous monitoring is essential to detect issues, gather performance metrics, and ensure the application runs smoothly. Feedback is collected from the production environment to inform further development and improvements.</li>
+</ul>
+<p>I find the above stage definitions problematic due to their vagueness. The most obvious issues include:</p>
+<ul>
+<li><a href="https://martinfowler.com/articles/continuousIntegration.html" target="_blank">Trunk based development / Continuous integration</a> requires verification of the code at the automated <strong>Build</strong> stage , yet the model implies testing only happens at the subsequent <strong>Test</strong> stage.</li>
+<li>Many of the types of test involved in the <strong>Test</strong> stage require the code to be released and deployed to an environment before they can be executed. Yet the <strong>Test</strong> stage happens before the <strong>Release</strong> stage.</li>
+<li><strong>Release</strong> and <strong>Deploy</strong> stages do not appear to be distinct activities and have significant overlap in responsibilities.</li>
+<li><strong>Operate</strong> and <strong>Monitor</strong> stages do not appear to be distinct activities and have significant overlap in responsibilities.</li>
+</ul>
+<p>Let's try and create a better model for the <strong>DevOps</strong> lifecycle by defining each stage more precisely and considering the outputs that stages generate.</p>
+<h2 id="a-better-definition-of-the-devops-lifecycle">A Better Definition of the DevOps Lifecycle</h2>
+<p>I prefer to define the <strong>DevOps</strong> lifecycle with the following stages: Incept - Plan - Develop - Integrate - Release - QA - Deploy - Operate &amp; Monitor.</p>
+<p><img src="NewDevopsLifecycle.png" class="img-fluid" alt="" /></p>
+<p>I will define the stages in more details below but before we get started let's consider the above diagram in a little more detail. It is clear that there is a direction of flow from the diagram - implying the outputs of a stage feed into the next. To more clearly define the stages we will discuss the output of each stage and how it affects the subsequent stage.  What may be less clear is that there is also a feedback loop from each stage to the previous. Feedback loops are essential for validation assumptions and identifying quality issues early in the delivery process. When considering the definition of a stage we will look closely at both the output and the feedback that the stage provides.</p>
+<p>As we have seen, the <strong>DevOps</strong> lifecycle is an infinite loop of activities where the output of a stage feeds into the next but this raises the question of how and where do we start?</p>
+<p>The answer is in the initial, one-off <strong>Incept</strong> stage.</p>
+<h3 id="stage-0-the-incept-stage">Stage 0: The Incept Stage</h3>
+<p>Prior to the any <strong>Plan</strong> stage we need to start the project and bootstraps the <strong>DevOps</strong> lifecycle loop. The project bootstrapping process, sometimes called the <strong>Incept</strong> stage, is worthy of more detailed discussion its own future article. For now, here are some typical high level activities that may be part of this process:</p>
+<ul>
+<li>Engaging with stakeholders that will drive the success of the project</li>
+<li>Doing discovery work to understand the problem to be solved</li>
+<li>Estimating to determine feasibility and establish return on investment</li>
+<li>Defining the architectural approach</li>
+<li>Defining non-functional requirements</li>
+<li>Building a preliminary backlog</li>
+<li>Initial security threat modelling</li>
+</ul>
+<p>The key output of the <strong>Incept</strong> stage is the decision to proceed or not. It is often wiser to halt a project early than to waste resources on a doomed effort. The <strong>Incept</strong> phase is crucial for identifying potential failure points, such as lack of stakeholder support, unclear goals, technical infeasibility, insufficient skills, inadequate funding, perceived lack of value, and ethical concerns.</p>
+<p>Assuming a successful <strong>Incept</strong> stage and a decision to process has been made, a number of additional outputs from this stage can feed into the next <strong>Plan</strong> stage. At a minimum we should expect the outputs to include a high-level backlog of functional and non-functional requirements. Outputs may also include a product vision and strategy, rough architecture diagrams, team roles and responsibilities, initial project timelines, risk register, and preliminary resource allocations.</p>
+<h3 id="stage-1-the-initial-plan-stage">Stage 1: The (Initial) Plan Stage</h3>
+<p>The <strong>Plan</strong> stage is the first proper stage of the <strong>DevOps</strong> lifecycle. As we have previously discussed, stages in the <strong>DevOps</strong> lifecycle are sequential, continuous and iterative. The key point here is that the process is iterative. This is <em>not</em> a <a href="https://martinfowler.com/bliki/WaterfallProcess.html" target="_blank">Waterfall Process</a> and we do not do all the planning first before starting the next phase. Instead we must take an incremental approach to planning. Agile methods are a natural fit here and, whether you implement <a href="https://en.wikipedia.org/wiki/Extreme_programming" target="_blank">XP</a>,  <a href="https://en.wikipedia.org/wiki/Scrum_(software_development)" target="_blank">Scrum</a>, or <a href="https://en.wikipedia.org/wiki/Kanban_(development)" target="_blank">Kanban</a>, the incremental approach allow you to break up the work to be done into <a href="https://dora.dev/capabilities/working-in-small-batches/" target="_blank">small batches</a> that release value into the hands of customers earlier, reduced deployment risks, and allow your organisation to be responsive to change.</p>
+<p>Planning is probably the least controversial stage of the <strong>DevOps</strong> lifecycle to define. Fundamentally the primary purpose of planning is to defining what to do next based on which pieces of work have the highest value. However I think it is useful to make a distinction between the initial planning stage and planning as the result of production monitoring feedback (which we will discuss when we review later).</p>
+<p>The initial <strong>Plan</strong> stage involves refining the outputs of the <strong>Incept</strong> stage. Typically the high-level backlog of functional and non-functional requirements is broken down and refined. Refinement identifies work to be done but may also involve UX design and making just-in-time architectural decisions.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Behavior-driven_development#The_three_amigos" target="_blank">Three Amigos</a> practice is extremely useful when refining the backlog of work to be done. It allows the business to define the problem to be solved, the engineer to suggest ways to fix the problem, and the QA to question the solution to ensure it does actually fix the problem. The practice can be extended to include other stakeholders as needed. For example, in the past, I have ran workshops that included a UX designer in the discussions. These Four Amigos sessions were particularly useful during initial stages of the project where the UX was being was being designed and iterated. This collaborative approach ensured that user experience considerations were integrated early, leading to a more cohesive and user-friendly solution.</p>
+<p>As well as refining the work to be done, the planning stage must also consider the team size and structure needed to deliver the project in an acceptable timeframe for an acceptable cost. Often team size and structure will be determined by the project's scope and complexity. As a rule of thumb each team should be organised according to the <a href="https://docs.aws.amazon.com/whitepapers/latest/introduction-devops-aws/two-pizza-teams.html" target="_blank">Two-Pizza Teams</a> rule which typically means 5-7 cross-functional members per team.</p>
+<p>The maximum number of teams that can work effectively and autonomously on a given project can be difficult to determine. One technique that has worked well for me in the past is to apply <a href="https://en.wikipedia.org/wiki/Domain-driven_design" target="_blank">Domain-driven design</a> to break a project down and give each <a href="https://teamtopologies.com/key-concepts" target="_blank">stream aligned team</a> responsibility for one <a href="https://martinfowler.com/bliki/BoundedContext.html" target="_blank">bounded context</a>.</p>
+<p>Team size and structure can also be influenced by the phase of the project. At the start of a green-field project is it sometimes useful to start with a smaller team that can set up the development standards and walking skeleton of the project before ramping up and onboarding more team members.</p>
+<p>The outputs of the <strong>Plan</strong> stage are a set of refined and prioritised work items and a resource plan to deliver the work.</p>
+<h3 id="stage-2-the-develop-stage">Stage 2: The Develop Stage</h3>
+<p>I prefer to define this stage as the <strong>Develop</strong> stage rather than the <strong>Code</strong> stage. Development includes design, coding and testing and is more aligned with my view of what activities engineering teams perform at this point in the <strong>DevOps</strong> lifecycle.</p>
+<p>During the <strong>Develop</strong> stage engineers design, code and test application features. The inputs to this stage are the refined and prioritised set of work items that are outputted from the <strong>Plan</strong> stage. Usually work items are clearly defined during the <strong>Plan</strong> stage and implementation is straight forward. Sometimes when the solution is not immediately clear, teams might need to spend some time researching the best solution. This preparation work is know as a <a href="https://en.wikipedia.org/wiki/Spike_(software_development)" target="_blank">spike</a>. Outcomes of a spike feeds back into the <strong>Plan</strong> stage to inform the next planning iteration.</p>
+<p>I have a preference for using <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">Test Driven Development</a> during the <strong>Develop</strong> stage. TDD promotes good design and maintainability while ensuring we have a set of tests that can prevent regressions. Specifically, I prefer the <a href="https://softwareengineering.stackexchange.com/questions/166409/tdd-outside-in-vs-inside-out" target="_blank">Outside-in style of TDD</a> described in the <a href="https://www.amazon.co.uk/dp/0321503627" target="_blank">GOOS book</a>. In this style of TDD, an engineer start by writing a failing high-level acceptance test that captures the expected behaviour of the system from an end-user or external interface perspective. This failing outer-loop test then drives the engineer to implement lower level unit tests following the standard red-green-refactor pattern. The combination of acceptance and unit testing leads to a double loop testing cycle.</p>
+<div class="mermaid">flowchart LR
+      subgraph as2[ ]
+        direction LR
+        Red2((Write a failing&lt;br/> acceptance test))
+        subgraph as[ Inner Loop ]
+          direction LR  
+          Red((Write a failing&lt;br/> unit test)) ---> Green
+          Green((Make the test&lt;br/> pass)) ---> Refactor
+          Refactor((.. Refactor ..)) --> Red
+        end
+        Green ---> Red2
+        Red2 ---> Red
+      end  
+      
+linkStyle default interpolate basis stroke-width:3px,fill:none
+style Red2 fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00    
+style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
+style Green fill:#0b9e52,color:#fff,stroke-width:4px,stroke:#0f0
+style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
+</div>
+<p>If I am working on a system with many independent (micro) services, I tend to use <a href="https://pactflow.io/blog/what-is-contract-testing" target="_blank">Contract Testing</a> as my outer loop acceptance tests. Contract testing ensures that systems are compatible by capturing interactions between each system, storing these interactions in a contract, and verifying that all parties adhere to the contract. In complex distributed systems, end-to-end integration tests tend to be slow, difficult to maintain, can be unreliable or flakey, hard to fix, and find bugs too late in the development process. In contrast, contract tests provide the same level of confidence as end-to-end integration tests but run fast, are easier to maintain, are easy to debug and fix, are repeatable, and allow developers to quickly uncover bugs locally. Contract testing does not remove the need for end-to-end integration tests, but reduces the reliance on them. Fewer end-to-end integration tests are needed making execution faster.</p>
+<p>As I've been describing the <strong>Develop</strong> stage, it has been implicit <em>where</em> these activities occur. To be completely clear, development activities happen locally on the engineer's machine. This, perhaps obvious statement, has some important consequences for productivity. Engineering productivity increases with faster feedback loops, therefore all activities that we want to execute in the <strong>Integrate</strong> stage (which we will discuss next) must also be executable locally during the <strong>Develop</strong> stage. If an engineer cannot easily run the application locally, they may need to integrate their work and release the application to a test environment in order to verify any change. This extended feedback loop can cripple productivity and should be avoided where possible.</p>
+<p>Because the activities of the <strong>Develop</strong> stage happen locally, a mechanism is needed to manage code changes, enable collaboration among team members, and provide a single source of truth. Note that code in this context includes not only application code but also infrastructure code and automated end-to-end integration test code. In order to provide these capabilities, all code must be managed by a version control system.</p>
+<p>When using version control systems, there are two main types of workflow:</p>
+<ol>
+<li>Trunk based development (either <a href="https://trunkbaseddevelopment.com/committing-straight-to-the-trunk/" target="_blank">committing straight to the trunk</a> or <a href="https://trunkbaseddevelopment.com/short-lived-feature-branches/" target="_blank">short-lived feature branches</a> - which is more suitable for larger teams)</li>
+<li>Feature branch based development (using workflows such as <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow" target="_blank">Gitflow</a>)</li>
+</ol>
+<p>My preference is for trunk based development.</p>
+<p>Regardless of the workflow, the output from the <strong>Develop</strong> stage will be a changes set -  either a commit to the main branch or a pull request to merge a feature branch into the main branch.</p>
+<h3 id="stage-3-the-integrate-stage">Stage 3: The Integrate Stage</h3>
+<p>I prefer to define this stage as the <strong>Integrate</strong> stage rather than the <strong>Build</strong> stage. Integration includes building, testing, and merging changes into the main branch and is more aligned with my view of what activities performed at this point in the <strong>DevOps</strong> lifecycle.</p>
+<p>The <strong>Integrate</strong> stage is the first stage of the <strong>DevOps</strong> lifecycle that can and should be fully automated. The stage is triggered by a change set being committed to the version control repository. Because of the way in which the stage is triggered it is sometimes called the <strong>commit build</strong>. The purpose of the <strong>Integrate</strong> stage is to verify that the change set is valid. A typical integration process will involved the follow steps:</p>
+<ul>
+<li><strong>Build</strong>. Ensure that the code can be compiled. This is the most basic verification step that makes sure the engineer has not missed something when creating the change set. Obviously the build step is only required for compiled languages. Interpreted languages, such as Python, do not require a build step.</li>
+<li><strong>Unit Test</strong>. From an integration perspective, unit tests have a number of characteristics that make them ideal. Properly written unit tests isolate each unit under test and mock slow external dependencies to ensure the tests are granular, fast, and repeatable. Each unit test should focus on a very specific aspect of the software’s functionality, which makes it easier to pinpoint the cause of a failure or regression.</li>
+<li><strong>Contract Test</strong>. If you are using contract testing then these tests should be executed during the commit build. While contract tests are not as granular as unit tests, they should be equally as fast and repeatable. Contract testing allow you to answer the question: can the new version of my service be deployed without breaking the contracts of consumers of my API?</li>
+<li><strong>Code analysis</strong>. Various types of language specific code analysis may be performed as part of the integration process. This may include spell checking, code style and format enforcement, duplicate code detection, applying cyclomatic complexity rules, and ensuring correct implementations of other best practices.</li>
+<li><strong>Code coverage checks</strong>. This type of checks can increase confidence by providing insights into how much of the code is being tested by the unit tests. Code coverage is not always important or valuable, especially if you are following test driven development practices. Can be useful when working with legacy code to ensure that any new tests increase coverage as the code is modernised.</li>
+<li><strong>Static application security testing (SAST)</strong>. Scan the codebase for security vulnerabilities allowing organisations to continuously assess and improve their code security. SAST tooling ensures robust and secure applications while reducing the cost and effort associated with fixing vulnerabilities later in the development process.</li>
+</ul>
+<p>Failure of any of these steps feeds back in to the <strong>Develop</strong> stage where the code must be adjusted to address the failure.</p>
+<p>As discussed above, engineers needs to be able to execute all these steps locally. In an ideal world, many if not all of these steps would be executed automatically to staged changed before they are committed to the repository via <a href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks" target="_blank">pre-commit hooks</a>.</p>
+<p>It is considered good practices for the <strong>Integrate</strong> stage to take less than 10 minutes to complete. This practice come from XP. In <a href="https://www.amazon.co.uk/dp/0321278658/" target="_blank">Extreme Programming Explained</a>, Kent Beck states that:</p>
+<blockquote class="blockquote">
+<p>A build that takes longer than ten minutes will be <strong>used much less often</strong>, missing the opportunity for feedback.</p>
+</blockquote>
+<p>To me, this does not ring true. Builds are automated on code commits, so stating they will be <em>used much less often</em> does not make sense. I guess this could mean that the result of the build is not checked as often if it take longer than 10 minutes, but I like to ensure that my builds notify me and my team on failure (ideally by messaging the team's Slack or Teams channel).</p>
+<p>I still strongly believe that builds should take less than 10 minutes to execute, but my reasons for this are rooted in maintaining developer productivity and ensuring quick feedback loops. Long build times can disrupt workflow, cause delays in identifying and addressing issues, and ultimately slow down the development process. Fast builds keep the team agile, enable more frequent integrations, and help catch problems early, leading to more efficient and effective software development..</p>
+<p>Optimising the commit build to ensure it can be executed in under 10 minutes is often a useful activity that boosts productivity. Typically this involves:</p>
+<ul>
+<li>Caching compilation output, only recompile changes. Can be particularly effective for complex repositories / mono-repos and languages with &quot;slow&quot; build speeds (such as C++)</li>
+<li>Limiting execution of unit tests, code analysis, and security scanning to the affected code.</li>
+<li>Excluding slow running integration style tests (these will still be executed, but as part of a different pipeline).</li>
+<li>Triggering different builds based on which files have changed by defining <a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/azure-repos-git?view=azure-devops&amp;tabs=yaml#paths" target="_blank">path triggers</a>.</li>
+<li>Splitting the application across multiple repositories and allowing each repository to have its own, more focused, commit build.</li>
+</ul>
+<p>The last point, splitting the application across multiple repositories, can be a complex, but worthwhile, optimisation. Fundamentally a repository is a unit of deployment. Components that needs to change together should be in the same repository, otherwise it is impossible to coordinate change and ensure component will work together. In a monolithic application, all components need to change together and therefore all code must be in a single repository.</p>
+<p>Moving to a <a href="https://dora.dev/capabilities/loosely-coupled-teams/" target="_blank">loosely coupled architecture</a> that is supported with contract testing allows components to be deployed independently and therefore allows them to split into different, smaller repositories that have their own fast build process.</p>
+<p>Before completing this section, I want to quickly discuss <strong>dependency management</strong>. Most applications will have some third party dependencies and ensuring these dependencies are up to date is crucial to reduce the risk from security vulnerabilities and the technical debt that comes from using outdated packages. While keeping these dependencies up to date is outside the normal <strong>Integrate</strong> stage, tools like <a href="https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide" target="_blank">dependabot</a> can be used to create pull requests that leverage the commit build pipeline and streamline the dependency management process. You should always ensure that dependencies are being tracked and you have a process for regularly updating outdated packages.</p>
+<p>The output from the <strong>Integrate</strong> stage consists of one or more <em>immutable</em> deployable artifacts. Whether the artifacts are executables or a containers, they must be must be versioned to ensure consistency and traceability across environments. Configuration values should be injected via environmental variables and secrets like passwords, certificates, and API keys should be provided securely via integration with a secrets management tool (such as <a href="https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts" target="_blank">Azure Key Vault</a>, <a href="https://aws.amazon.com/secrets-manager/" target="_blank">AWS Secrets Manager</a>, or <a href="https://www.hashicorp.com/products/vault" target="_blank">HashiCorp Vault</a>).</p>
+<h3 id="stage-4-the-release-stage">Stage 4: The Release Stage</h3>
+<p>In a typical definition of the stages of the <strong>DevOps</strong> lifecycle, the stage after the <strong>Integrate</strong> stage would be the <strong>Test</strong> stage. With this classical definition, it is only after successful testing, that the code is prepared for release and the release process usually involves configuring the environment, managing release notes, and ensuring all components are ready for deployment.</p>
+<p>I prefer to reorder the stages of the typical <strong>DevOps</strong> lifecycle so that the <strong>Release</strong> stage immediately follow the <strong>Integrate</strong> stage. I see the key activity of this stage to be the preparation of a pre-release environment. The reasons for reordering the stages are straight forward:</p>
+<ol>
+<li>Tests that an be execute without the artifacts being deployed to an environment (i.e. unit and contract tests) are executed as part of the <strong>Integrate</strong> stage.</li>
+<li>Other types of test that will be run as part of the <strong>DevOps</strong> lifecycle (and which we will discuss when we get to the <strong>QA</strong> stage) require the artifacts under test to be deployed to a test environment.</li>
+</ol>
+<p>The <strong>Release</strong> stage is triggered after a set of artifacts have been created and, as stated earlier, the purpose of the <strong>Release</strong> stage is to prepare an environment so that further testing can be performed. The <strong>Release</strong> stage is the first stage in the <strong>DevOps</strong> lifecycle where infrastructure code is executed and tested. As with the <strong>Integrate</strong> stage, the <strong>Release</strong> stage can and should be fully automated.</p>
+<p>The precise trigger for the <strong>Release</strong> stage can vary depending on whether we are releasing to a <em>static</em> or <em>ephemeral</em> environment.</p>
+<p>A static environment is a persistent, long-lived environment that remains in place for an extended period. This type of environment is used for well-defined stages of the software development lifecycle, such as development, testing, staging, or production. Typically, there is only one fixed static environment available for the <strong>Release</strong> stage, which introduces limitations on throughput. This scarcity means releases must be queued and tested sequentially, or testing must be scheduled at specific times, both of which can cause problems:</p>
+<ul>
+<li><strong>Sequential testing</strong> can create significant delays in identifying issues if changes from multiple teams are competing for the same testing environment.</li>
+<li><strong>Scheduled testing</strong> can also cause delays due to infrequent test runs and can complicate defect identification, as multiple changes from different teams may be tested simultaneously, making it hard to pinpoint the root cause of issues.</li>
+</ul>
+<p>An ephemeral environment is a short-lived, temporary environment that is created on-demand and destroyed after use. Ephemeral environments can address some of the limitations of static environments as they allowing changes to be tested in isolation and multiple changes can be tested in parallel by spinning up multiple environment. This ultimately leads to faster feedback loops and a more efficient development process.</p>
+<p>Static and ephemeral environments can be used together. An ephemeral environment can be initially created to test a release and when successfully tested the release can be promoted to a static environment for manual testing or demos.</p>
+<p>Failure of this stage feeds back in to the <strong>Develop</strong> stage where the code must be adjusted to address the failure.</p>
+<p>The output from the <strong>Release</strong> stage consists of an environment with the latest versions of deployable artifacts.</p>
+<h3 id="stage-5-the-qa-stage">Stage 5: The QA Stage</h3>
+<p>I prefer to define this stage as the <strong>QA</strong> stage rather than the <strong>Test</strong> stage. Testing is overused and occurs at both the <strong>Integrate</strong> and <strong>QA</strong> stages. Quality assurance is a broader discipline than testing that focuses on ensuring the overall quality of the software. And, even though this is the <strong>QA</strong> stage where most QA activities are executed, quality assurance engineers must be involved in every stage of the software development lifecycle to ensures that each stage of the process contributes to the overall quality of the solution.</p>
+<p>The <strong>QA</strong> stage is triggered when a new release is made available on an environment. The purpose of the <strong>QA</strong> stage is to verify that the changes applied to the environment are valid and have not introduced any regressions. A typical <strong>QA</strong> stage may involved the follow activities:</p>
+<ul>
+<li><strong>Integration testing</strong>. Integration tests aim to ensure that two or more system components work together as intended. This includes testing interactions between internal components, whether through direct API calls or via an intermediate messaging system, as well as interactions between internal components and external services (such as external APIs, databases, file stores, email systems, and message buses). The goal of integration testing is to take a broader view of the system and prevent regressions on a higher level. Integration testing via APIs is done using HTTP tools (such as <a href="https://jmeter.apache.org/" target="_blank">JMeter</a>, <a href="https://www.postman.com/" target="_blank">Postman</a> or <a href="https://insomnia.rest/" target="_blank">Insomnia</a>) or other framework specific tooling that simulate external requests to a service (such as <a href="https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests" target="_blank">WebApplicationFactory</a> for ASP.NET application or <a href="https://www.nuget.org/packages/AzureFunctions.Testing" target="_blank">FunctionApplicationFactory</a> for Azure Functions)</li>
+<li><strong>End-to-end testing</strong>. These types of test involve simulating real user scenarios via the backend APIs of the entire system. The goal of end-to-end testing is to ensure the entire software application is production-ready and avoid risks post-release. End-to-end tests are valuable, but are the most complicated type of test to set up and maintain. Because end-to-end testing operates at the API layer, it typically uses the same tools as integration testing.</li>
+<li><strong>UI testing</strong>. Extends end-to-end testing with the addition of testing behaviour through a user interface such as a mobile application or web interface. UI tests generally require more set up than end-to-end API tests and are often much slower to execute. UI tests are typically designed and executed via automation frameworks such as <a href="https://www.cypress.io/" target="_blank">Cypress</a>, <a href="https://www.selenium.dev/" target="_blank">Selenium</a> or <a href="https://playwright.dev/dotnet/" target="_blank">Playwright</a>.</li>
+<li><strong>Performance testing</strong>. Most of the testing we have discussed so far is designed to ensure the functional correctness of a system. Performance tests allow us to verify other cross-functional requirements (such as response time) are being met when a system is under load. Performance testing is typically done using tools such as <a href="https://k6.io/" target="_blank">K6</a>, <a href="https://www.artillery.io/" target="_blank">Artillery</a>, and <a href="https://learn.microsoft.com/en-us/azure/load-testing/" target="_blank">Azure Load Testing</a>.</li>
+<li><strong>Accessibility testing</strong>. Ensures that the application is usable by people with a wide range of disabilities. The goal is to verify that the application meets accessibility standards and guidelines, such as the <a href="https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines" target="_blank">Web Content Accessibility Guidelines</a>, ensuring that it can be accessed and navigated by individuals with visual, auditory, physical, speech, cognitive, or neurological disabilities. <a href="https://github.com/dequelabs/axe-core" target="_blank">Axe</a> is an open source tool that can be used for accessibly testing and seamlessly integrates with UI testing frameworks via extensions such as <a href="https://github.com/component-driven/cypress-axe" target="_blank">Cypress-Axe</a>,  <a href="https://github.com/dequelabs/axe-core-nuget/blob/develop/packages/selenium/README.md" target="_blank">axe-core-nuget for Selenium</a>, and <a href="https://github.com/dequelabs/axe-core-nuget/blob/develop/packages/playwright/README.md" target="_blank">axe-core-nuget for Playwright</a>.</li>
+<li><strong>Dynamic security analysis testing</strong>. DAST is a type of security testing that focuses on identifying vulnerabilities in a running application. Tools such as the <a href="https://www.zaproxy.org/" target="_blank">OWAP Zed Attack Proxy</a> can be run in a <a href="https://www.zaproxy.org/docs/desktop/start/features/pscan/" target="_blank">passive</a>mode to identify security vulnerabilities as part of API or UI testing. <a href="https://www.zaproxy.org/docs/desktop/start/features/ascan/" target="_blank">Active scanning</a> should also be executed to identify additional vulnerabilities.</li>
+</ul>
+<p>If we consider the testing pyramid then we can make some key observations about the intentions of the types of tests that are executed during the <strong>QA</strong> stage.</p>
+<p><img src="TheTestPyramid.png" class="img-fluid" alt="" /></p>
+<ol>
+<li>Integration, end-to-end and UI tests increase confidence that the system is performing correctly.</li>
+<li>These types of tests, while extremely valuable, are slow to execute, difficult to create and maintain, and are fragile to change in the system.</li>
+<li>The Test Pyramid suggests that as you move up the pyramid, the number of tests should decrease as the scope and complexity of what is being tested increases.</li>
+<li>This best practices approach ensures that your test suite is fast, cost-effective, and comprehensive, with the majority of testing focused on the foundational unit and contract tests, supplemented by integration, end-to-end, and UI tests to cover key interactions and user workflows.</li>
+</ol>
+<p>As with the <strong>Integrate</strong> and <strong>Release</strong> stages, the <strong>QA</strong> stage can and should be fully automated. Failure of this stage feeds back in to the <strong>Develop</strong> stage where the code must be adjusted to address the failure. Resolving failures that arise in the <strong>QA</strong> stage can be difficult due to the complexity and fragility of the tests. When failure are detected by the <strong>QA</strong> stage, it is usually a good idea to replicate the problem with a low level unit or contract tests to ensure the regression is detected earlier in the process in the future.</p>
+<p>As we stated above, the <strong>QA</strong> stage should be fully automated. While manual exploratory testing is still valuable for functional UI testing, DAST, and accessibility, it is slow and can hinder continuous delivery. Therefore, manual testing cannot be included in the <strong>DevOps</strong> lifecycle but should be treated as a supplementary and parallel activity.</p>
+<p>The output from the <strong>QA</strong> stage consists of a version of the deployable artifacts of a system that have been verified in a test environment.</p>
+<h3 id="stage-6-the-deploy-stage">Stage 6: The Deploy Stage</h3>
+<p>The <strong>Deploy</strong> stage is triggered after a set of artifacts have verified in a test environment during the <strong>QA</strong> stage.</p>
+<p>In the <strong>Deploy</strong> stage, the application is deployed to the production environment. Typically this involves executing the same pipelines that were used in the <strong>Release</strong> stage against a production environment. Reuse of existing pipelines that have already been used and validated in previous stages reduces the risk of deployment failures.</p>
+<p>In addition <a href="https://en.wikipedia.org/wiki/Blue%E2%80%93green_deployment" target="_blank">Blue–green deployment</a> or <a href="https://en.wikipedia.org/wiki/Feature_toggle#Canary_release" target="_blank">Canary release</a> strategies can be used to reduce the risk of a production deployment failures further and provide a path to rollback any changes.</p>
+<p>After deployment as <strong>smoke test</strong> may be executed. A <strong>smoke test</strong> is a preliminary test conducted to quickly evaluate whether the basic and most critical functions of a software build or system are working as expected. It is often referred to as a <strong>build verification test</strong> or <strong>sanity testing</strong>. The term originates from hardware testing, where devices were powered on and checked for &quot;smoke&quot; to ensure they wouldn't fail catastrophically.</p>
+<p>The <strong>Deploy</strong> stage should be fully automated (including any <strong>smoke test</strong>). Failure of this stage feeds back in to the <strong>Develop</strong> stage where the code must be adjusted to address the failure. In addition failures should result in a rollback to ensure the system continues to be available to users.</p>
+<p>The output from the <strong>Deploy</strong> stage consists of a version of the application that is live and available to end users.</p>
+<h3 id="stage-7-the-operate-and-monitor-stage">Stage 7: The Operate and Monitor Stage</h3>
+<p>I prefer to combine the <strong>Operate</strong> and <strong>Monitor</strong> stages into a single <strong>Operate and Monitor</strong> stage. In the typical <strong>DevOps</strong> lifecycle these stages do not appear to be distinct activities and have significant overlap in responsibilities.</p>
+<p>Unlike other stages in the <strong>DevOps</strong> lifecycle, the <strong>Operate and Monitor</strong> stage is a continuous process. While some activities may be triggered after a set of artifacts have been deployed and verified in the production environment during the <strong>Deploy</strong> stage, many more of the activities associated with this stage run continuously in the background.  Typical activities of the <strong>Operate and Monitor</strong> stage include:</p>
+<ul>
+<li><strong>Deployment management</strong>. If continuous deployment is not being implemented then deployment on new code and features must be managed manually. This includes coordinating release schedules, managing the deployment pipeline, and implementing rollback strategies in case of deployment failures (<strong>Operate</strong>).</li>
+<li><strong>Incident detection and response</strong>. Automated systems detect incident (<strong>Monitor</strong>). These incidents are addressed, escalated, or resolved by the operational team (<strong>Operate</strong>).</li>
+<li><strong>Alerting and notification</strong>. Alerts are generated when predefined thresholds or anomalies are detected (<strong>Monitor</strong>). These alerts are responded to and corrective actions are taken (<strong>Operate</strong>).</li>
+<li><strong>Performance and availability management</strong>. Performance and health data is collected and analysed (<strong>Monitor</strong>). The insights gained allow operators to optimise configurations, scale resources, or adjust settings for better performance (<strong>Operate</strong>).</li>
+<li><strong>System Maintenance</strong>: Regular system updates, patching, and software maintenance are managed (<strong>Operate</strong>). This is critical for ensuring that the system remains secure and up to date.</li>
+<li><strong>Disaster Recovery</strong>: Handle disaster recovery procedures, ensuring business continuity in the case of critical system failures (<strong>Operate</strong>). Planning for and executing these recovery steps is often triggered by alerts (<strong>Monitor</strong>).</li>
+</ul>
+<p>Choosing cloud based infrastructure and implementing appropriate automation can significantly reduce the management overhead of systems operations. Deployments and rollbacks can be fully automated by implementing a continuous deployment process. System maintenance is the responsibility of the cloud provider for cloud based infrastructure. Cloud native application can be scaled dynamically, based on system usage and load, or manually, by making simple configuration changes. Cloud solutions also provide comprehensive infrastructure monitoring capabilities.</p>
+<p>Given that an appropriate <a href="https://en.wikipedia.org/wiki/Observability_(software)" target="_blank">Observability</a> strategy has been implemented, the output from the <strong>Operate and Monitor</strong> stage consists of a collection of aggregated logs and metrics correlated across systems and services for performance, error tracking, and security purposes. As well as enabling the stage and supporting automated tracking of system performance, security, and health these logs and metrics provide valuable insights into how the system performs from the user’s perspective.</p>
+<h3 id="stage-8-the-subsequent-plan-stage">Stage 8: The (Subsequent) Plan Stage</h3>
+<p>During the initial planning stage we are limited to refining the outputs of the <strong>Incept</strong> stage. In subsequent planning stages we have access to additional metrics. As well as outputs that result from production monitoring feedback, we also need to <a href="https://www.amazon.co.uk/Extreme-Programming-Explained-Embrace-Change/dp/0321278658" target="_blank">Embrace Change</a>. Change is inevitable in software projects - requirements evolve, technologies change, new regulations are introduced, and business strategies and objectives change over time.</p>
+<p>As well as refining the work to be done, subsequent <strong>Plan</strong> stages may also track how quickly the work is being done. This may then result in (some limited) changes to team size and structure as long as we take into account the general principles of <a href="https://en.wikipedia.org/wiki/Brooks%27s_law" target="_blank">Brooks's law</a> i.e. people added to a project take time to become productive, increased headcount increases communication overhead, and adding more people only works if tasks are divisible. I am particularly fond of quoting Brooks on the limited divisibility of some tasks:</p>
+<blockquote class="blockquote">
+<p>While it takes one woman nine months to make one baby, nine women can't make a baby in one month.</p>
+</blockquote>
+<p>As with the initial <strong>Plan</strong> stage, the main output of the subsequent <strong>Plan</strong> stages are a set of refined and prioritised work items to be delivered in the next iteration. In addition, outputs may include a plan to adjust team resources.</p>
+<h2 id="summary">Summary</h2>
+<p>I hope this article has given you a deeper understanding of the stages of the <strong>DevOps</strong> lifecycle. I think by viewing the stages of the <strong>DevOps</strong> lifecycle through the lens of modern cloud native application development we can more clearly define the process and activities involved in each stage. Of course this is my view based on my experience and your views may be different. I'm open to expanding my view and if you feel that you have some insights worth sharing please <a href="https://www.linkedin.com/in/lee-sanderson/" target="_blank">contact me</a> to continue the conversation.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
