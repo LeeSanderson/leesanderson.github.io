@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Thu, 05 Dec 2024 10:02:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 05 Dec 2024 12:54:09 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -32,6 +32,14 @@
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/StylesOfTestDrivenDevelopment.html</link>
       <title>Styles of Test Driven Development</title>
       <pubDate>Wed, 06 Oct 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Missing data is a common challenge in data engineering. In this post I examine the different types of missing data and the impact they have on data engineering. We will discuss practical strategies for identifying and handling missing data with real-world examples.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html</guid>
+      <link>https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html</link>
+      <title>Data Engineering Basics: Dealing With Missing Data</title>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

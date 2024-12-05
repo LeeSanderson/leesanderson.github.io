@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Data Engineering Basics: Dealing With Missing Data - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="Missing data is a common challenge in data engineering. In this post I examine the different types of missing data and the impact they have on data engineering. We will discuss practical strategies for identifying and handling missing data with real-world examples.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="DataEngineering MissingData MCAR MAR MNAR ML">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Data Engineering Basics: Dealing With Missing Data">
+    <meta name="twitter:description" content="Missing data is a common challenge in data engineering. In this post I examine the different types of missing data and the impact they have on data engineering. We will discuss practical strategies for identifying and handling missing data with real-world examples.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Data Engineering Basics: Dealing With Missing Data">
+    <meta name="description" property="og:description" content="Missing data is a common challenge in data engineering. In this post I examine the different types of missing data and the impact they have on data engineering. We will discuss practical strategies for identifying and handling missing data with real-world examples.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Dec 03, 2024</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">DataEngineering</span>
+        <span class="badge badge-info">MissingData</span>
+        <span class="badge badge-info">MCAR</span>
+        <span class="badge badge-info">MAR</span>
+        <span class="badge badge-info">MNAR</span>
+        <span class="badge badge-info">ML</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="data-engineering-basics-dealing-with-missing-data" class="sr-only" data-hero-heading="true">Data Engineering Basics: Dealing With Missing Data</h1>
+<img class="hero-image" src="DealingWithMissingData.png" alt="Data Engineering Basics: Dealing With Missing Data"/>
+<p>In the world of data engineering, missing data is not an exception - it is an inevitable reality. Whether you are working with customer surveys, IoT sensor readings, or enterprise data pipelines, encountering incomplete datasets is almost guaranteed. Left unaddressed, missing data can compromise the quality of analytics, skew machine learning models, and disrupt downstream processes.</p>
+<p>Handling missing data is not just about patching gaps - it is about understanding <em>why</em> the data is missing and determining the best way to manage it. Is the missing data random, or does it reveal a deeper pattern? Should you delete, impute, or model it? The answers to these questions depend on the type of <em>missingness</em> and the context of the dataset.</p>
+<p>This article dives into the nuances of dealing with missing data in data engineering. We’ll explore the different types of missingness, the challenges they create, and practical strategies for handling them at scale. Whether you’re building ETL pipelines, managing data quality, or optimising machine learning workflows, this guide will equip you with the knowledge and tools to turn missing data from a problem into an opportunity for insight.</p>
+<h2 id="what-is-missing-data">What is Missing Data?</h2>
+<p>Missing data refers to the absence of a value in a dataset where one is expected. It is a common occurrence in data engineering, arising from various reasons such as system errors, manual omissions, or unrecorded measurements. Understanding missing data is critical because its presence can distort analysis, skew machine learning models, and lead to poor decision-making if not handled appropriately.</p>
+<p>Not all missing data is the same. To effectively manage it, it’s important to categorize it based on the reason for its absence. Missing data is typically classified into three main types: Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR).</p>
+<h3 id="missing-completely-at-random-mcar">Missing Completely at Random (MCAR)</h3>
+<p>In MCAR scenarios, the missingness of the data is entirely independent of both observed and unobserved data. The absence of data has no discernible pattern or relationship to other values in the dataset.</p>
+<p>For example, during a medical survey a technical glitch may have caused random questions to go unanswered by some respondents.</p>
+<p>MCAR is the least problematic type of missingness because the missing values do not introduce bias. Simple solutions like ignoring the missing data or basic imputation techniques are often sufficient.</p>
+<h3 id="missing-at-random-mar">Missing at Random (MAR)</h3>
+<p>In MAR scenarios, the probability of missingness is related to other <strong>observed variables</strong> but not the value of the missing data itself.</p>
+<p>For example, older respondents in a medical survey are less likely to report their income, but income is unrelated to their health outcomes. We classify this as MAR because:</p>
+<ul>
+<li>The probability of income being missing depends on an observed variable (age).</li>
+<li>The missingness is not directly tied to the missing value (income) or any other unobserved variables.</li>
+</ul>
+<p>MAR is more complex to handle than MCAR but can often be managed using advanced imputation techniques, leveraging the observed variables to predict and fill in the missing values.</p>
+<h3 id="missing-not-at-random-mnar">Missing Not at Random (MNAR)</h3>
+<p>In MNAR scenarios, the missingness is directly related to the <strong>value of the missing data itself</strong>, or to unobserved factors.</p>
+<p>For example, patients with severe symptoms might be more likely to skip reporting their condition due to embarrassment. We classify this as MNAR because:</p>
+<ul>
+<li>The likelihood of not reporting symptoms increases as the severity of the symptoms increases.</li>
+<li>In this case, the <strong>value of the missing data (symptom severity)</strong> is directly influencing whether or not the data is missing.</li>
+<li>If we look at other variables, such as patient demographics or medical history, they don’t explain the missingness. For example, both younger and older patients might skip reporting severe symptoms, meaning the missingness is not related to an observed variable like age or gender.</li>
+</ul>
+<p>MNAR is the most challenging type of missingness because it introduces systematic bias. Handling MNAR often requires additional domain knowledge or external data sources to model the missingness effectively.</p>
+<p>Understanding these types of missing data is the foundation for deciding how to handle them in your data pipelines. Each type requires a different approach, and misclassification can lead to incorrect assumptions and flawed analyses. The next sections will explore the challenges missing data creates and how to effectively address them in data engineering workflows.</p>
+<h2 id="the-challenge-of-missing-data">The Challenge of Missing Data</h2>
+<p>Missing data introduces significant challenges across data pipelines, analytics, and machine learning workflows. They can often compromise the reliability and accuracy of insights. These challenges can cascade throughout systems, creating disruptions that are both costly and difficult to resolve.</p>
+<p>Two key areas where missing data can lead to problems are in data pipelines and data modelling.</p>
+<h3 id="data-pipelines">Data Pipelines</h3>
+<p>In data pipelines, missing values can break workflows by causing schema mismatches, type errors, or unexpected null values in transformations. For instance, if a pipeline processing customer transaction data encounters rows with missing fields, it may fail to load into downstream databases, halting critical business processes.</p>
+<p>Additionally, missing data can propagate through interconnected systems, leading to corrupted downstream datasets. For example, a missing revenue figure in a source system could result in flawed financial reports or inaccurate KPIs. Addressing these issues often requires complex error-handling logic, increasing development time and system maintenance overhead.</p>
+<h3 id="data-modelling">Data Modelling</h3>
+<p>In data modelling, whether predictive analytics or machine learning models, the impact of missing data is equally profound. Missing values reduce the usable dataset size, which can lead to unrepresentative analysis. For example, in a marketing campaign, missing income data for a particular demographic might result in skewed customer segmentation, misinforming future strategies.</p>
+<p>Similarly, machine learning models trained on incomplete data are prone to bias and underperforming when deployed in real-world scenarios. A model predicting loan defaults could incorrectly classify applicants if those with high default probabilities have missing credit scores. Furthermore, missing data complicates feature engineering by introducing noise and calculating averages or aggregations from incomplete datasets often leads to misleading results.</p>
+<h2 id="handling-missing-data">Handling Missing Data</h2>
+<p>Effectively managing missing data is crucial for maintaining the quality and integrity of your datasets. The process begins with identifying missing values, diagnosing their cause, and then selecting the appropriate techniques to handle them. Depending on the type of missingness (MCAR, MAR, or MNAR) the approach can vary significantly.</p>
+<h3 id="identifying-missing-data">Identifying Missing Data</h3>
+<p>The first step in handling missing data is to identify where and how data is missing. In <strong>Pandas</strong>, this can be done using the <code>isna()</code> or <code>isnull()</code> functions.</p>
+<p>It can be confusion that these two functions that do exactly the same thing, but if we check the <a href="https://github.com/pandas-dev/pandas/blob/0409521665bd436a10aea7e06336066bf07ff057/pandas/core/dtypes/missing.py#L109" target="_blank">source code of Pandas</a> we can see that <code>isnull()</code> is just an alias for <code>isna()</code>.  As a best practice, I always prefer to use <code>isna()</code> over <code>isnull()</code>. In <strong>Pandas</strong> there are other similar method names like <code>dropna()</code> and  <code>fillna()</code> that handles missing values and it always helps to remember easily.</p>
+<pre><code class="language-python">import pandas as pd
+
+# Sample data
+data = {'age': [25, 30, None, 40, 50],
+        'income': [50000, None, 60000, 70000, 80000]}
+df = pd.DataFrame(data)
+
+# Identify missing values
+missing_data = df.isna()
+print(missing_data)
+</code></pre>
+<p>The output will highlight where the <code>None</code> values (missing) are located in the dataset. You can also use <code>df.isna().sum()</code> to get a quick summary of how many missing values exist in each column.</p>
+<h3 id="diagnosing-the-cause-of-missing-data">Diagnosing the Cause of Missing Data</h3>
+<p>Diagnosing the cause of missing data is critical for determining the best approach to handle it. As we discussed earlier, missing data can be classified into three categories:</p>
+<ul>
+<li><strong>MCAR (Missing Completely at Random)</strong>: Missing data is unrelated to other observed or unobserved values.</li>
+<li><strong>MAR (Missing at Random)</strong>: Missingness is related to observed data but not to the missing data itself.</li>
+<li><strong>MNAR (Missing Not at Random)</strong>: Missingness depends on the value of the missing data itself or other unobserved factors.</li>
+</ul>
+<p>Understanding the cause will help guide your decisions on whether to impute, drop, or flag missing data. This often involves data exploration, visual analysis, or domain expertise to spot patterns.</p>
+<h4 id="littles-mcar-test">Little's MCAR Test</h4>
+<p><a href="https://wiki.q-researchsoftware.com/wiki/Missing_Data_-_Little%27s_MCAR_Test" target="_blank">Little's MCAR test</a> is used to assess whether data is <strong>Missing Completely at Random (MCAR)</strong>. The test evaluates if the probability of missing data is independent of the observed data values. If the test result is <strong>non-significant</strong> (i.e., p-value &gt; 0.05), it suggests that the data is MCAR.</p>
+<p>Here is an implementation of the test in Python:</p>
+<pre><code class="language-python">from scipy.stats import chi2
+
+def little_mcar_test(data : pd.DataFrame) -> float:
+    """
+    Implementation of Little's MCAR test
+    
+    Parameters
+    ----------
+    data : pd.DataFrame
+        Dataset with missing values
+
+    Returns
+    -------
+    pvalue : float
+        The p-value of a chi-square hypothesis test. 
+        A p-value > 0.05 suggests that missing values in the column are 
+        likely MCAR.
+    """
+    overall_means = data.mean()
+    variances = data.var()
+    chi_squared_stat = 0
+    degrees_of_fredom = 0
+
+    pattern_groups = data.groupby(data.apply(lambda row: tuple(row.isna()), axis=1))
+    for pattern, group in pattern_groups:
+        observed_columns = ~np.array(pattern)
+        group_means = group.mean()
+        residuals = group_means[observed_columns] - overall_means[observed_columns]
+        
+        group_size = len(group)
+        group_variance = variances[observed_columns]
+        chi_squared_contribution = np.sum((group_size * (residuals ** 2)) / group_variance)
+
+        chi_squared_stat += chi_squared_contribution
+        degrees_of_fredom += len(observed_columns.nonzero()[0]) - 1 
+
+    p_value  = 1- chi2.cdf(chi_squared_stat, degrees_of_fredom)
+    return p_value</code></pre>
+<p>Using this test is straight-forward.</p>
+<p>First we generate a data set with random <code>age</code> and <code>income</code> columns where <code>income</code> is correlated with <code>age</code> (i.e. the older the person the more likely they will have a higher income)</p>
+<pre><code class="language-python">import random
+
+# Generate 100 samples of ages and incomes where income is correlated with age (with some variance)
+min_age, max_age, number_of_samples = 20, 80, 100
+ages = [random.randint(min_age, max_age) for _ in range(number_of_samples)]
+min_income, max_income, income_variance = 30000, 80000, 10000
+income_range = max_income - min_income
+age_range = max_age - min_age
+min_base_income, max_base_income = min_income - income_variance, min_income + income_variance
+incomes = [
+    int(random.randint(min_base_income, max_base_income) + (((age - min_age) / age_range) * income_range))
+    for age in ages
+]</code></pre>
+<p>Next we update the <code>income</code> values and randomly set 10% to missing</p>
+<pre><code class="language-python"># Set 10% of the values to None (missing) randomly
+ten_percent_of_incomes = int(0.1 * len(incomes))
+random_indices = random.sample(range(len(incomes)), ten_percent_of_incomes)
+randomly_null_incomes = [None if i in random_indices else income for i, income in enumerate(incomes)]
+
+df = pd.DataFrame({'age': ages, 'income': randomly_null_incomes })
+
+p_value = little_mcar_test(df)
+print(f"Missing values are likely missing completely at random"
+      if p_value > 0.05 else
+      f"Missing values are not missing completly at random")</code></pre>
+<p>As expected (since we randomly set incomes to missing) the output of the MCAR test is:</p>
+<pre><code class="language-text">Missing values are likely missing completely at random
+</code></pre>
+<p>However, if we now update the <code>income</code> so that we randomly update values to missing only if the <code>income</code> is over 70,000 (which is correlated with <code>age</code>) like this:</p>
+<pre><code class="language-python"># Set 70% of the values over 70,000 to None - indicating some correlation between age and missing income
+
+indices_over_70000 = [i for i, income in enumerate(incomes) if income > 70000]
+seventy_percent_of_incomes_over_70000 = int(0.7 * len(indices_over_70000))
+random_indices_over_70000 = random.sample(indices_over_70000, seventy_percent_of_incomes_over_70000)
+randomly_null_incomes_over_70000 = [None if i in random_indices_over_70000 else income for i, income in enumerate(incomes)]
+
+df = pd.DataFrame({'age': ages, 'income': randomly_null_incomes_over_70000 })
+
+p_value = little_mcar_test(df)
+print(f"Missing values are likely missing completely at random"
+      if p_value > 0.05 else
+      f"Missing values are not missing completly at random")</code></pre>
+<p>We now get the output</p>
+<pre><code class="language-text">Missing values are not missing completly at random
+</code></pre>
+<h3 id="handling-mcar-missing-data">Handling MCAR Missing Data</h3>
+<p>For data that is <strong>Missing completely at random (MCAR)</strong>, you can often drop the rows or columns with missing values without introducing significant bias into your analysis, as MCAR data does not show systematic patterns.</p>
+<pre><code class="language-python"># Drop rows with any missing values 
+df_cleaned = df.dropna() 
+print(df_cleaned)</code></pre>
+<p>Alternatively, if the missing values are few and dropping them won't result in losing too much data, you might choose to <strong>impute</strong> the missing values with the column mean, median, or mode.</p>
+<pre><code class="language-python"># Impute missing values with the column mean
+df['age'] = df['age'].fillna(df['age'].mean())
+df['income'] = df['income'].fillna(df['income'].mean())
+print(df)</code></pre>
+<p>This results in the following output. Note that the missing <code>age</code> is calculated as <code>36.25</code> and the missing <code>income</code> value is calculate as <code>60000.0</code></p>
+<pre><code class="language-text">  age income 
+0 25.00 50000.0 
+1 30.00 65000.0 
+2 36.25 60000.0 
+3 40.00 70000.0 
+4 50.00 80000.0
+</code></pre>
+<p>Since MCAR data is random, these simple methods typically suffice without introducing bias.</p>
+<h3 id="handling-mar-missing-data">Handling MAR Missing Data</h3>
+<p>When data is <strong>Missing at random (MAR)</strong>, imputing missing values based on other observed variables is often the best approach. Techniques like <strong>regression imputation</strong> or <strong>k-nearest neighbours (KNN) imputation</strong> are commonly used.</p>
+<pre><code class="language-python"># Imputation using linear regression
+from sklearn.linear_model import LinearRegression
+
+# Sample data
+data = {'age': [25, 30, 35, 40, 50],
+        'income': [50000, None, 60000, 70000, 80000]}
+df = pd.DataFrame(data)
+
+# Assuming we are imputing 'income' based on 'age'
+model = LinearRegression()
+
+# Drop rows with missing 'income' and use 'age' to predict 'income'
+train_data = df.dropna(subset=['income'])
+X_train = train_data[['age']]
+y_train = train_data['income']
+model.fit(X_train, y_train)
+
+# Predict missing 'income' values
+df.loc[df['income'].isnull(), 'income'] = model.predict(df.loc[df['income'].isnull(), ['age']])
+
+print(df)</code></pre><pre><code class="language-python"># Imputation using KNN
+from sklearn.impute import KNNImputer
+
+# Sample data
+data = {'age': [25, 30, 35, 40, 50],
+        'income': [50000, None, 60000, 70000, 80000]}
+df = pd.DataFrame(data)
+
+# Use 2 nearest neighbors to fill missing data.
+knn_imputer = KNNImputer(n_neighbors=2)
+
+df[['age', 'income']] = knn_imputer.fit_transform(df[['age', 'income']])
+print(df)</code></pre><h3 id="handling-mnar-missing-data">Handling MNAR Missing Data</h3>
+<p>Handling <strong>Missing Not at Random (MNAR)</strong> data is the most challenging, as the missingness is related to the value of the missing data itself or some unobserved factor. The best approach often requires domain expertise or external data to model the missingness properly. However, one common strategy is to <strong>impute with a constant</strong> or create a separate indicator variable to flag the missingness.</p>
+<pre><code class="language-python"># Create a flag for missing 'income' data
+df['income_missing'] = df['income'].isnull().astype(int)
+
+# Impute 'income' with a constant or domain-based value
+df['income'] = df['income'].fillna(0)
+print(df)</code></pre>
+<p>Another strategy is <strong>Multiple Imputation by Chained Equations (MICE)</strong>, which accounts for uncertainty in the missing data by creating multiple plausible imputations.</p>
+<pre><code class="language-python">from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+data = {
+    'age': [25, 30, None, 40, 50],
+    'income': [50000, 60000, None, 70000, 80000],
+    'bmi': [22.5, 24.0, 23.5, None, 27.0]
+}
+
+df = pd.DataFrame(data)
+
+# Apply MICE to impute missing values. Note: MICE works only on numeric data
+mice_imputer = IterativeImputer()
+df_imputed = df.copy()
+df_imputed.iloc[:, :] = mice_imputer.fit_transform(df)
+
+print(df)
+print(df_imputed)</code></pre><h2 id="conclusions">Conclusions</h2>
+<p>Handling missing data is a critical skill for data engineers, as its impact ripples across pipelines, analytics, and machine learning models. By identifying the type of missingness (MCAR, MAR, or MNAR), diagnosing its root cause, and applying suitable techniques like imputation, flagging, or advanced machine learning models, you can ensure data integrity and robustness.</p>
+<p>Modern tools such as <code>Pandas</code> and <code>scikit-learn</code> make it easier to address missing data systematically. However, the best approach depends on the specific use case, data structure, and the downstream application.</p>
+<p>In practice, handling missing data is not a one-size-fits-all task. It requires a deep understanding of the data, domain knowledge, and iterative experimentation. Embracing best practices and leveraging scalable solutions ensures your data pipelines are resilient and your insights reliable.</p>
+<h3 id="further-reading-resources">Further Reading &amp; Resources</h3>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/user_guide/missing_data.html" target="_blank">Pandas Documentation: Working with missing data</a></li>
+<li><a href="https://scikit-learn.org/1.5/modules/impute.html" target="_blank">Scikit-learn User Guide: Imputation of Missing Values</a></li>
+</ul>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
