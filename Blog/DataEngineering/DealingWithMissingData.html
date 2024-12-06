@@ -57,7 +57,7 @@
         <main role="main" class="pb-3">
             
 <div class="article-header">
-    <span class="article-date">Dec 03, 2024</span>
+    <span class="article-date">Dec 06, 2024</span>
     
     <span class="article-tags">
         <span class="badge badge-info">DataEngineering</span>
@@ -133,6 +133,83 @@ print(missing_data)
 <li><strong>MNAR (Missing Not at Random)</strong>: Missingness depends on the value of the missing data itself or other unobserved factors.</li>
 </ul>
 <p>Understanding the cause will help guide your decisions on whether to impute, drop, or flag missing data. This often involves data exploration, visual analysis, or domain expertise to spot patterns.</p>
+<h4 id="example-test-data">Example Test Data</h4>
+<p>In the following sections we will define some tests for detecting whether data is missing completely at random. To evaluate these tests we will use two data sets</p>
+<p>First we generate a base data set with random <code>age</code> and <code>income</code> columns where <code>income</code> is correlated with <code>age</code> (i.e. the older the person the more likely they will have a higher income)</p>
+<pre><code class="language-python">import random
+
+# Generate 100 samples of ages and incomes where income is correlated with age (with some variance)
+min_age, max_age, number_of_samples = 20, 80, 100
+ages = [random.randint(min_age, max_age) for _ in range(number_of_samples)]
+min_income, max_income, income_variance = 30000, 80000, 10000
+income_range = max_income - min_income
+age_range = max_age - min_age
+min_base_income, max_base_income = min_income - income_variance, min_income + income_variance
+incomes = [
+    int(random.randint(min_base_income, max_base_income) + (((age - min_age) / age_range) * income_range))
+    for age in ages
+]</code></pre>
+<p>Now we can create a <code>DataFrame</code> with 10% of the <code>income</code> values randomly removed. This will be our baseline <code>DataFrame</code> for testing when we expect data to be missing completely at random.</p>
+<pre><code class="language-python"># Set 10% of the values to None (missing) randomly
+ten_percent_of_incomes = int(0.1 * len(incomes))
+random_indices = random.sample(range(len(incomes)), ten_percent_of_incomes)
+randomly_null_incomes = [None if i in random_indices else income for i, income in enumerate(incomes)]
+
+df_randomly_missing_incomes = pd.DataFrame({'age': ages, 'income': randomly_null_incomes })</code></pre>
+<p>Finally we create a second <code>DataFrame</code>  where 70% of the income values over £70,000 are randomly removed. This will be our  <code>DataFrame</code> for testing when we expect data <em>not</em> to be missing completely at random (since higher incomes are correlated to higher age because of the way we've defined our data).</p>
+<pre><code class="language-python"># Set 70% of the values over 70,000 to None - indicating some correlation between age and missing income
+
+indices_over_70000 = [i for i, income in enumerate(incomes) if income > 70000]
+seventy_percent_of_incomes_over_70000 = int(0.7 * len(indices_over_70000))
+random_indices_over_70000 = random.sample(indices_over_70000, seventy_percent_of_incomes_over_70000)
+randomly_null_incomes_over_70000 = [None if i in random_indices_over_70000 else income for i, income in enumerate(incomes)]
+
+df_randomly_missing_high_incomes = pd.DataFrame({'age': ages, 'income': randomly_null_incomes_over_70000 })
+</code></pre><h4 id="detecting-mcar-with-t-tests">Detecting MCAR with t-tests</h4>
+<p>A <a href="https://en.wikipedia.org/wiki/Student%27s_t-test" target="_blank">t-test</a> can be used to assess whether missing values in a dataset are missing completely at random by comparing the distributions of observed and missing data for a specific variable. The general idea is to test whether the presence of missing data in one variable is independent of another variable's value, suggesting randomness.</p>
+<p>Here is an implementation of the test in Python that allows us to test whether missing data is correlated with a particular column:</p>
+<pre><code class="language-python">from scipy.stats import ttest_ind
+
+def mcar_t_tests(dataset: pd.DataFrame, target_column: str, mcar_threshold = 0.05) -> pd.DataFrame:
+    """
+    Performs t-tests for MCAR for a give column
+    """
+    column_names = list(df.columns)
+    column_names.remove(target_column)
+    mcar_results = pd.DataFrame(
+        columns=["t_stat", "p_value", "is_mcar", "sample_too_small"],
+        index=column_names,
+    )
+
+    observed_rows = dataset[dataset[target_column].notna()]
+    missing_rows = dataset[dataset[target_column].isna()]
+
+    for paired_column in column_names:              
+        group_observed = observed_rows[paired_column].dropna()
+        group_missing = missing_rows[paired_column].dropna()
+        if len(group_observed) > 1 and len(group_missing) > 1:  # Ensure enough data
+            t_stat, p_value = ttest_ind(group_observed, group_missing, equal_var=False)
+            mcar_results.loc[paired_column] = [ t_stat, p_value, p_value > mcar_threshold, False ]
+        else:
+            mcar_results.loc[paired_column] = [ 0.0, 0.0, False, True ]
+
+    return mcar_results</code></pre>
+<p>Using this test for the <code>income</code> column is straight-forward. For our <code>df_randomly_missing_incomes</code> <code>DataFrame</code> we can simply:</p>
+<pre><code class="language-python">print(mcar_t_tests(df_randomly_missing_incomes, "income"))</code></pre>
+<p>Which should output something like this:</p>
+<pre><code class="language-text">	t_stat   p_value  is_mcar sample_too_small 
+age 0.364443 0.722076 True    False
+</code></pre>
+<p>Note the <code>t_stat</code> and <code>p_value</code> number might be different if you run this due to the randomness of the input. The important thing here is that <code>is_mcar</code> should return <code>True</code> to indicate our random data is truly completely random.</p>
+<p>We can evaluate our <code>df_randomly_missing_high_incomes</code> <code>DataFrame</code> in a similar way:</p>
+<pre><code class="language-python">print(mcar_t_tests(df_randomly_missing_high_incomes, "income"))</code></pre>
+<p>Which results in:</p>
+<pre><code class="language-text">	t_stat    p_value is_mcar sample_too_small 
+age -8.983374 0.0     False   False
+</code></pre>
+<p>Again, your numbers may vary but  <code>is_mcar</code> should return <code>False</code> to indicate our data is not completely random and there is some correlation between <code>income</code> and <code>age</code>.</p>
+<p>The t-test assumes normality and equal variances between groups. If these assumptions are violated, the test's results might be inaccurate.</p>
+<p>This approach only provides indirect evidence for MAR and doesn't conclusively establish it. For a robust assessment, you might also consider other techniques like Little's MCAR test, which specifically tests for MCAR (missing completely at random).</p>
 <h4 id="littles-mcar-test">Little's MCAR Test</h4>
 <p><a href="https://wiki.q-researchsoftware.com/wiki/Missing_Data_-_Little%27s_MCAR_Test" target="_blank">Little's MCAR test</a> is used to assess whether data is <strong>Missing Completely at Random (MCAR)</strong>. The test evaluates if the probability of missing data is independent of the observed data values. If the test result is <strong>non-significant</strong> (i.e., p-value &gt; 0.05), it suggests that the data is MCAR.</p>
 <p>Here is an implementation of the test in Python:</p>
@@ -174,51 +251,21 @@ def little_mcar_test(data : pd.DataFrame) -> float:
 
     p_value  = 1- chi2.cdf(chi_squared_stat, degrees_of_fredom)
     return p_value</code></pre>
-<p>Using this test is straight-forward.</p>
-<p>First we generate a data set with random <code>age</code> and <code>income</code> columns where <code>income</code> is correlated with <code>age</code> (i.e. the older the person the more likely they will have a higher income)</p>
-<pre><code class="language-python">import random
-
-# Generate 100 samples of ages and incomes where income is correlated with age (with some variance)
-min_age, max_age, number_of_samples = 20, 80, 100
-ages = [random.randint(min_age, max_age) for _ in range(number_of_samples)]
-min_income, max_income, income_variance = 30000, 80000, 10000
-income_range = max_income - min_income
-age_range = max_age - min_age
-min_base_income, max_base_income = min_income - income_variance, min_income + income_variance
-incomes = [
-    int(random.randint(min_base_income, max_base_income) + (((age - min_age) / age_range) * income_range))
-    for age in ages
-]</code></pre>
-<p>Next we update the <code>income</code> values and randomly set 10% to missing</p>
-<pre><code class="language-python"># Set 10% of the values to None (missing) randomly
-ten_percent_of_incomes = int(0.1 * len(incomes))
-random_indices = random.sample(range(len(incomes)), ten_percent_of_incomes)
-randomly_null_incomes = [None if i in random_indices else income for i, income in enumerate(incomes)]
-
-df = pd.DataFrame({'age': ages, 'income': randomly_null_incomes })
-
-p_value = little_mcar_test(df)
+<p>Using this test is straight-forward. For our <code>df_randomly_missing_incomes</code> <code>DataFrame</code></p>
+<pre><code class="language-python">p_value = little_mcar_test(df_randomly_missing_incomes)
 print(f"Missing values are likely missing completely at random"
       if p_value > 0.05 else
       f"Missing values are not missing completly at random")</code></pre>
-<p>As expected (since we randomly set incomes to missing) the output of the MCAR test is:</p>
+<p>We get the result:</p>
 <pre><code class="language-text">Missing values are likely missing completely at random
 </code></pre>
-<p>However, if we now update the <code>income</code> so that we randomly update values to missing only if the <code>income</code> is over 70,000 (which is correlated with <code>age</code>) like this:</p>
-<pre><code class="language-python"># Set 70% of the values over 70,000 to None - indicating some correlation between age and missing income
-
-indices_over_70000 = [i for i, income in enumerate(incomes) if income > 70000]
-seventy_percent_of_incomes_over_70000 = int(0.7 * len(indices_over_70000))
-random_indices_over_70000 = random.sample(indices_over_70000, seventy_percent_of_incomes_over_70000)
-randomly_null_incomes_over_70000 = [None if i in random_indices_over_70000 else income for i, income in enumerate(incomes)]
-
-df = pd.DataFrame({'age': ages, 'income': randomly_null_incomes_over_70000 })
-
-p_value = little_mcar_test(df)
+<p>As expected (since we randomly set incomes to missing) the output of the MCAR test is:</p>
+<p>And for our <code>df_randomly_missing_high_incomes</code> <code>DataFrame</code></p>
+<pre><code class="language-python">p_value = little_mcar_test(df_randomly_missing_high_incomes)
 print(f"Missing values are likely missing completely at random"
       if p_value > 0.05 else
       f"Missing values are not missing completly at random")</code></pre>
-<p>We now get the output</p>
+<p>We now get the expected output:</p>
 <pre><code class="language-text">Missing values are not missing completly at random
 </code></pre>
 <h3 id="handling-mcar-missing-data">Handling MCAR Missing Data</h3>
