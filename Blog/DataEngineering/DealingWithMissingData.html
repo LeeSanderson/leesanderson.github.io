@@ -209,7 +209,7 @@ age -8.983374 0.0     False   False
 </code></pre>
 <p>Again, your numbers may vary but  <code>is_mcar</code> should return <code>False</code> to indicate our data is not completely random and there is some correlation between <code>income</code> and <code>age</code>.</p>
 <p>The t-test assumes normality and equal variances between groups. If these assumptions are violated, the test's results might be inaccurate.</p>
-<p>This approach only provides indirect evidence for MAR and doesn't conclusively establish it. For a robust assessment, you might also consider other techniques like Little's MCAR test, which specifically tests for MCAR (missing completely at random).</p>
+<p>This approach only provides indirect evidence for MAR and doesn't conclusively establish it. For a robust assessment, you might also consider other techniques like Little's MCAR test, which specifically tests for MCAR.</p>
 <h4 id="littles-mcar-test">Little's MCAR Test</h4>
 <p><a href="https://wiki.q-researchsoftware.com/wiki/Missing_Data_-_Little%27s_MCAR_Test" target="_blank">Little's MCAR test</a> is used to assess whether data is <strong>Missing Completely at Random (MCAR)</strong>. The test evaluates if the probability of missing data is independent of the observed data values. If the test result is <strong>non-significant</strong> (i.e., p-value &gt; 0.05), it suggests that the data is MCAR.</p>
 <p>Here is an implementation of the test in Python:</p>
