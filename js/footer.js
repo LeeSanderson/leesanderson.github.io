@@ -20,7 +20,7 @@ footerTemplate.innerHTML = `
             </a>
         </div>
         </div>
-        <div class="text-muted mt-2">&copy; 2024 - SixSidedDice.com</div>
+        <div class="text-muted mt-2">&copy; 2025 - SixSidedDice.com</div>
     </div>
 </div>
 </footer>`
