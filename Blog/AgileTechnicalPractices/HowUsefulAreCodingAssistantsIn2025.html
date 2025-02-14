@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>How Useful Are Coding Assistants in 2025? - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="description" content="Debate remains on the effectiveness of AI based coding assistants. This article examines the limitations of these tools and assesses the impact on productivity and software maintainability. Through practical experiments and analysis, I explore whether these tools truly enhance development or introduce new challenges that require careful oversight.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices TDD CodingAssistants AI">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="How Useful Are Coding Assistants in 2025?">
+    <meta name="twitter:description" content="Debate remains on the effectiveness of AI based coding assistants. This article examines the limitations of these tools and assesses the impact on productivity and software maintainability. Through practical experiments and analysis, I explore whether these tools truly enhance development or introduce new challenges that require careful oversight.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="How Useful Are Coding Assistants in 2025?">
+    <meta name="description" property="og:description" content="Debate remains on the effectiveness of AI based coding assistants. This article examines the limitations of these tools and assesses the impact on productivity and software maintainability. Through practical experiments and analysis, I explore whether these tools truly enhance development or introduce new challenges that require careful oversight.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jan 31, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">TDD</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">AI</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="how-useful-are-coding-assistants-in-2025" class="sr-only" data-hero-heading="true">How Useful Are Coding Assistants in 2025?</h1>
+<img class="hero-image" src="HowUsefulAreCodingAssistantsIn2025.png" alt="How Useful Are Coding Assistants in 2025?"/>
+<p>In recent years, AI-powered coding assistants have been marketed as transformative tools. They claim to have evolved from basic autocomplete features to sophisticated pair programmers capable of generating, refactoring, and explaining code. With advancements in natural language processing and machine learning, there has been an explosion of tools like <a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a>, <a href="https://aws.amazon.com/q/developer/" target="_blank">Amazon Q Developer</a>, <a href="https://codeium.com/" target="_blank">Codium's Windsurf Editor</a>, <a href="https://www.tabnine.com/" target="_blank">Tabnine AI Code Assistant</a>, <a href="https://www.cursor.com/" target="_blank">Cursor</a>, and many more that are all hoping to convince developers that they can enhance the way we write and maintain software.</p>
+<p>As we enter 2025, a crucial question remains:</p>
+<p><em>Do these assistants live up to the hype, or are they just an overpromised trend?</em></p>
+<p>In this article I'm going to try and answer this question by examining the claimed productivity benefits of coding assistants. Specifically, I will illustrate my views of these claims with examples from my experience using <a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a>. Although the practical examples will be from Copilot, all of the conclusions are applicable to all types of coding assistants.</p>
+<p>I will not cover security or data privacy concerns of using coding assistant tools. If you decide you want to experiment with this type of tooling within your organisation then I suggest you use your own judgement to assess these wider ranging concerns.</p>
+<h2 id="what-can-coding-assistants-do">What Can Coding Assistants Do?</h2>
+<p>Coding assistants offer a wide range of capabilities. Broadly the common features offered by most assistants fit into the following categories:</p>
+<ul>
+<li><strong>Generate code</strong> to reduce repetitive coding tasks.</li>
+<li><strong>Generate tests</strong> to reduce repetitive testing tasks.</li>
+<li><strong>Generate documentation</strong> to add comments that explain how code works.</li>
+<li><strong>Suggest code completions</strong> for faster and more accurate typing.</li>
+<li><strong>Explain code</strong> to help understand existing code.</li>
+<li><strong>Explain errors</strong> to help fix unexpected results and offering solutions.</li>
+</ul>
+<h2 id="my-context">My Context</h2>
+<p>In order to provide some context on my opinions I want to be open about my development preferences and my experience with coding assistants and other similar AI tools.</p>
+<p>I consider myself to be a relatively experienced developer. I worked with a number of different languages over my 30 year career and still write code everyday. I prefer to use <a href="StylesOfTestDrivenDevelopment.html">Test Driven Development</a> as I truly believe that this technique encourages the creation of cleaner, modular, more maintainable code.</p>
+<p>I used Copilot when it was in its initial technical preview in 2021 and have recently become reacquainted with the technology as part of a project I am currently working on. I would not say I am an expert, nor would I say I'm a beginner with using such tools.</p>
+<p>I've use various other AI tools outside of development and have a good understanding of their inner working and how to get the best out of them by tailoring my prompts.</p>
+<p>In this evaluation of coding assistants, I will naturally view the value of the tool from my experience and preferred way of working. Your context may be different and, if it is, I encourage you to perform your own evaluation.</p>
+<p>Where I think it might be valuable, I will also consider the value of these tools from the perspective of a more junior developers starting out in the software industry or trying to learn a new technology / language.</p>
+<h2 id="an-experiment-with-copilot">An Experiment With Copilot</h2>
+<p>Getting hands-on with Copilot is the only way to truly understand the hype/value of this kind of tool. To evaluate Copilot we will use the official <a href="https://developer.microsoft.com/en-us/ai" target="_blank">Microsoft AI for developers</a> documentation.</p>
+<p>I've been using Python a lot recently as part of my series on <a href="../DataScienceForDevs/Part1-Foundations.html">Data Science For Devs</a> so I will use the <a href="https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming/blob/main/05-Using-GitHub-Copilot-with-Python/README.md" target="_blank">Mastering GitHub Copilot for Paired Programming with Python</a> tutorial to test the core features of Copilot.</p>
+<h3 id="getting-started">Getting Started</h3>
+<p>If you are following along at home then, before starting the <a href="https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming/blob/main/05-Using-GitHub-Copilot-with-Python/README.md" target="_blank">Copilot Python tutorial</a> you may need to follow some of the previous steps such as <a href="https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming/blob/main/01-Introduction-to-GitHub/README.md" target="_blank">Introduction to GitHub</a>,  <a href="https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming/blob/main/02-Introduction-to-GitHub-Codespaces/README.md" target="_blank">Introduction to GitHub Codespaces</a>, and <a href="https://github.com/microsoft/Mastering-GitHub-Copilot-for-Paired-Programming/blob/main/03-Introduction-to-GitHub-Copilot/README.md" target="_blank">Introduction to GitHub Copilot</a>. Fortunately <a href="https://docs.github.com/en/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/about-github-copilot-free" target="_blank">Copilot now offers a free tier</a> - so you can try out a limited version of the tool for free.</p>
+<p>To start the tutorial, you open a simple <a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a> application in a new <a href="https://github.com/codespaces/new/MicrosoftDocs/mslearn-copilot-codespaces-python" target="_blank">Codespace</a>.</p>
+<h3 id="step-1-generate-some-code">Step 1: Generate some code</h3>
+<p>In the first step of the tutorial we generate some code. Opening up the chat interface in the IDE we type in:</p>
+<pre><code class="language-text">Create a Pydantic model so that I can use it in a new route that will accept JSON with text as a key which accepts a string.
+</code></pre>
+<p>This generates a code like this:</p>
+<pre><code class="language-python">class TextData(BaseModel):
+    text: str</code></pre>
+<p>Cool, right?</p>
+<p>Well yes. But I typed in 125 characters as instructions and Copilot generated 37. It would have been quicker for me to create the model myself.</p>
+<p>Maybe this prompt would be useful for a junior developer that is unfamiliar with the application, but it still requires some very specific details to generate what we want (e.g. that we want a <code>Pydantic</code> model).</p>
+<p>Is this kind of usage reducing repetitive coding tasks? Or are we actually spending more time typing in prompts and then tweaking them to get the code that is needed?</p>
+<h3 id="step-2-generate-some-more-code">Step 2: Generate some more code</h3>
+<p>In step two we will generate some more code. We type in:</p>
+<pre><code class="language-text">Create a FastAPI endpoint that accepts a POST request with a JSON body containing a single field called &quot;text&quot; and returns a checksum of the text 
+</code></pre>
+<p>And Copilot generates something like this:</p>
+<pre><code class="language-python">@app.post('/checksum')
+def checksum(body: TextData):
+    """
+    Generate a checksum for the given text.
+    Example POST request body:
+    {
+        "text": "example text"
+    }
+    """
+    checksum_value = hashlib.md5(body.text.encode('utf-8')).hexdigest()
+    return {'checksum': checksum_value}</code></pre>
+<p>It also updates the imports section of the file adding <code>import hashlib</code>.</p>
+<p>This is quite cool. It has reused the model we generated in step 1 as the input to the new endpoint and found a suitable library to create a checksum.</p>
+<p>But...</p>
+<p>The generated code was not indented correctly and, because Python is very peculiar about indentation, the code did not work (I tried this 3 times and it did the same every time). It is probably a minor point as it is simple to fix, but could be confusing for a more junior developer and is likely to result in mistrust of the tool.</p>
+<p>My second, more serious point, on this code is that I have to trust that the tool has interpreted my intentions and that the generated code does what I expect it to do. Sure I can read the code to see if it looks right, but I've no tests to verify that the implementation is correct. Without proper testing, potential logic errors, security vulnerabilities, or inefficiencies may go unnoticed.</p>
+<p>Furthermore, coding assistants do not inherently understand the broader context of a project. They generate solutions based on patterns from existing code but may not fully grasp edge cases, business logic, or project-specific constraints. This means developers still need to rigorously review, test, and validate generated code before integrating it into production.</p>
+<p>With strict adherence to the principles of TDD, I know each line of code I write has a meaning and a purpose. The behaviour of the system emerges from the tests and by refactoring as I go I ensure that the end design is the simplest it can be to solve the particular problem.</p>
+<p>We cannot say this about code generated by coding assistants. The best we can do is test after the code has been generated and use code coverage tools to ensure the tests we write have sufficient coverage.</p>
+<p>Does this approach improve quality and reduce overall effort? I think not.</p>
+<h3 id="step-3-explaining-existing-code">Step 3: Explaining Existing Code</h3>
+<p>Step 3, uses the <em>&quot;Explain this&quot;</em> feature of Copilot to understand the following particularly and deliberately terse code:</p>
+<pre><code class="language-python">@app.post('/generate')
+def generate(body: Body):
+    """
+    Generate a pseudo-random token ID of twenty characters by default. 
+    Example POST request body:
+    {
+        "length": 20
+    }
+    """
+    string = base64.b64encode(os.urandom(64))[:body.length].decode('utf-8')
+    return {'token': string}</code></pre>
+<p>The output is accurate, if a bit verbose:</p>
+<pre><code class="language-text">The active selection is a FastAPI endpoint defined using the `@app.post` decorator, which indicates that this endpoint will handle HTTP POST requests to the `/generate` path. The function &quot;generate&quot; takes a single parameter &quot;body&quot; of type &quot;Body&quot;, which is a Pydantic model. The &quot;Body&quot; model has a single attribute &quot;length&quot;, which is an integer with a default value of 20.
+
+The purpose of this endpoint is to generate a pseudo-random token ID. The function starts by generating 64 random bytes using &quot;os.urandom(64)&quot;. These random bytes are then encoded into a Base64 string using &quot;base64.b64encode(random_bytes)&quot;. The resulting encoded string is sliced to the length specified in the &quot;body.length&quot; attribute and decoded from bytes to a UTF-8 string. Finally, the function returns a JSON response containing the generated token.
+
+This implementation ensures that the token is pseudo-random and of the desired length, making it suitable for use cases where unique identifiers are needed. The use of Pydantic models for request validation and FastAPI's decorators for defining endpoints helps in creating a robust and well-documented API.
+</code></pre>
+<p>The first third of this output is a lengthy description of the method signature with little value to all but the most junior developer who is unfamiliar with <code>FastAPI</code>.</p>
+<p>The second part, has some utility but the useful parts are already mostly captured in the comments that already exist in the code. Also, this seems like a lot of text description for two lines of code. Applying the <code>/explain</code> feature to any significantly longer functions results in a long response which is of little value. You would probably be better off refactoring the long function into <a href="https://martinfowler.com/bliki/FunctionLength.html" target="_blank">smaller functions with intention-revealing names</a>.</p>
+<p>The final part, contains some assumptions about the implementation and some general information about the technologies used (but remember, as we previously discussed, coding assistants do not inherently understand the broader context of a project and this information could be incorrect). I do not think this helps me understand the code any better.</p>
+<p>In summary, while the <em>&quot;Explain this&quot;</em> feature provides accurate descriptions of code, it tends to be overly verbose and often repeats information that is already clear from the code structure or comments. The utility of this feature is limited, especially for experienced developers. Instead of relying on AI-generated explanations, a more effective approach may be to refactor complex functions into smaller, self-explanatory components.</p>
+<h3 id="generating-documentation">Generating Documentation</h3>
+<p>In the first part of step 4 we use use the <code>/doc</code> command to generate documentation using the following prompt:</p>
+<pre><code class="language-text">/doc I need to document the routes for these API Routes. Help me produce documentation I can put in the README.md file of this project
+</code></pre>
+<p>I tried this a few times but I was not able to generate anything useful. The best I got was a few fragmented code snippets that I could use the <code>Apply in Editor</code> feature to copy in to the current file I was working in. The last code snippet Copilot suggested I add to the <code>README.md</code> was:</p>
+<pre><code class="language-text">
+You can add this documentation to your `README.md` file to provide details about the `/` and `/generate` endpoints. This will help users understand how to interact with your API and what responses to expect.
+
+You can add this documentation to your `README.md` file to provide details about the `/` and `/generate` endpoints. This will help users understand how to interact with your API and what responses to expect.
+</code></pre>
+<p>This was not particularly useful.</p>
+<p>Maybe the lack of useful output is down to prompt not being clear enough?  Again, maybe this could be a time saver but it probably requires some better prompt engineering to get the best out of Copilot. I do not know for sure if this is the case. Can Copilot actually do what I'm asking it to do? Or could I just end up wasting a bunch of time <a href="https://en.wiktionary.org/wiki/yak_shaving" target="_blank">tuning prompts</a>?</p>
+<h3 id="generating-tests">Generating Tests</h3>
+<p>The last part of the exercise involves having Copilot write some tests. I'll pretend I don't think this is a really bad idea for now (more on this later) and follow the instructions to see how well we get on with this task.</p>
+<p>With <code>main.py</code> open, use the chat interface I type the following prompt:</p>
+<pre><code class="language-text">/tests help me write a test for the generate() route using the FastAPI test client and the Pytest framework. Help me understand where I should put the test file, how to add the Pytest dependency to my project, and how to run the tests
+</code></pre>
+<p>Again, I need to be verbose and have a deep understanding of the specifics I need in order for Copilot to generate anything useful.</p>
+<p>Copilot's response starts with a summary of the steps I need to follow:</p>
+<pre><code class="language-text">To write a test for the generate() route using the FastAPI test client and the Pytest framework, follow these steps:
+
+ 1. Create a test file: Create a new file named test_main.py in a tests directory at the root of your project.
+
+ 2. Add the Pytest dependency: Add pytest and httpx (for the FastAPI test client) to your requirements.txt or pyproject.toml file.
+
+ 3. Write the test: Use the FastAPI test client to write a test for the generate() route.
+
+ 4. Run the tests: Use the pytest command to run the tests.
+</code></pre>
+<p>Fairly good I guess but mostly repeating back to me what I wrote in the prompt and getting confused about how dependencies are managed in this project (despite an existing <code>requirements.txt</code>).</p>
+<p>Let's look at the next parts of the response:</p>
+<pre><code class="language-text">Step 1: Create the test file
+
+Create a directory named `tests` at the root of your project and add a file named `test_main.py`:
+
+your_project/
+├── webapp/
+│   └── main.py
+├── tests/
+│   └── test_main.py
+└── requirements.txt
+</code></pre>
+<p>OK. But an important step is missing here. This will not work without adding <code>__init.py__</code> files to each of the directories to make them packages. This could easily trip up someone unfamiliar with <code>Python</code>.</p>
+<p>Next:</p>
+<pre><code class="language-text">Step 2: Add the Pytest dependency
+
+Add the following lines to your requirements.txt file:
+
+pytest
+httpx
+</code></pre>
+<p>Useful but also missing key information. Adding the dependencies to the <code>requirements.txt</code> is only part of the answer. These dependencies do not appear magically and need to be installed via running a command like <code>pip install -r requirements.txt</code> in the terminal. Again, this is something that could trip up a junior developer learning <code>Python</code>.</p>
+<p>Next:</p>
+<pre><code class="language-text">Step 3: Write the test
+
+Add the following code to `tests/test_main.py`:
+</code></pre>
+<pre><code class="language-python">from fastapi.testclient import TestClient
+from webapp.main import app
+
+client = TestClient(app)
+
+def test_generate_token():
+    response = client.post("/generate", json={"length": 20})
+    assert response.status_code == 200
+    assert "token" in response.json()
+    assert len(response.json()["token"]) == 20</code></pre>
+<p>Fine. Not much to add here until we try to run test tests, which we do next with:</p>
+<pre><code class="language-text">Step 4: Run the tests
+
+Run the tests using the following command in your terminal:
+
+pytest
+
+This will execute the test and provide you with the results. The test checks that the `/generate` endpoint returns a status code of 200, includes a `token` in the response, and that the token has the correct length.
+</code></pre>
+<p>At this point, even after fixing the missing <code>__init.py__</code> issue and correctly installing the dependencies, the tests fail to run and generate an error:</p>
+<pre><code class="language-text">ERROR tests/test_main.py - TypeError: init() got an unexpected keyword argument 'app'
+</code></pre>
+<p>After a bit of fiddling about, I discovered that the error relates to the version of <code>FastAPI</code> that the project was using.  Running <code>pip install --upgrade fastapi</code> fixed the problem and allowed the tests to run successfully. An easy fix, but not great that the generated code for the test is incompatible with the application and yet another area for confusion.</p>
+<p>The process of trying to generate tests has, in my view, highlighted significant gaps in <em>thinking</em> that can be introduced by trying to use Copilot to perform any reasonably complex, multi-step task. It seems to struggle with maintaining coherence and context over multiple interdependent steps. It often misses crucial implementation details, leading to incomplete or incorrect solutions that require manual debugging. Furthermore, its lack of deep understanding of project-specific architecture means that the generated code may not align with the existing design or best practices. This results in additional overhead for developers, who must continuously validate and refine AI-generated suggestions rather than focusing on solving the actual problem at hand.</p>
+<h2 id="why-generating-tests-is-a-bad-idea">Why Generating Tests is a Bad Idea</h2>
+<p>One of the key features of many coding assistants is the ability to generate tests.</p>
+<p>However, generated tests are just another form of generated code and, as such, they require careful scrutiny and validation before being trusted (as discussed in the above section on generating code). In addition, there are several specific concerns with using AI-generated tests:</p>
+<ul>
+<li><strong>Trust Issues:</strong> Generated tests may not always capture the intent of the developer or the critical edge cases that need verification.</li>
+<li><strong>Need for Careful Review:</strong> Developers must manually inspect generated tests to ensure they truly validate functionality and are not just providing superficial coverage.</li>
+<li><strong>Lack of Deep Understanding:</strong> AI can generate tests based on patterns but lacks a deep understanding of the problem domain, which can lead to misleading results.</li>
+<li><strong>Semantic Flaws:</strong> The generated tests might include logical mistakes or incorrect assumptions about the expected behaviour of the application.</li>
+<li><strong>Maintenance Challenges:</strong> As a project evolves, brittle or overly simplistic generated tests may become a burden rather than an asset.</li>
+<li><strong>False Sense of Security:</strong> Just because a test suite runs without errors doesn’t mean the system behaves as expected in real-world scenarios.</li>
+</ul>
+<h3 id="the-tdd-perspective">The TDD perspective</h3>
+<p>More fundamentally than the concerns outlined above, the biggest problem I see with using generated tests is that they contradict the fundamental principles of TDD.</p>
+<p>I've already discussed my strong views on the positive value of Test Driven Development. TDD is about designing code through incremental testing, ensuring that each line of code is justified by a test case. The system's behaviour emerges from the tests, and iterative refactoring ensures the final design is as simple as possible.</p>
+<p>Relying on AI to generate tests <em>after</em> the code is written bypasses the disciplined process of TDD. It hinders emergent design and will inevitably results in poorer quality, less maintainable code. I truly believe that this fact will continue to stand irrespective of how <em>good</em> the AI-generated tests are now or in the future.</p>
+<h3 id="the-challenge-with-legacy-code">The Challenge with Legacy Code</h3>
+<p>Another potential area where tests generated by coding assistants propose that they can add value is when working with legacy code. This is a slightly different scenario that typical TDD so it may deserve some special considerations.</p>
+<p>When working with legacy systems, developers often need to introduce tests before refactoring or adding new functionality. The code has already been written so we have to write tests afterwards and therefore we cannot apply the full discipline and rigour of TDD. Generated tests might seem like a convenient shortcut, but the issued outlined above still apply.</p>
+<p>In addition, having worked on some major modernisation projects over my career, I often find that legacy code does not tend to have tests because it is not written in a testable way. It is not uncommon for UI code to contain business logic, for business logic to be directly dependant on a database or some other external service, or for code to rely on some global state. These kinds of spaghetti codebases need to be carefully refactored during the testing process. I've yet to see evidence of any coding assistance being able to effectively perform the steps needed to reliably and incrementally adjust legacy code to be able to introduce effective tests.</p>
+<h3 id="the-worst-case-scenario-generated-code-generated-tests">The Worst-Case Scenario: Generated Code +Generated Tests</h3>
+<p>If we generate both the implementation and the tests using AI, we enter dangerous territory. There's a high risk of a feedback loop where the tests only validate what the AI-generated implementation is doing, rather than verifying whether the implementation is correct. This can create an illusion of robustness while major flaws remain untested and undetected.</p>
+<p>If generating tests is a bad idea, then generating the code and then generating the test for the generated code is even worse.</p>
+<h2 id="other-coding-assistants-features">Other Coding Assistants Features</h2>
+<p>Our walk through the Copilot tutorial allow us to examine many, but not all, of the major features of coding assistants. So far we have found significant issue with the features we have looked at:</p>
+<ul>
+<li><strong>Generate code</strong> requires us to write verbose prompts to generate even simple structures and any non-trivial code created will be untested and require trust or significant review to ensure it does what we expected.</li>
+<li><strong>Generate tests</strong> has all the problem we identified with generating code and prevents us from applying TDD to ensure code is testable, high quality, and maintainable.</li>
+<li><strong>Generate documentation</strong> did not generate anything of value (although this is a single data point and more experimentation may find the feature more valuable).</li>
+<li><strong>Explain code</strong> tends to be overly verbose and often repeats information that is already clear.</li>
+</ul>
+<p>Let us now examine the other major features to see if they can provide value. Specifically we will look at <strong>Explain errors</strong> and <strong>Suggest code completions</strong>.</p>
+<h3 id="explain-errors">Explain Errors</h3>
+<p>During the tutorial I did find some use for the <strong>Explain errors</strong> feature. I mentioned above that when working through the <strong>Generate tests</strong> part of the tutorial I encountered some issues with the generate instructions being incomplete. After I'd fixed the problems, I wondered if Copilot could have helped so I created a prompt to ask it to explain the error:</p>
+<pre><code class="language-text">/explain ERROR tests/test_main.py - TypeError: **init**() got an unexpected keyword argument 'app'
+</code></pre>
+<p>Copilot suggested a number of potential problems and again it was quite verbose. I needed to read the response carefully to get value from it. Some of the suggestions were clearly not the problem (e.g. Copilot suggested I ensure the imports were correct - which they obviously were). But, it did also suggest that the problem could be due to incompatible versions of dependencies (which was one of the actual problems).</p>
+<p>Explaining errors does seem to have some utility and I will continue to use Copilot to help me diagnose unexpected errors in future to determine if this does add value.</p>
+<h3 id="suggest-code-completions">Suggest Code Completions</h3>
+<p>The only other major feature of coding assistants not directly examined as part of the tutorial was the <strong>Suggest code completions</strong> feature. This feature claims to enable faster and more accurate typing. I've direct exposure to this feature from working with Copilot in real projects.</p>
+<p>In my view, the suggestions offered can be hit and miss. Very anecdotally I find that:</p>
+<ul>
+<li>About 50% of the time the suggestions get in the way of what I'm trying to do. They are a distraction that I need to dismiss in order to type what I want to.</li>
+<li>About 30% of the time the suggestions look like they might be useful, but after accepting them there is some syntax or logic error from context that the assistant has inferred that I then need to correct manually.</li>
+<li>About 20% of the suggestions are exactly what I need and the assistant save me some typing.</li>
+</ul>
+<p>At best I reckon I might get a minor increase in typing speed by using the suggestions. Your experience my vary.</p>
+<p>However, the proposed value of this feature reminds me of some of the typical <a href="https://wiki.c2.com/?PairProgrammingDoubts" target="_blank">Doubts about implementing Pair Programming</a>, the most relevant part being:</p>
+<blockquote class="blockquote">
+<p>There are many factors that influence your effectiveness as a programmer: Typing speed isn't the most important thing.</p>
+</blockquote>
+<h2 id="conclusions">Conclusions</h2>
+<p>I've been critical of the benefits of coding assistants. I've argued that many of the major features have minor value at best and some (generating tests) should be avoided.</p>
+<p>I think there is absolutely value in AI tooling and, as it evolves, it will continue to impact the software industry. But, based on the experiences I have outlined in this article, I do not think the value will come from automating the writing and construction of code. AI's greatest benefit is in enhancing our creativity. Whether it’s generating new ideas, helping with experimentation, providing unconventional problem-solving approaches, or exploring cross-disciplinary insights, AI serves as an invaluable creative partner.  I will examine these ideas more in a future article.</p>
+<p>In summary, my take-aways for those considering using coding assistants are:</p>
+<ol>
+<li><strong>For minor, incremental code changes, manual implementation is often faster.</strong> Writing code directly, rather than crafting AI prompts, usually saves time while allowing TDD to drive code quality and maintainability.</li>
+<li><strong>For larger changes, breaking them into smaller, manageable increments is best.</strong> This aligns with best software engineering practices.</li>
+<li><strong>If using a coding assistant, rigorously verify the output.</strong> AI-generated code may contain logic errors, security vulnerabilities, and performance inefficiencies.</li>
+<li><strong>Be sceptical of AI-generated code explanations.</strong> The reasoning provided may be incomplete or misleading.</li>
+<li><strong>Prefer TDD over relying on AI-generated tests.</strong> TDD ensures tests guide software design, rather than being an afterthought.</li>
+<li><strong>Explaining errors seems to have some value.</strong> Debugging ambiguous errors can be time-consuming, but assistants can suggest areas to investigate, speeding up resolution.</li>
+<li><strong>Code completion suggestions may slightly improve typing speed.</strong> But typing speed is not the most important thing about being an effective developer.</li>
+</ol>
+<p>Ultimately, coding assistants are not a replacement for fundamental software engineering practices. If used then they should be used with a critical eye, ensuring that generated code aligns with best practices and business requirements. As developers we must remain engaged in the coding process, leveraging these tools to enhance thoughtful software design and rigorous testing rather than relying on them or expecting them to <em>do the work</em> for us.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>

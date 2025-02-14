@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Fri, 14 Feb 2025 11:07:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Feb 2025 11:10:37 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -24,6 +24,14 @@
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</link>
       <title>DevOps Lifecycle</title>
       <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Debate remains on the effectiveness of AI based coding assistants. This article examines the limitations of these tools and assesses the impact on productivity and software maintainability. Through practical experiments and analysis, I explore whether these tools truly enhance development or introduce new challenges that require careful oversight.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.html</link>
+      <title>How Useful Are Coding Assistants in 2025?</title>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
