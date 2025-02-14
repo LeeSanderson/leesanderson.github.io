@@ -158,9 +158,10 @@ a default value of 20.
 
 The purpose of this endpoint is to generate a pseudo-random token ID. The 
 function starts by generating 64 random bytes using &quot;os.urandom(64)&quot;. These
-random bytes are then encoded into a Base64 string using &quot;base64.b64encode(random_bytes)&quot;. The resulting encoded string is sliced 
-to the length specified in the &quot;body.length&quot; attribute and decoded from bytes 
-to a UTF-8 string. Finally, the function returns a JSON response containing 
+random bytes are then encoded into a Base64 string using &quot;base64.b64encode(random_bytes)&quot;. 
+The resulting encoded string is sliced to the length specified in
+the &quot;body.length&quot; attribute and decoded from bytes to a UTF-8 string. 
+Finally, the function returns a JSON response containing 
 the generated token.
 
 This implementation ensures that the token is pseudo-random and of the 
@@ -203,11 +204,14 @@ the tests
 <pre><code class="language-text">To write a test for the generate() route using the FastAPI test client and 
 the Pytest framework, follow these steps:
 
- 1. Create a test file: Create a new file named test_main.py in a tests directory at the root of your project.
+ 1. Create a test file: Create a new file named test_main.py in a tests directory
+ at the root of your project.
 
- 2. Add the Pytest dependency: Add pytest and httpx (for the FastAPI test client) to your requirements.txt or pyproject.toml file.
+ 2. Add the Pytest dependency: Add pytest and httpx (for the FastAPI test client) 
+ to your requirements.txt or pyproject.toml file.
 
- 3. Write the test: Use the FastAPI test client to write a test for the generate() route.
+ 3. Write the test: Use the FastAPI test client to write a test for the 
+ generate() route.
 
  4. Run the tests: Use the pytest command to run the tests.
 </code></pre>
