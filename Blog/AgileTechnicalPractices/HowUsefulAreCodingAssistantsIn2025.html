@@ -99,7 +99,8 @@
 <p>To start the tutorial, you open a simple <a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI</a> application in a new <a href="https://github.com/codespaces/new/MicrosoftDocs/mslearn-copilot-codespaces-python" target="_blank">Codespace</a>.</p>
 <h3 id="step-1-generate-some-code">Step 1: Generate some code</h3>
 <p>In the first step of the tutorial we generate some code. Opening up the chat interface in the IDE we type in:</p>
-<pre><code class="language-text">Create a Pydantic model so that I can use it in a new route that will accept JSON with text as a key which accepts a string.
+<pre><code class="language-text">Create a Pydantic model so that I can use it in a new route that will accept 
+JSON with text as a key which accepts a string.
 </code></pre>
 <p>This generates a code like this:</p>
 <pre><code class="language-python">class TextData(BaseModel):
@@ -110,7 +111,8 @@
 <p>Is this kind of usage reducing repetitive coding tasks? Or are we actually spending more time typing in prompts and then tweaking them to get the code that is needed?</p>
 <h3 id="step-2-generate-some-more-code">Step 2: Generate some more code</h3>
 <p>In step two we will generate some more code. We type in:</p>
-<pre><code class="language-text">Create a FastAPI endpoint that accepts a POST request with a JSON body containing a single field called &quot;text&quot; and returns a checksum of the text 
+<pre><code class="language-text">Create a FastAPI endpoint that accepts a POST request with a JSON body 
+containing a single field called &quot;text&quot; and returns a checksum of the text 
 </code></pre>
 <p>And Copilot generates something like this:</p>
 <pre><code class="language-python">@app.post('/checksum')
@@ -147,11 +149,25 @@ def generate(body: Body):
     string = base64.b64encode(os.urandom(64))[:body.length].decode('utf-8')
     return {'token': string}</code></pre>
 <p>The output is accurate, if a bit verbose:</p>
-<pre><code class="language-text">The active selection is a FastAPI endpoint defined using the `@app.post` decorator, which indicates that this endpoint will handle HTTP POST requests to the `/generate` path. The function &quot;generate&quot; takes a single parameter &quot;body&quot; of type &quot;Body&quot;, which is a Pydantic model. The &quot;Body&quot; model has a single attribute &quot;length&quot;, which is an integer with a default value of 20.
+<pre><code class="language-text">The active selection is a FastAPI endpoint defined using
+the `@app.post` decorator, which indicates that this endpoint will handle 
+HTTP POST requests to the `/generate` path. The function &quot;generate&quot; takes
+a single parameter &quot;body&quot; of type &quot;Body&quot;, which is a Pydantic model.
+The &quot;Body&quot; model has a single attribute &quot;length&quot;, which is an integer with 
+a default value of 20.
 
-The purpose of this endpoint is to generate a pseudo-random token ID. The function starts by generating 64 random bytes using &quot;os.urandom(64)&quot;. These random bytes are then encoded into a Base64 string using &quot;base64.b64encode(random_bytes)&quot;. The resulting encoded string is sliced to the length specified in the &quot;body.length&quot; attribute and decoded from bytes to a UTF-8 string. Finally, the function returns a JSON response containing the generated token.
+The purpose of this endpoint is to generate a pseudo-random token ID. The 
+function starts by generating 64 random bytes using &quot;os.urandom(64)&quot;. These
+random bytes are then encoded into a Base64 string using &quot;base64.b64encode(random_bytes)&quot;. The resulting encoded string is sliced 
+to the length specified in the &quot;body.length&quot; attribute and decoded from bytes 
+to a UTF-8 string. Finally, the function returns a JSON response containing 
+the generated token.
 
-This implementation ensures that the token is pseudo-random and of the desired length, making it suitable for use cases where unique identifiers are needed. The use of Pydantic models for request validation and FastAPI's decorators for defining endpoints helps in creating a robust and well-documented API.
+This implementation ensures that the token is pseudo-random and of the 
+desired length, making it suitable for use cases where unique identifiers 
+are needed. The use of Pydantic models for request validation and FastAPI's
+decorators for defining endpoints helps in creating a robust and 
+well-documented API.
 </code></pre>
 <p>The first third of this output is a lengthy description of the method signature with little value to all but the most junior developer who is unfamiliar with <code>FastAPI</code>.</p>
 <p>The second part, has some utility but the useful parts are already mostly captured in the comments that already exist in the code. Also, this seems like a lot of text description for two lines of code. Applying the <code>/explain</code> feature to any significantly longer functions results in a long response which is of little value. You would probably be better off refactoring the long function into <a href="https://martinfowler.com/bliki/FunctionLength.html" target="_blank">smaller functions with intention-revealing names</a>.</p>
@@ -159,24 +175,33 @@ This implementation ensures that the token is pseudo-random and of the desired l
 <p>In summary, while the <em>&quot;Explain this&quot;</em> feature provides accurate descriptions of code, it tends to be overly verbose and often repeats information that is already clear from the code structure or comments. The utility of this feature is limited, especially for experienced developers. Instead of relying on AI-generated explanations, a more effective approach may be to refactor complex functions into smaller, self-explanatory components.</p>
 <h3 id="generating-documentation">Generating Documentation</h3>
 <p>In the first part of step 4 we use use the <code>/doc</code> command to generate documentation using the following prompt:</p>
-<pre><code class="language-text">/doc I need to document the routes for these API Routes. Help me produce documentation I can put in the README.md file of this project
+<pre><code class="language-text">/doc I need to document the routes for these API Routes. Help me produce
+documentation I can put in the README.md file of this project
 </code></pre>
 <p>I tried this a few times but I was not able to generate anything useful. The best I got was a few fragmented code snippets that I could use the <code>Apply in Editor</code> feature to copy in to the current file I was working in. The last code snippet Copilot suggested I add to the <code>README.md</code> was:</p>
 <pre><code class="language-text">
-You can add this documentation to your `README.md` file to provide details about the `/` and `/generate` endpoints. This will help users understand how to interact with your API and what responses to expect.
+You can add this documentation to your `README.md` file to provide details about
+the `/` and `/generate` endpoints. This will help users understand how to 
+interact with your API and what responses to expect.
 
-You can add this documentation to your `README.md` file to provide details about the `/` and `/generate` endpoints. This will help users understand how to interact with your API and what responses to expect.
+You can add this documentation to your `README.md` file to provide details about
+the `/` and `/generate` endpoints. This will help users understand how to interact
+with your API and what responses to expect.
 </code></pre>
 <p>This was not particularly useful.</p>
 <p>Maybe the lack of useful output is down to prompt not being clear enough?  Again, maybe this could be a time saver but it probably requires some better prompt engineering to get the best out of Copilot. I do not know for sure if this is the case. Can Copilot actually do what I'm asking it to do? Or could I just end up wasting a bunch of time <a href="https://en.wiktionary.org/wiki/yak_shaving" target="_blank">tuning prompts</a>?</p>
 <h3 id="generating-tests">Generating Tests</h3>
 <p>The last part of the exercise involves having Copilot write some tests. I'll pretend I don't think this is a really bad idea for now (more on this later) and follow the instructions to see how well we get on with this task.</p>
 <p>With <code>main.py</code> open, use the chat interface I type the following prompt:</p>
-<pre><code class="language-text">/tests help me write a test for the generate() route using the FastAPI test client and the Pytest framework. Help me understand where I should put the test file, how to add the Pytest dependency to my project, and how to run the tests
+<pre><code class="language-text">/tests help me write a test for the generate() route using the FastAPI test 
+client and the Pytest framework. Help me understand where I should put the 
+test file, how to add the Pytest dependency to my project, and how to run 
+the tests
 </code></pre>
 <p>Again, I need to be verbose and have a deep understanding of the specifics I need in order for Copilot to generate anything useful.</p>
 <p>Copilot's response starts with a summary of the steps I need to follow:</p>
-<pre><code class="language-text">To write a test for the generate() route using the FastAPI test client and the Pytest framework, follow these steps:
+<pre><code class="language-text">To write a test for the generate() route using the FastAPI test client and 
+the Pytest framework, follow these steps:
 
  1. Create a test file: Create a new file named test_main.py in a tests directory at the root of your project.
 
@@ -190,7 +215,8 @@ You can add this documentation to your `README.md` file to provide details about
 <p>Let's look at the next parts of the response:</p>
 <pre><code class="language-text">Step 1: Create the test file
 
-Create a directory named `tests` at the root of your project and add a file named `test_main.py`:
+Create a directory named `tests` at the root of your project and add a file
+named `test_main.py`:
 
 your_project/
 ├── webapp/
@@ -231,7 +257,9 @@ Run the tests using the following command in your terminal:
 
 pytest
 
-This will execute the test and provide you with the results. The test checks that the `/generate` endpoint returns a status code of 200, includes a `token` in the response, and that the token has the correct length.
+This will execute the test and provide you with the results. The test 
+checks that the `/generate` endpoint returns a status code of 200, 
+includes a `token` in the response, and that the token has the correct length.
 </code></pre>
 <p>At this point, even after fixing the missing <code>__init.py__</code> issue and correctly installing the dependencies, the tests fail to run and generate an error:</p>
 <pre><code class="language-text">ERROR tests/test_main.py - TypeError: init() got an unexpected keyword argument 'app'
