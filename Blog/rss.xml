@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Sun, 27 Apr 2025 13:09:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 27 Apr 2025 13:14:02 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -24,6 +24,14 @@
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</link>
       <title>DevOps Lifecycle</title>
       <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Exploring the Agentic capabilities of GitHub Copilot by building a simple side-scrolling game</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html</link>
+      <title>Evaluating Agents By Building Games</title>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

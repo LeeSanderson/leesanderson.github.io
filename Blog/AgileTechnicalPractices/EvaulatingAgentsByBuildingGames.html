@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Evaluating Agents By Building Games - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Exploring the Agentic capabilities of GitHub Copilot by building a simple side-scrolling game">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices CodingAssistants AI">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Evaluating Agents By Building Games">
+    <meta name="twitter:description" content="Exploring the Agentic capabilities of GitHub Copilot by building a simple side-scrolling game">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Evaluating Agents By Building Games">
+    <meta name="description" property="og:description" content="Exploring the Agentic capabilities of GitHub Copilot by building a simple side-scrolling game">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Apr 27, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">AI</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="evaluating-agents-by-building-games" class="sr-only" data-hero-heading="true">Evaluating Agents By Building Games</h1>
+<img class="hero-image" src="EvaulatingAgentsByBuildingGames.png" alt="Evaluating Agents By Building Games"/>
+<p>There is a lot of hype around the capabilities of AI Agents to write code. Anthropic's CEO Dario Amodei claimed that <a href="https://x.com/slow_developer/status/1899430284350616025" target="_blank">nearly all code would be written by AI within the next year</a>.</p>
+<p>In a <a href="HowUsefulAreCodingAssistantsIn2025.html">previous post</a>, I examined the general usefulness of coding assistants and was critical of their claimed benefits. I argued that many of the major features have minor value at best and some should be avoided.</p>
+<p>In this blog post, I will explore how to build a simple browser-based game using React with the assistance of GitHub Copilot Agent. I will try to cut through the hype to examine the real benefits of coding with agents.</p>
+<p>For this experiment I will use the recently announced a new <a href="https://github.blog/news-insights/product-news/github-copilot-the-agent-awakens/" target="_blank">Agent mode preview</a> enhancement to GitHub Copilot.</p>
+<p>This new agent mode <em>claims</em> to be capable of iterating on its own code, recognising errors, and fixing them automatically. It can suggest terminal commands and ask you to execute them. It also analyses run-time errors with self-healing capabilities.</p>
+<h2 id="evaluation-metrics">Evaluation Metrics</h2>
+<p>I believe simple games are a great way to assess the capabilities of AI Agents because they involve multiple layers of complexity. They require high-level game logic while also integrating visual, audio, and interactive elements. All of these aspects impact the overall quality of the game.</p>
+<p>Games like these are also provide an intuitive way for humans to evaluate an AI Agent's performance. By playing for just a few seconds, we can quickly gauge the game's design quality and determine how effectively the agent was at making decisions.</p>
+<p>As well as evaluating the agent from the gameplay perspective, we can also evaluate from the functional perspective and a code perspective.</p>
+<p>On the functional side, we can assess how many of the features were implemented correctly by the agent and how well these features were implemented.</p>
+<p>From a code perspective, we can look at the correctness, quality and maintainability of the generated code.</p>
+<p>As part of this evaluation I will rank each iteration of the game in these three categories: gameplay, functionality, and code.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>If you are following along at home then, the first thing you need to do is get access to Copilot. Fortunately <a href="https://docs.github.com/en/copilot/managing-copilot/managing-copilot-as-an-individual-subscriber/about-github-copilot-free" target="_blank">Copilot now offers a free tier</a> - so you can try out a limited version of the tool for free.</p>
+<p>You also need to <a href="https://code.visualstudio.com/insiders/" target="_blank">Download Visual Studio Code Insiders</a> build and then you need to enable the agent mode setting for GitHub Copilot Chat (see the <a href="https://github.blog/news-insights/product-news/github-copilot-the-agent-awakens/" target="_blank">instruction</a> in the GitHub blog announcement article).</p>
+<h2 id="the-first-prompt">The First Prompt</h2>
+<p>Getting a new project started is one of the hardest things to do in software engineering. There are many choices to be made around which technology, frameworks, and libraries to use. For front-end development this is even more difficult, just check out the <a href="https://dayssincelastjavascriptframework.com/" target="_blank">Days Since Last JavaScript Framework</a>.</p>
+<p>For our game project we will delegate much of this responsibility to the agent via the project prompt. This will outline the functionality we want the agent to build for us along with a couple of technical choices.</p>
+<p>Here is the gist of the prompt I used to get the project going:</p>
+<pre><code>Buzzer Bee is an endless side-scrolling game. The player controls a bee that 
+must navigate through a series of obstacles while avoiding collisions. The 
+game is built using React and utilizes HTML5 Canvas for rendering.
+
+...
+</code></pre>
+<p>The full spec I used for the <em>Buzzer Bee</em> game prompt is available in my GitHub repo here: <a href="https://github.com/LeeSanderson/BuzzerBee/blob/main/SpecPrompt.md" target="_blank">SpecPrompt.md</a></p>
+<h3 id="functional-but-not-fun">Functional But Not Fun</h3>
+<p>The output generated by the agent was underwhelming to say the least. Here is a screen grab of the initial version of the game that was generated from the above prompt:</p>
+<p><img src="BeeGameV1.png" class="img-fluid" alt="" /></p>
+<p><strong>Gameplay score: 1 / 10</strong></p>
+<h3 id="many-missing-features">Many Missing Features</h3>
+<p>While the gameplay was disappointing, the game was working. However a number of features had not been implemented. Here is a list of features that were asked for and whether they were implemented by the agent:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>Implementation</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The player controls a bee that constantly moves forward.</td>
+<td>Yes ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Clicking/tapping makes the bee flap and ascend; releasing lets it descend due to gravity.</td>
+<td>Partial ⏳</td>
+<td>No tap / mobile support</td>
+</tr>
+<tr>
+<td>The game ends when the bee collides with an obstacle or the ground.</td>
+<td>Yes  ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Vertical honeycombs (top and bottom) act as obstables with randomly generated gaps.</td>
+<td>Partial ⏳</td>
+<td>Obstacles plain rectangles</td>
+</tr>
+<tr>
+<td>The gaps become smaller over time to increase difficulty.</td>
+<td>Yes ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>The player earns 1 point for each set of honeycombs successfully passed.</td>
+<td>No ❌</td>
+<td>Score increases on every render frame and is not limited to passing obstacles</td>
+</tr>
+<tr>
+<td>A high score is stored using localStorage.</td>
+<td>Yes  ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Pixel-art style bee character.</td>
+<td>No ❌</td>
+<td>No Bee. Simple SVG image generated by Agent</td>
+</tr>
+<tr>
+<td>Colorful honey-themed background with moving parallax effect.</td>
+<td>No ❌</td>
+<td>Plain background. No theme. No parallax.</td>
+</tr>
+<tr>
+<td>Animated buzzing effect on the bee.</td>
+<td>No ❌</td>
+<td>No animation</td>
+</tr>
+<tr>
+<td>&quot;Game Over&quot; screen with retry button and best score display.</td>
+<td>Partial ⏳</td>
+<td>Basic game over outside of main game canvas</td>
+</tr>
+<tr>
+<td>A gentle buzzing sound while the bee is moving.</td>
+<td>No ❌</td>
+<td>No audio</td>
+</tr>
+<tr>
+<td>A &quot;flap&quot; sound when the player clicks/taps.</td>
+<td>No ❌</td>
+<td>No audio</td>
+</tr>
+<tr>
+<td>A &quot;collision&quot; sound when the bee crashes.</td>
+<td>No ❌</td>
+<td>No audio</td>
+</tr>
+<tr>
+<td>A point-scoring sound effect when passing through obstacles.</td>
+<td>No ❌</td>
+<td>No audio</td>
+</tr>
+<tr>
+<td>The game starts with larger gaps and slower movement.</td>
+<td>Yes ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Speed increases gradually, making the game more challenging.</td>
+<td>Yes ✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Randomly placed flower bonuses that provide a short burst of invincibility.</td>
+<td>No ❌</td>
+<td>Not implemented</td>
+</tr>
+</tbody>
+</table>
+<p>6 features implemented, 3 partially implemented, and 9 not implemented.</p>
+<p><strong>Functionality score: 3 / 10</strong></p>
+<h3 id="technical-problems">Technical Problems</h3>
+<p>When I first asked GitHub Copilot to generate the starting point for my <em>Buzzer Bee</em> game, I expected a solid foundation or at least something close. What I got instead was a reminder that while the agent can be helpful, it still needs a lot of hand-holding.</p>
+<p>Right off the bat, Copilot scaffolded the project using <a href="https://create-react-app.dev/docs/getting-started/" target="_blank">Create React App</a> . While this was once a standard choice, it is now now officially sunsetted by the React team. Not ideal. I had to intervene early, explicitly telling it to use <a href="%5BVite%5D(https://vite.dev/)">Vite</a> instead. Once I gave that nudge, Copilot corrected course and generated a working Vite setup. But it was a good early sign that you can’t rely on Copilot to keep up with the latest best practices unless you explicitly ask for them.</p>
+<p>Another hiccup: I had asked for TypeScript, but the generated codebase was mostly plain JavaScript. I had to go back and explicitly request TypeScript support. And even then, had to manually clean up and fix types across the project.</p>
+<p>The main gameplay logic, the actual code that made the bee buzz,  was all dumped into a single <code>Game.tsx</code> file. That file became increasingly unwieldy as I added features. Each time I prompted Copilot to implement something new, like scoring or instructions, it would blindly append the logic to <code>Game.tsx</code> rather than splitting it into reusable components. Before long, the file was doing <em>everything</em>: rendering, managing game state, handling input, and drawing to canvas.</p>
+<p>To make matters worse, the first time I ran the app, the console lit up with <a href="https://stackoverflow.com/questions/57853288/react-warning-maximum-update-depth-exceeded" target="_blank"><strong>Maximum update depth exceeded</strong></a> errors. Copilot had mishandled  <code>useEffect</code> and <code>useState</code>. It was a clear sign that while Copilot doesn’t really understand React or how it should be used in a real app.</p>
+<p><strong>Code quality / maintainability score: 3 / 10</strong></p>
+<h3 id="overall-scoring">Overall scoring</h3>
+<p>Taking into account the three aspects of gameplay, functionality, and code I would rank the output generated by the agent in this scenario as <strong>2 / 10 - poor and disappointing</strong>.</p>
+<h2 id="refinement">Refinement</h2>
+<p>Not willing to give up at the first hurdle, I persevered with the game and attempted to use the agent to refactor the code and incrementally add missing features - maybe the agent was going to be better at adding features to the existing code than it was at generating the initial game code?</p>
+<p>Refactoring the <em>Buzzer Bee</em> game using GitHub Copilot was a rollercoaster. At times, the agent felt like a decent assistant but most of the time it felt more like a rogue intern with too much creative freedom.</p>
+<p>Image generation, which I tried for a number of the core game assets, just did not work at all. Maybe this is to be expected as its not really part of the core capabilities I would expect in an agentic coding assistant. But, even though the agent could not generate the images I wanted, it still created useless placeholders such as the smiley face SVG file that was supposed to look like a flying bee.</p>
+<p>I hoped that Copilot's performance in actual code would be a bit more promising.</p>
+<p>One highlight was when I asked Copilot to correct the scoring mechanism. Initially it just increased the score when each frame rendered instead of only when the bee passed an object as had been asked in the game spec prompt. Once I pointed out this error, it smartly introduced a <code>passed</code> field to my <code>Obstacle</code> type and implemented the logic to prevent multiple scoring for the same obstacle and it got it right on the first try. That was a clear win.</p>
+<p>Encouraged by this, I asked it to create a scoring component. The first attempt was a mess and had to be reverted, but on the second try, it followed the game’s existing patterns, built a new <code>GameObject</code> class, and the results were solid. This back-and-forth showed me that Copilot can learn from context but sometimes it needs multiple goes to get something close to right.</p>
+<p>However, as the complexity of the main <code>Game.tsx</code> file grew, the agent started to slow down noticeably. It raised a flag for me: while it works well on toy problems, scaling Copilot into a real project can introduce frustrating lag and reduce productivity.</p>
+<p>A more serious challenge came when implementing a pre-start state to the game (when the bee flies automatically without the score and obstacle components being rendered). The Agent's first version of the code introduced complex <code>if...else</code> logic in the <code>render</code> function making the code difficult to understand. I fixed the issue by asking the Agent to revert this change and manually split the <code>render</code> function into separate functions for each state. This made the code cleaner, but the changes the Agent made introduced a subtle bug where obstacles no longer rendered when the game started. Clearly the agent needs sufficient guidance to generate both clear and accurate code.</p>
+<p>Another issue cropped up when I asked it to add on-screen instructions for the pre-start state (telling the player to &quot;Tap of click to start&quot;). Copilot decided to drop the new object into the existing <code>ObjectFactory.ts</code> file - which promptly broke the factory. Reverting the change and asking it to move the logic to a new file fixed things. But again, it exposed a limitation: English is just too ambiguous sometimes. You need to use very precise, technical language and have a strong mental model of your project’s structure to get consistent results.</p>
+<p>As the project grew, even small visual details became tricky to implement using Copilot. As an example, after the instructions were added, the score display shifted out of alignment. This turned out to be because the <code>context.textAlign</code> setting had been changed in the instructions component but not reset in the score component. I couldn’t get Copilot to fix it properly, so I ended up adjusting the alignment manually.</p>
+<p>Finally, when I added a context provider for background music, Copilot completely duplicated the <code>Game</code> component instead of wrapping the existing one. I reverted and did it manually, but from then on, any further prompts to change the music context caused the agent to repeat the same duplication mistake.</p>
+<h2 id="what-i-learned">What I Learned</h2>
+<p>Copilot can seem like it could be a boost for simple tasks. But it still struggles with ambiguity, scaling across large files, and maintaining stateful context in a complex codebase.</p>
+<p>When it works, it can definitely save time. But it needs a developer who can think critically, spot subtle bugs, and guide it with crystal-clear instructions.</p>
+<p>If you want to see how the game works you can <a href="https://www.sixsideddice.com/Games/BuzzerBee/" target="_blank">play the game on my website</a> or check out the code in my <a href="https://github.com/LeeSanderson/BuzzerBee" target="_blank">GitHub repo</a>. You can get a flavour from the animated gif below:</p>
+<p><img src="BuzzerBeeGamePlay.gif" class="img-fluid" alt="" /></p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
