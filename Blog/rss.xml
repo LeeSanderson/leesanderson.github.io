@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Thu, 01 May 2025 09:23:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 May 2025 09:26:39 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -136,6 +136,14 @@
       <link>https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</link>
       <title>Knowledge Management With Obsidian</title>
       <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Vibe coding tools promise to make software development faster and easier, but history tells a cautionary tale. Like 4GLs and Model-Driven Architecture before them, these tools risk repeating the cycle of hype, complexity, and disillusionment. Real engineering practices and not just "vibes" remain essential for building systems that last.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/VibeCodingTheEmperorsNewClothes.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Thoughts/VibeCodingTheEmperorsNewClothes.html</link>
+      <title>Vibe Coding: The Emperor's New Clothes</title>
+      <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
