@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Thu, 10 Jul 2025 12:59:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Jul 2025 13:03:26 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -136,6 +136,14 @@
       <link>https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</link>
       <title>Knowledge Management With Obsidian</title>
       <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>As AI coding agents automate simpler tasks, the traditional apprenticeship model that nurtures junior developers is at risk. This article explores the long-term implications for engineering teams and argues that preserving pathways for junior talent is essential to sustain software development as a craft.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/AIAndTheDeathOfTheJuniorDeveloper.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Thoughts/AIAndTheDeathOfTheJuniorDeveloper.html</link>
+      <title>AI and The Death of The Junior Developer</title>
+      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
