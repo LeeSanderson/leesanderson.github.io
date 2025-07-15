@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 15 Jul 2025 14:34:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 15 Jul 2025 15:04:02 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -139,7 +139,7 @@
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
-      <description>Example showing how SciKit Learn's Decision Trees can be used to solve classification type problems by trying to predict survivors of Titanic.</description>
+      <description>Introduction to decision trees and examples showing how SciKit Learn can be used to solve classification type problems by trying to predict survivors of the Titanic.</description>
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html</guid>
       <link>https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html</link>
       <title>Decision Tree Classifiers By Example</title>
