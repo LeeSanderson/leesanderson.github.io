@@ -76,14 +76,14 @@
 </blockquote>
 <p>In my <a href="BloggingWithGithubAndMarkdown.html">Blogging with GitHub and Markdown</a> article, I discussed using Markdown to author content for your blog. In this follow up article, I will use C#, <a href="https://github.com/xoofx/markdig" target="_blank">Markdig</a>, and <a href="https://github.com/fouadmess/RazorEngine" target="_blank">RazorEngine.NetCore</a> to convert the Markdown content to HTML so that it can be published on to the Internet.</p>
 <p>The diagram below outlines how a raw Markdown source files are processed:</p>
-<div class="mermaid">
+<pre class="mermaid">
 graph TD;
     MD(Markdown Source) --> Markdig[[Markdig Processor]]
     Markdig--> HTML(Raw HTML + Metadata)
     Razor(Razor Template)-->Razor_Engine[[Razor Engine]]
     HTML --> Razor_Engine
     Razor_Engine --> Article(Article HTML)
-</div>
+</pre>
 <p>Here we can see:</p>
 <ol>
 <li>The Markdig processor parses the raw Markdown source file, extracts and Yaml metadata, and converts the remaining Markdown to HTML</li>

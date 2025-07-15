@@ -59,7 +59,7 @@
         <main role="main" class="pb-3">
             
 <div class="article-header">
-    <span class="article-date">Sep 10, 2024</span>
+    <span class="article-date">Sept 10, 2024</span>
     
     <span class="article-tags">
         <span class="badge badge-info">#DevOps</span>
@@ -138,7 +138,7 @@
 <p>I prefer to define this stage as the <strong>Develop</strong> stage rather than the <strong>Code</strong> stage. Development includes design, coding and testing and is more aligned with my view of what activities engineering teams perform at this point in the <strong>DevOps</strong> lifecycle.</p>
 <p>During the <strong>Develop</strong> stage engineers design, code and test application features. The inputs to this stage are the refined and prioritised set of work items that are outputted from the <strong>Plan</strong> stage. Usually work items are clearly defined during the <strong>Plan</strong> stage and implementation is straight forward. Sometimes when the solution is not immediately clear, teams might need to spend some time researching the best solution. This preparation work is know as a <a href="https://en.wikipedia.org/wiki/Spike_(software_development)" target="_blank">spike</a>. Outcomes of a spike feeds back into the <strong>Plan</strong> stage to inform the next planning iteration.</p>
 <p>I have a preference for using <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">Test Driven Development</a> during the <strong>Develop</strong> stage. TDD promotes good design and maintainability while ensuring we have a set of tests that can prevent regressions. Specifically, I prefer the <a href="https://softwareengineering.stackexchange.com/questions/166409/tdd-outside-in-vs-inside-out" target="_blank">Outside-in style of TDD</a> described in the <a href="https://www.amazon.co.uk/dp/0321503627" target="_blank">GOOS book</a>. In this style of TDD, an engineer start by writing a failing high-level acceptance test that captures the expected behaviour of the system from an end-user or external interface perspective. This failing outer-loop test then drives the engineer to implement lower level unit tests following the standard red-green-refactor pattern. The combination of acceptance and unit testing leads to a double loop testing cycle.</p>
-<div class="mermaid">flowchart LR
+<pre class="mermaid">flowchart LR
       subgraph as2[ ]
         direction LR
         Red2((Write a failing&lt;br/> acceptance test))
@@ -157,7 +157,7 @@ style Red2 fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Green fill:#0b9e52,color:#fff,stroke-width:4px,stroke:#0f0
 style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
-</div>
+</pre>
 <p>If I am working on a system with many independent (micro) services, I tend to use <a href="https://pactflow.io/blog/what-is-contract-testing" target="_blank">Contract Testing</a> as my outer loop acceptance tests. Contract testing ensures that systems are compatible by capturing interactions between each system, storing these interactions in a contract, and verifying that all parties adhere to the contract. In complex distributed systems, end-to-end integration tests tend to be slow, difficult to maintain, can be unreliable or flakey, hard to fix, and find bugs too late in the development process. In contrast, contract tests provide the same level of confidence as end-to-end integration tests but run fast, are easier to maintain, are easy to debug and fix, are repeatable, and allow developers to quickly uncover bugs locally. Contract testing does not remove the need for end-to-end integration tests, but reduces the reliance on them. Fewer end-to-end integration tests are needed making execution faster.</p>
 <p>As I've been describing the <strong>Develop</strong> stage, it has been implicit <em>where</em> these activities occur. To be completely clear, development activities happen locally on the engineer's machine. This, perhaps obvious statement, has some important consequences for productivity. Engineering productivity increases with faster feedback loops, therefore all activities that we want to execute in the <strong>Integrate</strong> stage (which we will discuss next) must also be executable locally during the <strong>Develop</strong> stage. If an engineer cannot easily run the application locally, they may need to integrate their work and release the application to a test environment in order to verify any change. This extended feedback loop can cripple productivity and should be avoided where possible.</p>
 <p>Because the activities of the <strong>Develop</strong> stage happen locally, a mechanism is needed to manage code changes, enable collaboration among team members, and provide a single source of truth. Note that code in this context includes not only application code but also infrastructure code and automated end-to-end integration test code. In order to provide these capabilities, all code must be managed by a version control system.</p>

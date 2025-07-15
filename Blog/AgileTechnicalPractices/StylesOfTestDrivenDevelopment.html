@@ -90,7 +90,7 @@
 <li>Write the <em>minimal</em> amount of code to stop the test failing. The code is now in the <code>green</code> state (so called because testing tools display in success i.e., zero teat failures, as green).</li>
 <li>Eliminate any duplication created in step 2 by <em>refactoring</em> the code <em>without changing its behaviour</em>.</li>
 </ol>
-<div class="mermaid">flowchart LR
+<pre class="mermaid">flowchart LR
     subgraph as[ ]
         direction RL
         Red((Write a failing&lt;br/> unit test)) ---> Green
@@ -103,7 +103,7 @@ style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Green fill:#0b9e52,color:#fff,stroke-width:4px,stroke:#0f0
 style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
 
-</div>
+</pre>
 <p>To provide fast feedback to the developer(s) writing the code, the tests must run <em>quickly</em> - the faster we can iterate around this loop, the faster we can validate assumptions, capture edge cases, and improve the design.</p>
 <p>The Classicist style of TDD uses <em>state based verification</em> i.e., the subject under test will be acted upon and assertions will be used to verify the state of the object. The example below, written in C# and using the xUnit testing framework, shows a simple state based verification test:</p>
 <pre><code class="language-csharp">public class StackShould
@@ -128,7 +128,7 @@ style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
 <p>In <a href="https://www.amazon.co.uk/Growing-Object-Oriented-Software-Guided-Signature/dp/0321503627" target="_blank">Growing object-oriented software, guided by tests</a>, <a href="https://www.amazon.co.uk/Steve-Freeman/e/B002O21DQW" target="_blank">Steve Freeman</a> and <a href="https://www.amazon.co.uk/Nat-Pryce/e/B002PXWFIU" target="_blank">Nat Pryce</a> address these issues by using the golden rule of TDD: <em>write a failing test</em>. They suggest the best place to start when adding a new <em>feature</em> to an application (including the first feature) is to write a failing <em>acceptance</em> test.</p>
 <p>Here a <em>feature</em> can be a <a href="https://en.wikipedia.org/wiki/User_story" target="_blank">user story</a> or some other high level piece of functionality and an <em>acceptance</em> test is a test conducted to determine if the requirements of a feature are met.</p>
 <p>The combination of acceptance and unit testing leads to a double loop</p>
-<div class="mermaid">flowchart LR
+<pre class="mermaid">flowchart LR
       subgraph as2[ ]
         direction LR
         Red2((Write a failing&lt;br/> acceptance test))
@@ -147,7 +147,7 @@ style Red2 fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Red fill:#9e280b,color:#fff,stroke-width:4px,stroke:#f00
 style Green fill:#0b9e52,color:#fff,stroke-width:4px,stroke:#0f0
 style Refactor fill:#0b439e,color:#fff,stroke-width:4px,stroke:#00f
-</div>
+</pre>
 <p>Because Outside-in TDD starts with an acceptance test, you need to do a small amount of up-front design first to define the public interface and <em>collaborators</em> of the system under test. Collaborators can then be <em>mocked</em> to implement the acceptance test. As collaborators are mocked, tests must use behaviour verification.</p>
 <p>For example, consider the &quot;forgot password&quot; process for a typical web site. The acceptance test for this functionality might state &quot;given a user has registered with their email address when the user requests a password reset then an email with a reset link will be sent&quot;.</p>
 <p>If we were to implement this using ASP.NET MVC, a <code>PasswordResetController</code> would be responsible for handling the interaction with the user. During our up-front design we may decide that we need a <code>IUserAuthenticatorService</code> to check if the <code>UserIsRegistered</code> and a <code>IPasswordResetEmailerService</code> to send the email. The code below, written in C# using xUnit and the NSubstitute mocking framework, shows a simple behaviour based verification test for this design:</p>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Decision Tree Classifiers By Example - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Example showing how SciKit Learn's Decision Trees can be used to solve classification type problems by trying to predict survivors of Titanic.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="ML DecisionTrees Classification">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Decision Tree Classifiers By Example">
+    <meta name="twitter:description" content="Example showing how SciKit Learn's Decision Trees can be used to solve classification type problems by trying to predict survivors of Titanic.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Decision Tree Classifiers By Example">
+    <meta name="description" property="og:description" content="Example showing how SciKit Learn's Decision Trees can be used to solve classification type problems by trying to predict survivors of Titanic.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jul 15, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">ML</span>
+        <span class="badge badge-info">DecisionTrees</span>
+        <span class="badge badge-info">Classification</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="decision-tree-classifiers-by-example" class="sr-only" data-hero-heading="true">Decision Tree Classifiers By Example</h1>
+<img class="hero-image" src="DecisionTreeClassifiersByExample.png" alt="Decision Tree Classifiers By Example"/>
+<p>Decision trees are one of the most intuitive algorithms in machine learning. They are commonly used for classification problems. These are problems where the goal is to assign labels to data, such as predicting if an email is spam, whether a customer will leave, or if a loan application should be approved.</p>
+<p>In this article we will explore how <a href="https://scikit-learn.org/stable/modules/tree.html" target="_blank">SciKit Learn's Decision Trees</a> can be used to solve classification type problems by trying to predict survivors of Titanic.</p>
+<h2 id="how-decision-trees-work">How Decision Trees Work</h2>
+<p>A decision tree works like a flowchart.</p>
+<ul>
+<li>Each node asks a question about a feature (for example, &quot;Is the passenger female?&quot;).</li>
+<li>Based on the answer, the data follows a branch to the next question.</li>
+<li>Eventually, the data reaches a leaf node, which represents the predicted class (such as &quot;Survived&quot; or &quot;Did not survive&quot;).</li>
+</ul>
+<p>The important part is that machine learning is used to build this flowchart automatically.
+Instead of manually deciding which questions to ask and in what order, we train the model using labeled data. The algorithm looks at patterns in the data and figures out:</p>
+<ul>
+<li>Which features are the most informative,</li>
+<li>What threshold values best separate different groups,</li>
+<li>And how to organize these decisions in a way that leads to accurate predictions.</li>
+</ul>
+<p>This makes decision trees both powerful and easy to understand. You can trace exactly how a prediction was made by following the tree's logic.</p>
+<h2 id="python-prerequisites">Python Prerequisites</h2>
+<p>We will by using  the <code>numpy</code>, <code>pandas</code>, and <code>sklearn</code> Python packages throughout, so let's install them and import them so they are ready to use.</p>
+<pre><code class="language-python"># %pip install --quiet --upgrade pip 
+# %pip install numpy --quiet
+# %pip install PyArrow --quiet
+# %pip install Pandas --quiet
+# %pip install scikit-learn --quiet</code></pre><pre><code class="language-python">import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn import tree</code></pre><h2 id="the-titanic-dataset">The Titanic Dataset</h2>
+<p>The classic <a href="https://www.kaggle.com/competitions/titanic" target="_blank">Kaggle Titanic</a> dataset will be used to show how decision trees  can be used to solve <strong>classification</strong> problems. In this case, the dataset includes Titanic passenger data (name, age, price of ticket, etc) and the problem we are trying to predict is who will survive and who not.</p>
+<p>Columns in the dataset include:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Column</th>
+<th>Definition</th>
+<th>Notes</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>The unique id of the passenger</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Survived</td>
+<td>Did the passenger survive?</td>
+<td>1 = Yes, 0 = No</td>
+<td></td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>The passenger's ticket class</td>
+<td>1 = 1st, 2 = 2nd, 3 = 3rd</td>
+<td></td>
+</tr>
+<tr>
+<td>Name</td>
+<td>The passenger's name</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>The passenger's gender</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Age</td>
+<td>The passenger's age in years</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>The number of siblings or spouses also onboard</td>
+<td>Siblings = brother, sister, stepbrother, stepsister. Spouses =  husband, wife (mistresses and fiances were ignored)</td>
+<td></td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>The number of parents or children also onboard</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>The passenger's ticket number</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>The fair paid by the passenger for their ticket</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>The passenger's cabin number</td>
+<td>Not all passenger's had a cabin</td>
+<td></td>
+</tr>
+<tr>
+<td>Embarked</td>
+<td>The port that the passenger embarked from</td>
+<td>C = Cherbourg, Q = Queenstown, S = Southampton</td>
+<td>The Titanic data is provided in a CSV file. Let's load the dataset into a <code>pandas</code> dataframe so we can manipulate is more easily.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">titanic_data = pd.read_csv("Data/titanic_train.csv")
+titanic_data["Survived"].value_counts()</code></pre>
+<pre><code class="language-text">Survived
+0    549
+1    342
+Name: count, dtype: int64
+</code></pre>
+<p>Some simple analysis of the data shows <code>342</code> passengers survived and <code>549</code> perished (about <code>62%</code>).</p>
+<h2 id="data-wrangling">Data Wrangling</h2>
+<p>In statistics and machine learning, variables are generally divided into two main types: <strong>categorical</strong> and <strong>continuous</strong>. Understanding the difference between these types is essential, because they are handled differently during data preprocessing and model training.</p>
+<p><strong>Categorical variables</strong> are features that represent distinct groups or labels. Examples include sex (<code>male</code>, <code>female</code>), passenger class (<code>first</code>, <code>second</code>, <code>third</code>), or port of embarkation (<code>C</code>, <code>Q</code>, <code>S</code>). These variables describe qualitative attributes and do not have a meaningful numeric order or scale. In contrast, <strong>continuous variables</strong> represent quantitative data. They include values such as age, fare, or temperature that can take on a wide range of numerical values and support arithmetic operations like averaging and subtraction.</p>
+<p>SciKit Learn's <a href="https://scikit-learn.org/stable/modules/tree.html" target="_blank">Decision Tree</a> does not support categorical variables (see: <a href="https://github.com/scikit-learn/scikit-learn/issues/5442" target="_blank">#5442</a>). We therefore need to convert categorical variables into a suitable format. One of the most common techniques for this is <strong>one-hot encoding</strong>, which transforms each unique category into its own binary (0 or 1) column. For example, a <code>Sex</code> column with the values <code>male</code> and <code>female</code> would be split into two new columns: <code>Sex_male</code> and <code>Sex_female</code>. Each row would have a 1 in the column that matches the category and a 0 in the other. This allows models to use categorical information without treating the values as numeric or ordered, and avoids introducing unintended relationships between categories.</p>
+<table class="table">
+<thead>
+<tr>
+<th>Sex</th>
+<th>Sex_male</th>
+<th>Sex_female</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>male</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>female</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Next we define a utility function to perform <strong>one-hot encoding</strong> on a given column of a dataframe. We will use this in the subsequent analysis:</p>
+<pre><code class="language-python">def onehot_encode(df : pd.DataFrame, column_name: str) -> tuple[pd.DataFrame, list[str]]:
+    categories = [f"{column_name}_{value}" for value in df[column_name].unique()]
+
+    # remove the categorical variables (if we previous called onehot_encode)
+    df = df.drop(categories, axis=1, errors="ignore") 
+    temp_column_name = f"{column_name}_Temp"
+
+    # get_dummies will remove the original column, so copy the data to temp column
+    df[temp_column_name] = df[column_name] 
+    df = pd.get_dummies(df, prefix=column_name, columns=[temp_column_name], dtype=float)
+    return df, categories</code></pre><h2 id="predicting-survivors-women-and-children-first">Predicting Survivors: Women and children first</h2>
+<p>Our first hypothesis will be that woman and children were more likely to be given a place on the lifeboats and therefore will have survived. Based on this hypothesis we will use the <code>Sex</code> and <code>Age</code> columns as predictors of survival.</p>
+<p>Let's apply our new <code>onehot_encode</code> function to convert the <code>Sex</code> column to trainable parameters <code>Sex_male</code> and <code>Sex_female</code>:</p>
+<pre><code class="language-python">
+titanic_data, gender_categories = onehot_encode(titanic_data, "Sex")
+titanic_data[gender_categories].value_counts()</code></pre>
+<pre><code class="language-text">Sex_male  Sex_female
+1.0       0.0           577
+0.0       1.0           314
+Name: count, dtype: int64
+</code></pre>
+<h3 id="splitting-the-data-into-training-and-validation-data-sets">Splitting the data into training and validation data sets</h3>
+<p>When building a machine learning model, it's important to test how well it performs on new, unseen data and not just the data it was trained on. This helps us understand whether the model is actually learning meaningful patterns, or simply memorizing the training data.</p>
+<p>To do this, we split the dataset into two parts:</p>
+<ul>
+<li>Training set: This is the portion of the data the model uses to learn. It sees the input features and corresponding labels, and uses them to build internal rules.</li>
+<li>Validation set (sometimes called a test set): This is a separate portion of the data that the model does not see during training. After the model is trained, we use the validation set to evaluate how well it performs on data it hasn't encountered before.</li>
+</ul>
+<p>This split helps prevent overfitting, which happens when a model performs very well on the training data but poorly on new data. By testing on a validation set, we get a more realistic measure of how well our model is likely to perform in real-world scenarios.</p>
+<p>When we split data into training and validation sets, we want each set to be a <strong>fair representation</strong> of the full dataset. This is especially important when it comes to the <strong>target label</strong> we are trying to predict. Stratification helps ensure that the distribution of this label is consistent across both sets.</p>
+<p>In the Titanic dataset, the target label is <code>Survived</code>, which tells us whether a passenger lived or died. This dataset is imbalanced because more passengers died than survived. If we split the data randomly, we might end up with a training set that contains mostly non-survivors or a validation set with very few survivors. This imbalance can distort how the model learns and lead to unreliable performance metrics.</p>
+<p>Stratified sampling helps solve this problem by preserving the proportion of classes in each split. For example, if about 38% of passengers survived in the full dataset, stratification ensures that the training and validation sets also contain approximately 38% survivors. This makes sure the model is trained and tested on data that reflects the true class distribution.</p>
+<p>In Scikit-Learn, we can use the stratify parameter in the <code>train_test_split()</code> function to enable this behavior.</p>
+<p>Here’s how it looks when we:</p>
+<ul>
+<li>Split the data so that we have 80% training data and 20% validation data (<code>test_size=0.2</code>).</li>
+<li>Stratify the data using the <code>Survived</code> column</li>
+<li>Set the <code>random_state</code> to <code>42</code> so that every time we run the code, we get the same split (any fixed value will work, 42 is just a commonly used arbitrary value).</li>
+</ul>
+<pre><code class="language-python">train, validate = (
+    train_test_split(
+        titanic_data, 
+        test_size=0.2, 
+        stratify=titanic_data["Survived"], 
+        random_state=42)
+    )</code></pre><h3 id="training-the-model">Training the model</h3>
+<p>Now that we've got the data in the right state and split out our training and validation data sets we can create our model using <code>tree.DecisionTreeClassifier</code>.</p>
+<p>The <code>max_depth</code> parameter sets the maximum number of levels the tree is allowed to grow. In this case, we limit it to a depth of 2, which means the model can make only two splits from the root. This is useful for a few reasons:</p>
+<ul>
+<li>It keeps the model simple and interpretable.</li>
+<li>With only two features (<code>Age</code> and <code>Sex</code>), deeper trees often don't add much value and may lead to overfitting.</li>
+</ul>
+<p>Again we set <code>random_state=42</code> to make results reproducible and ensure consistent comparisons when trying different models or parameters.</p>
+<pre><code class="language-python">predictors = ["Age"] + gender_categories
+prediction = "Survived"
+
+x = train[predictors]
+y = train[[prediction]].values
+
+decision_tree = tree.DecisionTreeClassifier(max_depth=2, random_state=42)
+decision_tree.fit(x, y)
+
+print(tree.export_text(decision_tree, feature_names=predictors))</code></pre>
+<pre><code class="language-text">|--- Sex_male &lt;= 0.50
+|   |--- Age &lt;= 14.75
+|   |   |--- class: 1
+|   |--- Age &gt;  14.75
+|   |   |--- class: 1
+|--- Sex_male &gt;  0.50
+|   |--- Age &lt;= 3.50
+|   |   |--- class: 1
+|   |--- Age &gt;  3.50
+|   |   |--- class: 0
+
+
+</code></pre>
+<p>Interpreting this tree we see:</p>
+<ul>
+<li>This tree uses <code>Sex_male</code> and <code>Age</code> to predict survival.</li>
+<li>Sex is the most important factor (providing the most information) and is used in the first split.</li>
+<li>If the passenger is female (Sex_male &lt;= 0.5): predict survived, regardless of age.</li>
+<li>If the passenger is male:
+<ul>
+<li>Age ≤ 6.5: predict survived.</li>
+<li>Age &gt; 6.5: predict did not survive.</li>
+</ul>
+</li>
+<li>The tree is balanced: both sides of the tree split once more, keeping it simple and interpretable.### Evaluate the model</li>
+</ul>
+<p>Now that we have trained our decision tree, one of the first things we check is its accuracy i.e. the percentage of correct predictions the model makes on the validation set. But how do we know if that accuracy is actually meaningful?</p>
+<p>A helpful baseline is to compare the model's accuracy to the accuracy of a random guess. In a binary classification problem like predicting Titanic survival (<code>Survived = 0</code> or <code>1</code>), a random guess would mean selecting either class with equal probability. This is similar to flipping a coin, which gives an expected accuracy of around 50%.</p>
+<p>However, the Titanic dataset is imbalanced. More passengers died than survived. This means that even a simple strategy like always predicting the majority class (in this case, &quot;Did not survive&quot;) can perform better than random. We know from the analysis we did above that approximately 62% of the passengers did not survive, always predicting &quot;Did not survive&quot; would be correct 62% of the time. This is called the majority class baseline.</p>
+<p>So when we evaluate our model, we should ask two questions:</p>
+<ul>
+<li>Is the accuracy better than a random guess, which would be about 50%?</li>
+<li>Is the accuracy better than always guessing the majority class, which would be around 62% in this dataset?</li>
+</ul>
+<p>Let's evaluate our simple model to see how accurate it is:</p>
+<pre><code class="language-python">predictions = decision_tree.predict(validate[predictors])
+actuals = validate[[prediction]].values
+
+score = accuracy_score(actuals, predictions)
+print(f'Simple "Women and children first" hypothesis has accuracy of: {score *100:.2f}%')</code></pre>
+<pre><code class="language-text">Simple &quot;Women and children first&quot; hypothesis has accuracy of: 75.98%
+
+</code></pre>
+<p>Our decision tree achieves an accuracy significantly higher than these baselines. Therefore we can be confident that the model is learning meaningful patterns from the data instead of simply guessing.## Improving Predictions: Is class a factor?</p>
+<p>Let's see if we can improve the accuracy of our decision tree by adding the ticket class into the model.
+Our hypothesis here is that 1st and 2nd class passengers are closer to the lifeboats and will more easily be able to reach them than 3rd class passengers.</p>
+<p>Let's apply our <code>onehot_encode</code> function to the <code>Pclass</code> column:</p>
+<pre><code class="language-python">titanic_data, class_categories = onehot_encode(titanic_data, "Pclass")
+titanic_data[class_categories].value_counts()</code></pre>
+<pre><code class="language-text">Pclass_3  Pclass_1  Pclass_2
+1.0       0.0       0.0         491
+0.0       1.0       0.0         216
+          0.0       1.0         184
+Name: count, dtype: int64
+</code></pre>
+<p>And now let's train a new model combining <code>Age</code>, <code>Sex</code>, and <code>Pclass</code>.</p>
+<p>Again we will restrict the value of the <code>max_depth</code> parameter, but this time we will set it to 3 as we have 3 variables.</p>
+<pre><code class="language-python">train, validate = train_test_split(titanic_data, test_size=0.2, random_state=42)
+predictors = ["Age"] + gender_categories + class_categories
+prediction = "Survived"
+
+x = train[predictors]
+y = train[[prediction]].values
+
+decision_tree = tree.DecisionTreeClassifier(max_depth=3, random_state=42)
+decision_tree.fit(x, y)
+
+print(tree.export_text(decision_tree, feature_names=predictors))</code></pre>
+<pre><code class="language-text">|--- Sex_male &lt;= 0.50
+|   |--- Pclass_3 &lt;= 0.50
+|   |   |--- Age &lt;= 2.50
+|   |   |   |--- class: 0
+|   |   |--- Age &gt;  2.50
+|   |   |   |--- class: 1
+|   |--- Pclass_3 &gt;  0.50
+|   |   |--- Age &lt;= 36.50
+|   |   |   |--- class: 1
+|   |   |--- Age &gt;  36.50
+|   |   |   |--- class: 0
+|--- Sex_male &gt;  0.50
+|   |--- Age &lt;= 6.50
+|   |   |--- Pclass_3 &lt;= 0.50
+|   |   |   |--- class: 1
+|   |   |--- Pclass_3 &gt;  0.50
+|   |   |   |--- class: 0
+|   |--- Age &gt;  6.50
+|   |   |--- Pclass_1 &lt;= 0.50
+|   |   |   |--- class: 0
+|   |   |--- Pclass_1 &gt;  0.50
+|   |   |   |--- class: 0
+
+
+</code></pre>
+<p>The tree is more complicate this time but we see similar patterns:</p>
+<ul>
+<li>This tree uses <code>Sex_male</code>, <code>Pclass_3</code>, and <code>Age</code> to predict survival.</li>
+<li>Sex is the most important factor (providing the most information) and is used in the first split.</li>
+<li>The tree is balanced: both sides of the tree split once more, keeping it simple and interpretable.### Evaluating The Impact of Class</li>
+</ul>
+<p>Let's evaluate our new model to see how accurate it is:</p>
+<pre><code class="language-python">predictions = decision_tree.predict(validate[predictors])
+actuals = validate[[prediction]].values
+
+score = accuracy_score(actuals, predictions)
+print(f'"Women and children first (as long as you are not 3rd class)" hypothesis has accuracy of: {score *100:.2f}%')</code></pre>
+<pre><code class="language-text">&quot;Women and children first (as long as you are not 3rd class)&quot; hypothesis has accuracy of: 80.45%
+
+</code></pre>
+<p>Our decision tree using <code>Pclass</code> alongside <code>Age</code> and <code>Sex</code> achieves a better accuracy that the decision tree that just used <code>Age</code> and <code>Sex</code> and significantly higher than the baselines. Therefore we can be confident that <code>Pclass</code> adds some additional predictive power to the model.</p>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>Decision trees are powerful and interpretable tools, especially when you're getting started with classification. While this example was simple, it mirrors real-world machine learning workflows: data cleaning, feature selection, model training, and evaluation.</p>
+<p>Next Steps:</p>
+<ul>
+<li>Try using more features like <code>Fare</code>, <code>Embarked</code>, or <code>SibSp</code>.</li>
+<li>Experiment with different <code>max_depth</code> values.</li>
+<li>Try other models like <code>RandomForestClassifier</code> for improved accuracy.</li>
+</ul>
+<p>The full source code of this notebook can be accessed via <a href="https://github.com/LeeSanderson/MLByExample/blob/main/DecisionTreeClassifier.ipynb" target="_blank">GitHub</a>.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
