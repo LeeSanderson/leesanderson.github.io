@@ -197,7 +197,13 @@ Model accuracy: 84.36%
                 .rename(columns={"index": "ColumnName"}))
     return missing[missing["MissingCount"] > 0]
 
-missing_counts(titanic_data)</code></pre><div>
+missing_counts(titanic_data)</code></pre>
+<pre><code class="language-text">  ColumnName  MissingCount
+0      Cabin           687
+1        Age           177
+2   Embarked             2
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -265,7 +271,17 @@ missing_counts(titanic_data)</code></pre><div>
 
 matrix = create_correlation_matrix(titanic_data)
 matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=False)
-</code></pre><div>
+</code></pre>
+<pre><code class="language-text">   Feature1     Feature2  Correlation
+24      Age          Age     1.000000
+23      Age       Pclass     0.369226
+25      Age        SibSp     0.308247
+26      Age        Parch     0.189119
+27      Age         Fare     0.096067
+22      Age     Survived     0.077221
+21      Age  PassengerId     0.036847
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -344,7 +360,16 @@ matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=Fals
     return df.groupby(with_grouping)[for_col].mean().reset_index()
 
 age_impute_matrix = create_mean_imputation_matrix(titanic_data, "Age", ["Pclass", "Sex"])
-age_impute_matrix</code></pre><div>
+age_impute_matrix</code></pre>
+<pre><code class="language-text">   Pclass     Sex        Age
+0       1  female  34.611765
+1       1    male  41.281386
+2       2  female  28.722973
+3       2    male  30.740707
+4       3  female  21.750000
+5       3    male  26.507589
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -425,7 +450,15 @@ age_impute_matrix</code></pre><div>
 <p>But before we apply the function, let's examine some of the passenger data where the passenger's age is unknown (we can then check the imputation has been applied correctly).</p>
 <pre><code class="language-python">missing_passengers = titanic_data[titanic_data["Age"].isnull()]
 missing_passengers_ids = missing_passengers["PassengerId"].tolist()
-missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre><div>
+missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre>
+<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass  Age
+5             6               Moran, Mr. James    male       3  NaN
+17           18   Williams, Mr. Charles Eugene    male       2  NaN
+19           20        Masselmani, Mrs. Fatima  female       3  NaN
+26           27        Emir, Mr. Farred Chehab    male       3  NaN
+28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  NaN
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -496,7 +529,12 @@ missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code
 </div>
 <p>Right, now let's create a copy of the data frame with imputed ages and verify that the missing data has been replaced.</p>
 <pre><code class="language-python">titanic_data_with_imputed_age = apply_imputation_matrix(titanic_data, age_impute_matrix, "Age")
-missing_counts(titanic_data_with_imputed_age)</code></pre><div>
+missing_counts(titanic_data_with_imputed_age)</code></pre>
+<pre><code class="language-text">  ColumnName  MissingCount
+0      Cabin           687
+1   Embarked             2
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -535,7 +573,15 @@ missing_counts(titanic_data_with_imputed_age)</code></pre><div>
 <p>Great. No more missing ages. Let's verify that the imputations are what we expect be looking at the updated passenger data.</p>
 <pre><code class="language-python">(titanic_data_with_imputed_age[
     titanic_data_with_imputed_age["PassengerId"].isin(missing_passengers_ids)]
-    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre><div>
+    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre>
+<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass        Age
+5             6               Moran, Mr. James    male       3  26.507589
+17           18   Williams, Mr. Charles Eugene    male       2  30.740707
+19           20        Masselmani, Mrs. Fatima  female       3  21.750000
+26           27        Emir, Mr. Farred Chehab    male       3  26.507589
+28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  21.750000
+</code></pre>
+<div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
