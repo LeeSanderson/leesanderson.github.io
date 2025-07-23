@@ -197,13 +197,7 @@ Model accuracy: 84.36%
                 .rename(columns={"index": "ColumnName"}))
     return missing[missing["MissingCount"] > 0]
 
-missing_counts(titanic_data)</code></pre>
-<pre><code class="language-text">  ColumnName  MissingCount
-0      Cabin           687
-1        Age           177
-2   Embarked             2
-</code></pre>
-<div>
+missing_counts(titanic_data)</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -244,7 +238,7 @@ missing_counts(titanic_data)</code></pre>
   </tbody>
 </table>
 </div>
-Hmm. OK. We expect `Cabin` to have some significant missing values as not all passengers will have been able to afford or book a cabin. And we aren't currently using the `Embarked` column so we don't need to worry about the 2 rows with missing values in this column. But we are using `Age` and `Age` has a significant amount of missing data. 
+<p>Hmm. OK. We expect <code>Cabin</code> to have some significant missing values as not all passengers will have been able to afford or book a cabin. And we aren't currently using the <code>Embarked</code> column so we don't need to worry about the 2 rows with missing values in this column. But we are using <code>Age</code> and <code>Age</code> has a significant amount of missing data.</p>
 <p>Is this affecting the accuracy of our model? What can we do about it?</p>
 <h3 id="imputing-age">Imputing Age</h3>
 <p>Good data engineering practices states we should <a href="https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html" target="_blank">deal with missing data</a> and one way of doing this is by <code>imputing</code> the values of missing data based on the distribution of values across the data set.</p>
@@ -271,17 +265,7 @@ Hmm. OK. We expect `Cabin` to have some significant missing values as not all pa
 
 matrix = create_correlation_matrix(titanic_data)
 matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=False)
-</code></pre>
-<pre><code class="language-text">   Feature1     Feature2  Correlation
-24      Age          Age     1.000000
-23      Age       Pclass     0.369226
-25      Age        SibSp     0.308247
-26      Age        Parch     0.189119
-27      Age         Fare     0.096067
-22      Age     Survived     0.077221
-21      Age  PassengerId     0.036847
-</code></pre>
-<div>
+</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -350,7 +334,7 @@ matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=Fals
   </tbody>
 </table>
 </div>
-The correlation matrix shows that `Age` is most strongly related to `Pclass`, so one option is to fill missing ages using the mean age within each `Pclass`. However, we also suspect that males and females in each class may have different average ages. To improve accuracy, we can group by both `Pclass` and `Sex`, and use the mean age within each group to impute missing values.
+<p>The correlation matrix shows that <code>Age</code> is most strongly related to <code>Pclass</code>, so one option is to fill missing ages using the mean age within each <code>Pclass</code>. However, we also suspect that males and females in each class may have different average ages. To improve accuracy, we can group by both <code>Pclass</code> and <code>Sex</code>, and use the mean age within each group to impute missing values.</p>
 <p>So, first let's define a function to compute an imputation matrix:</p>
 <pre><code class="language-python">def create_mean_imputation_matrix(
         df: pd.DataFrame, 
@@ -360,16 +344,7 @@ The correlation matrix shows that `Age` is most strongly related to `Pclass`, so
     return df.groupby(with_grouping)[for_col].mean().reset_index()
 
 age_impute_matrix = create_mean_imputation_matrix(titanic_data, "Age", ["Pclass", "Sex"])
-age_impute_matrix</code></pre>
-<pre><code class="language-text">   Pclass     Sex        Age
-0       1  female  34.611765
-1       1    male  41.281386
-2       2  female  28.722973
-3       2    male  30.740707
-4       3  female  21.750000
-5       3    male  26.507589
-</code></pre>
-<div>
+age_impute_matrix</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -432,7 +407,7 @@ age_impute_matrix</code></pre>
   </tbody>
 </table>
 </div>
-As suspected males and females in each class have different mean ages with males in 1st class tending to be oldest and females in 3rd class being youngest.
+<p>As suspected males and females in each class have different mean ages with males in 1st class tending to be oldest and females in 3rd class being youngest.</p>
 <p>We can now define a function to use this imputation matrix and apply the mean ages in these groups to a data frame.</p>
 <pre><code class="language-python">def apply_imputation_matrix(
         df: pd.DataFrame, 
@@ -450,15 +425,7 @@ As suspected males and females in each class have different mean ages with males
 <p>But before we apply the function, let's examine some of the passenger data where the passenger's age is unknown (we can then check the imputation has been applied correctly).</p>
 <pre><code class="language-python">missing_passengers = titanic_data[titanic_data["Age"].isnull()]
 missing_passengers_ids = missing_passengers["PassengerId"].tolist()
-missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre>
-<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass  Age
-5             6               Moran, Mr. James    male       3  NaN
-17           18   Williams, Mr. Charles Eugene    male       2  NaN
-19           20        Masselmani, Mrs. Fatima  female       3  NaN
-26           27        Emir, Mr. Farred Chehab    male       3  NaN
-28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  NaN
-</code></pre>
-<div>
+missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -527,14 +494,9 @@ missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code
   </tbody>
 </table>
 </div>
-Right, now let's create a copy of the data frame with imputed ages and verify that the missing data has been replaced.
+<p>Right, now let's create a copy of the data frame with imputed ages and verify that the missing data has been replaced.</p>
 <pre><code class="language-python">titanic_data_with_imputed_age = apply_imputation_matrix(titanic_data, age_impute_matrix, "Age")
-missing_counts(titanic_data_with_imputed_age)</code></pre>
-<pre><code class="language-text">  ColumnName  MissingCount
-0      Cabin           687
-1   Embarked             2
-</code></pre>
-<div>
+missing_counts(titanic_data_with_imputed_age)</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -570,18 +532,10 @@ missing_counts(titanic_data_with_imputed_age)</code></pre>
   </tbody>
 </table>
 </div>
-Great. No more missing ages. Let's verify that the imputations are what we expect be looking at the updated passenger data.
+<p>Great. No more missing ages. Let's verify that the imputations are what we expect be looking at the updated passenger data.</p>
 <pre><code class="language-python">(titanic_data_with_imputed_age[
     titanic_data_with_imputed_age["PassengerId"].isin(missing_passengers_ids)]
-    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre>
-<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass        Age
-5             6               Moran, Mr. James    male       3  26.507589
-17           18   Williams, Mr. Charles Eugene    male       2  30.740707
-19           20        Masselmani, Mrs. Fatima  female       3  21.750000
-26           27        Emir, Mr. Farred Chehab    male       3  26.507589
-28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  21.750000
-</code></pre>
-<div>
+    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -650,7 +604,7 @@ Great. No more missing ages. Let's verify that the imputations are what we expec
   </tbody>
 </table>
 </div>
-Perfect. Cross-referencing the imputation matrix above with the `Sex` and `Pclass` of each passenger we can see our imputation has been applied correct.
+<p>Perfect. Cross-referencing the imputation matrix above with the <code>Sex</code> and <code>Pclass</code> of each passenger we can see our imputation has been applied correct.</p>
 <p>New let's retrain the model on the new data and check the accuracy.</p>
 <pre><code class="language-python">train_and_evaluate_model(titanic_data_with_imputed_age, ["Age", "Fare"])</code></pre>
 <pre><code class="language-text">Model trained with predictors: ['Age', 'Fare', 'Sex_male', 'Sex_female', 'Pclass_3', 'Pclass_1', 'Pclass_2']

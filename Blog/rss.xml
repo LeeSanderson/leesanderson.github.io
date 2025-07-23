@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Wed, 23 Jul 2025 09:13:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Jul 2025 09:59:32 +0100</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -23,7 +23,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</guid>
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/DevOpsLifecycle.html</link>
       <title>DevOps Lifecycle</title>
-      <pubDate>Tue, 10 Sep 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 10 Sept 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -31,7 +31,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html</guid>
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html</link>
       <title>Evaluating Agents By Building Games</title>
-      <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 27 Apr 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -39,7 +39,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.html</guid>
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/HowUsefulAreCodingAssistantsIn2025.html</link>
       <title>How Useful Are Coding Assistants in 2025?</title>
-      <pubDate>Fri, 31 Jan 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 31 Jan 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -47,7 +47,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/StylesOfTestDrivenDevelopment.html</guid>
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/StylesOfTestDrivenDevelopment.html</link>
       <title>Styles of Test Driven Development</title>
-      <pubDate>Wed, 06 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 06 Oct 2021 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -55,7 +55,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html</guid>
       <link>https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html</link>
       <title>Data Engineering Basics: Dealing With Missing Data</title>
-      <pubDate>Fri, 06 Dec 2024 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 06 Dec 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -63,7 +63,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.html</guid>
       <link>https://www.sixsideddice.com/Blog/DataScienceForDevs/Part1-Foundations.html</link>
       <title>Data Science for Developers: Part 1 - Foundations</title>
-      <pubDate>Tue, 11 Jun 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 11 Jun 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -71,7 +71,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html</guid>
       <link>https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html</link>
       <title>Data Science for Developers: Part 2 - Fundamentals</title>
-      <pubDate>Thu, 27 Jun 2024 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 27 Jun 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -79,7 +79,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Dotnet/CreatingPackagesForNuGet.html</guid>
       <link>https://www.sixsideddice.com/Blog/Dotnet/CreatingPackagesForNuGet.html</link>
       <title>Creating Packages For NuGet.org</title>
-      <pubDate>Wed, 01 Jun 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Jun 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -87,7 +87,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/K8s/SettingUpMinikubeOnWindows10.html</guid>
       <link>https://www.sixsideddice.com/Blog/K8s/SettingUpMinikubeOnWindows10.html</link>
       <title>Setting up minikube on Windows 10</title>
-      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -95,7 +95,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/K8s/UsefulMinikubeCommands.html</guid>
       <link>https://www.sixsideddice.com/Blog/K8s/UsefulMinikubeCommands.html</link>
       <title>Useful minikube commands</title>
-      <pubDate>Wed, 26 Jun 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 26 Jun 2019 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -103,7 +103,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/BloggingWithGithubAndMarkdown.html</guid>
       <link>https://www.sixsideddice.com/Blog/Meta/BloggingWithGithubAndMarkdown.html</link>
       <title>Blogging with GitHub and Markdown</title>
-      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -111,7 +111,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.html</guid>
       <link>https://www.sixsideddice.com/Blog/Meta/BloggingWithObsidian.html</link>
       <title>Blogging With Obsidian</title>
-      <pubDate>Thu, 23 May 2024 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 23 May 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -119,7 +119,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/DeployingAStaticWebsiteToGitHubPages.html</guid>
       <link>https://www.sixsideddice.com/Blog/Meta/DeployingAStaticWebsiteToGitHubPages.html</link>
       <title>Deploying to GitHub Pages</title>
-      <pubDate>Wed, 05 Jan 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 05 Jan 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -127,7 +127,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/GeneratingAStaticWebsiteUsingMarkdown.html</guid>
       <link>https://www.sixsideddice.com/Blog/Meta/GeneratingAStaticWebsiteUsingMarkdown.html</link>
       <title>Generating a Static Website Using Markdown</title>
-      <pubDate>Fri, 28 May 2021 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 28 May 2021 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -135,7 +135,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</guid>
       <link>https://www.sixsideddice.com/Blog/Meta/KnowledgeManagementWithObsidian.html</link>
       <title>Knowledge Management With Obsidian</title>
-      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -143,7 +143,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html</guid>
       <link>https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html</link>
       <title>Decision Tree Classifiers By Example</title>
-      <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 15 Jul 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -151,7 +151,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html</guid>
       <link>https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html</link>
       <title>Random Forest Classifiers By Example</title>
-      <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 23 Jul 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -159,7 +159,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/AIAndTheDeathOfTheJuniorDeveloper.html</guid>
       <link>https://www.sixsideddice.com/Blog/Thoughts/AIAndTheDeathOfTheJuniorDeveloper.html</link>
       <title>AI and The Death of The Junior Developer</title>
-      <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 10 Jul 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -167,7 +167,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/VibeCodingTheEmperorsNewClothes.html</guid>
       <link>https://www.sixsideddice.com/Blog/Thoughts/VibeCodingTheEmperorsNewClothes.html</link>
       <title>Vibe Coding: The Emperor's New Clothes</title>
-      <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 01 May 2025 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -175,7 +175,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part1-Concepts.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part1-Concepts.html</link>
       <title>AZ-104 Study Guide: Part 1 - Concepts</title>
-      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -183,7 +183,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part2-PowershellAndCLI.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part2-PowershellAndCLI.html</link>
       <title>AZ-104 Study Guide: Part 2 - PowerShell</title>
-      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -191,7 +191,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part3-ManagingAzureIdentitiesAndGovernace.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part3-ManagingAzureIdentitiesAndGovernace.html</link>
       <title>AZ-104 Study Guide: Part 3 - Azure Identities and Governance</title>
-      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -199,7 +199,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part4-ManagingSubscriptions.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part4-ManagingSubscriptions.html</link>
       <title>AZ-104 Study Guide: Part 4 - Managing Subscriptions</title>
-      <pubDate>Tue, 09 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 09 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -207,7 +207,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part5-StorageAccounts.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part5-StorageAccounts.html</link>
       <title>AZ-104 Study Guide: Part 5 - Storage Accounts</title>
-      <pubDate>Wed, 10 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 10 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -215,7 +215,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part6-VirtualMachines.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/AZ-104-StudyNotes/Part6-VirtualMachines.html</link>
       <title>AZ-105 Study Guide: Part 6 - Virtual Machines</title>
-      <pubDate>Wed, 17 Aug 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 17 Aug 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -223,7 +223,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part1-StorageAccounts.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part1-StorageAccounts.html</link>
       <title>DP-203 Study Guide: Part 1 - storage accounts</title>
-      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 20 Apr 2022 00:00:00 +0100</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
@@ -231,7 +231,7 @@
       <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part2-CosmosDB.html</guid>
       <link>https://www.sixsideddice.com/Blog/Azure/DP-203-StudyNotes/Part2-CosmosDB.html</link>
       <title>DP-203 Study Guide: Part 2 - Cosmos DB</title>
-      <pubDate>Mon, 16 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 16 May 2022 00:00:00 +0100</pubDate>
     </item>
   </channel>
 </rss>
