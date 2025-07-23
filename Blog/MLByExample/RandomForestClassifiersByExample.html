@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Random Forest Classifiers By Example - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="An introduction to Scikit-Learn’s Random Forest Classifiers, covering how they reduce overfitting and sensitivity to noise compared to decision trees, how feature importance reveals which inputs most influence predictions, and why handling missing data is often less critical.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="ML RandomForest Classification">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Random Forest Classifiers By Example">
+    <meta name="twitter:description" content="An introduction to Scikit-Learn’s Random Forest Classifiers, covering how they reduce overfitting and sensitivity to noise compared to decision trees, how feature importance reveals which inputs most influence predictions, and why handling missing data is often less critical.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Random Forest Classifiers By Example">
+    <meta name="description" property="og:description" content="An introduction to Scikit-Learn’s Random Forest Classifiers, covering how they reduce overfitting and sensitivity to noise compared to decision trees, how feature importance reveals which inputs most influence predictions, and why handling missing data is often less critical.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jul 23, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">ML</span>
+        <span class="badge badge-info">RandomForest</span>
+        <span class="badge badge-info">Classification</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="random-forest-classifiers-by-example" class="sr-only" data-hero-heading="true">Random Forest Classifiers By Example</h1>
+<img class="hero-image" src="RandomForestClassifiersByExample.png" alt="Random Forest Classifiers By Example"/>
+<p>Random forests build on the simplicity of <a href="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html" target="_blank">decision trees</a> to create a more powerful and robust classification algorithm. They are widely used for classification tasks where accuracy and generalization are important, such as predicting customer churn or detecting fraud.</p>
+<p>In this article, we will explore how <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html" target="_blank">SciKit Learn's Random Forests</a> can improve classification by combining many decision trees to predict survivors of the Titanic. As part of this journey we will examine additional features of the Titanic dataset and their predictive power, we will look at feature importance, and we will end with a discussion on handling missing data (and whether it is needed for Random Forests).</p>
+<p>This is the second article in the series &quot;ML by Example&quot;. In my previous article, <a href="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html" target="_blank">Decision Tree Classifiers By Example</a>, I covered topics like the Titanic dataset, one-hot encoding, and train/test splits in detail. To avoid repetition, I will skip most of those details here. Please refer to that article if you want a deeper explanation.</p>
+<h2 id="how-random-forests-work">How Random Forests Work</h2>
+<p>A random forest is essentially a &quot;forest&quot; of decision trees that work together.</p>
+<ul>
+<li>Instead of relying on a single decision tree, it builds many trees during training.</li>
+<li>Each tree is trained on a different random subset of the data and features.</li>
+<li>When making a prediction, every tree in the forest votes for a class.</li>
+<li>The forest chooses the class with the most votes as the final prediction.</li>
+</ul>
+<p>This approach helps overcome limitations of individual trees, such as overfitting or being overly sensitive to noise.</p>
+<p>By averaging the predictions of many diverse trees, random forests tend to be more accurate and robust, while still retaining the interpretability and structure of decision trees at the individual tree level.</p>
+<h2 id="python-prerequisites">Python Prerequisites</h2>
+<p>Let's install and import the prerequisites so they are ready to use.</p>
+<pre><code class="language-python"># %pip install --quiet --upgrade pip 
+# %pip install numpy --quiet
+# %pip install PyArrow --quiet
+# %pip install Pandas --quiet
+# %pip install scikit-learn --quiet</code></pre><pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import tree</code></pre><pre><code class="language-python">titanic_data = pd.read_csv("Data/titanic_train.csv")</code></pre>
+<p>And let's redefine our one-hot encoding utility function:</p>
+<pre><code class="language-python">def onehot_encode(df : pd.DataFrame, column_name: str) -> tuple[pd.DataFrame, list[str]]:
+    categories = [f"{column_name}_{value}" for value in df[column_name].unique()]
+
+    # remove the categorical variables (if we previous called onehot_encode)
+    df = df.drop(categories, axis=1, errors="ignore") 
+    temp_column_name = f"{column_name}_Temp"
+
+    # get_dummies will remove the original column, so copy the data to temp column
+    df[temp_column_name] = df[column_name] 
+    df = pd.get_dummies(df, prefix=column_name, columns=[temp_column_name], dtype=float)
+    return df, categories</code></pre><h2 id="predicting-survivors">Predicting Survivors</h2>
+<p>Let's define a utility function we can use to train and evaluate the <code>RandomForestClassifier</code>.</p>
+<pre><code class="language-python">def train_and_evaluate_model(data: pd.DataFrame, base_predictors: list[str]) -> None:
+    """Trains the model and evaluates it on the validation data."""
+    data, gender_categories = onehot_encode(data, "Sex")
+    data, class_categories = onehot_encode(data, "Pclass")
+    predictors = base_predictors + gender_categories + class_categories
+    prediction = "Survived"
+
+    train, validate = (
+        train_test_split(
+            data, 
+            test_size=0.2, 
+            stratify=data[prediction], 
+            random_state=42)
+        )
+
+    x = train[predictors]
+    y = train[[prediction]].values
+
+    random_forest = RandomForestClassifier(n_estimators=100, random_state=42)
+    random_forest.fit(x, y.ravel())
+
+    print(f"Model trained with predictors: {predictors}")
+    print(f"Feature importances:")
+    for feature, importance in zip(predictors, random_forest.feature_importances_):
+        print(f" - {feature}: {importance:.3f}")
+
+    print(f"Number of trees: {len(random_forest.estimators_)}")    
+
+    predictions = random_forest.predict(validate[predictors])
+    actuals = validate[[prediction]].values
+
+    score = accuracy_score(actuals, predictions)
+    print(f'Model accuracy: {score *100:.2f}%')</code></pre>
+<p>Following the same hypothesis as we did in <a href="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html" target="_blank">Decision Tree Classifiers By Example</a>, we start with a simple prediction using <code>Age</code>, <code>Sex</code>, and <code>Pclass</code></p>
+<pre><code class="language-python">
+train_and_evaluate_model(titanic_data, ["Age"])
+</code></pre>
+<pre><code class="language-text">Model trained with predictors: ['Age', 'Sex_male', 'Sex_female', 'Pclass_3', 'Pclass_1', 'Pclass_2']
+Feature importances:
+ - Age: 0.442
+ - Sex_male: 0.224
+ - Sex_female: 0.176
+ - Pclass_3: 0.081
+ - Pclass_1: 0.057
+ - Pclass_2: 0.021
+Number of trees: 100
+Model accuracy: 81.56%
+
+</code></pre>
+<p>Great. This is more accurate than our best Decision Tree classifier (which was 80.45%).</p>
+<p>The output from the evaluation process also include the <strong>feature importance</strong> for each of the predictor columns. As it's name suggests, it is a way to measure how important each feature is in making predictions across the entire forest. The higher the number, the more that feature contributes to the model's decisions. The values are normalized to sum to 1, so you can interpret them as fractions of the model's overall &quot;attention.&quot;</p>
+<p>In the above, <code>Age</code> is the most important feature.</p>
+<p>Checking feature importance is useful because it helps you understand how your model is making predictions.</p>
+<ul>
+<li>Feature importance reveals which inputs the model relies on most and provides a way to interpret the models predictions.</li>
+<li>It can also identify unimportant features that can be removed to reducing noise and improve training time, model simplicity, and allow the model to better generalize to new data.</li>
+</ul>
+<h2 id="improving-predictions">Improving Predictions</h2>
+<p>Let's see if we can improve our predictions by adding a new feature to our training data.</p>
+<p>We might hypothesize that <code>Fare</code> is a <em>proxy</em> for how likely a passenger is to be near a lifeboat given we expect cabins and rooms closer to the top deck to be more expensive than rooms in lower decks.</p>
+<p>Let's add <code>Fare</code> as a predictor and see the impact it has on the overall model accuracy.</p>
+<pre><code class="language-python">train_and_evaluate_model(titanic_data, ["Age", "Fare"])</code></pre>
+<pre><code class="language-text">Model trained with predictors: ['Age', 'Fare', 'Sex_male', 'Sex_female', 'Pclass_3', 'Pclass_1', 'Pclass_2']
+Feature importances:
+ - Age: 0.288
+ - Fare: 0.330
+ - Sex_male: 0.147
+ - Sex_female: 0.136
+ - Pclass_3: 0.047
+ - Pclass_1: 0.035
+ - Pclass_2: 0.018
+Number of trees: 100
+Model accuracy: 84.36%
+
+</code></pre>
+<p>Nice. Adding <code>Fare</code> improves our prediction accuracy by around another 3%.</p>
+<p>Interestingly, <code>Fare</code> turns out to have a greater feature importance that <code>Age</code>.</p>
+<h2 id="dealing-with-missing-data">Dealing With Missing Data</h2>
+<p>So far, we've ignored an important aspect of data engineering - we haven't been dealing with missing data.</p>
+<p>If you look at any of the advanced tutorials on <a href="https://www.kaggle.com/" target="_blank">Kaggle</a> (such as the <a href="https://www.kaggle.com/code/gunesevitan/titanic-advanced-feature-engineering-tutorial" target="_blank">Titanic - Advanced Feature Engineering Tutorial</a>) you will see that significant effort is spend identifying and handling missing data.</p>
+<p>Let's take a look at the data we've been using so far and identify missing values.</p>
+<pre><code class="language-python">def missing_counts(df: pd.DataFrame) -> pd.DataFrame:
+    """Returns a DataFrame with the count of missing values in each column."""
+    missing = (pd.DataFrame(df.isnull().sum(), columns=["MissingCount"])
+                .sort_values(by="MissingCount", ascending=False)
+                .reset_index()
+                .rename(columns={"index": "ColumnName"}))
+    return missing[missing["MissingCount"] > 0]
+
+missing_counts(titanic_data)</code></pre>
+<pre><code class="language-text">  ColumnName  MissingCount
+0      Cabin           687
+1        Age           177
+2   Embarked             2
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ColumnName</th>
+      <th>MissingCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Cabin</td>
+      <td>687</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Age</td>
+      <td>177</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Embarked</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+Hmm. OK. We expect `Cabin` to have some significant missing values as not all passengers will have been able to afford or book a cabin. And we aren't currently using the `Embarked` column so we don't need to worry about the 2 rows with missing values in this column. But we are using `Age` and `Age` has a significant amount of missing data. 
+<p>Is this affecting the accuracy of our model? What can we do about it?</p>
+<h3 id="imputing-age">Imputing Age</h3>
+<p>Good data engineering practices states we should <a href="https://www.sixsideddice.com/Blog/DataEngineering/DealingWithMissingData.html" target="_blank">deal with missing data</a> and one way of doing this is by <code>imputing</code> the values of missing data based on the distribution of values across the data set.</p>
+<p>So, how do we impute the <code>Age</code> column?</p>
+<p>There are several ways to fill in missing age values. A simple approach is to assign the mean or median age across the entire dataset. However, this often doesn't give the best results.</p>
+<p>A better strategy is to group the data by related attributes and compute the average age within each group. For example, passengers in the same class or with similar titles might have similar ages.</p>
+<p>To identify which features are related to age, we can use a <strong>correlation matrix</strong> to explore how <code>Age</code> is associated with other variables in the dataset.</p>
+<p>A <strong>correlation matrix</strong> is a table that shows the relationship between multiple variables in a dataset. Each cell in the matrix represents the correlation coefficient between two variables, which measures how strongly they move together.</p>
+<ul>
+<li>A correlation close to +1 means the two variables increase or decrease together.</li>
+<li>A correlation close to -1 means when one variable increases, the other decreases.</li>
+<li>A correlation near 0 means there is little or no linear relationship.</li>
+</ul>
+<p>Correlation matrices help us quickly understand which variables are related and can guide decisions in data analysis, feature selection, and more.</p>
+<p>Let's create a correlation matrix to see which other features are strongly correlated with <code>Age</code>.</p>
+<pre><code class="language-python">def create_correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
+    """Returns a DataFrame that is the correlation matrix of the DataFrame df."""
+    return (df.select_dtypes(include='number')
+            .corr()
+            .abs()
+            .unstack()
+            .reset_index()
+            .rename(columns={"level_0": "Feature1", "level_1": "Feature2", 0: "Correlation"}))
+
+matrix = create_correlation_matrix(titanic_data)
+matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=False)
+</code></pre>
+<pre><code class="language-text">   Feature1     Feature2  Correlation
+24      Age          Age     1.000000
+23      Age       Pclass     0.369226
+25      Age        SibSp     0.308247
+26      Age        Parch     0.189119
+27      Age         Fare     0.096067
+22      Age     Survived     0.077221
+21      Age  PassengerId     0.036847
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Feature1</th>
+      <th>Feature2</th>
+      <th>Correlation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24</th>
+      <td>Age</td>
+      <td>Age</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Age</td>
+      <td>Pclass</td>
+      <td>0.369226</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Age</td>
+      <td>SibSp</td>
+      <td>0.308247</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Age</td>
+      <td>Parch</td>
+      <td>0.189119</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Age</td>
+      <td>Fare</td>
+      <td>0.096067</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Age</td>
+      <td>Survived</td>
+      <td>0.077221</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Age</td>
+      <td>PassengerId</td>
+      <td>0.036847</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+The correlation matrix shows that `Age` is most strongly related to `Pclass`, so one option is to fill missing ages using the mean age within each `Pclass`. However, we also suspect that males and females in each class may have different average ages. To improve accuracy, we can group by both `Pclass` and `Sex`, and use the mean age within each group to impute missing values.
+<p>So, first let's define a function to compute an imputation matrix:</p>
+<pre><code class="language-python">def create_mean_imputation_matrix(
+        df: pd.DataFrame, 
+        for_col: str, 
+        with_grouping: list[str]) -> pd.DataFrame:
+    """Returns a DataFrame with the median values of forCol grouped by withGrouping."""
+    return df.groupby(with_grouping)[for_col].mean().reset_index()
+
+age_impute_matrix = create_mean_imputation_matrix(titanic_data, "Age", ["Pclass", "Sex"])
+age_impute_matrix</code></pre>
+<pre><code class="language-text">   Pclass     Sex        Age
+0       1  female  34.611765
+1       1    male  41.281386
+2       2  female  28.722973
+3       2    male  30.740707
+4       3  female  21.750000
+5       3    male  26.507589
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pclass</th>
+      <th>Sex</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>female</td>
+      <td>34.611765</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>male</td>
+      <td>41.281386</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>female</td>
+      <td>28.722973</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>male</td>
+      <td>30.740707</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>female</td>
+      <td>21.750000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>male</td>
+      <td>26.507589</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+As suspected males and females in each class have different mean ages with males in 1st class tending to be oldest and females in 3rd class being youngest.
+<p>We can now define a function to use this imputation matrix and apply the mean ages in these groups to a data frame.</p>
+<pre><code class="language-python">def apply_imputation_matrix(
+        df: pd.DataFrame, 
+        imputation_matrix: pd.DataFrame, 
+        for_col: str) -> pd.DataFrame:
+    """Applies the imputation matrix to the DataFrame df."""
+    grouping_columns = imputation_matrix.columns.values.tolist()
+    grouping_columns.remove(for_col) # type: ignore
+    df = df.copy()
+    for _, row in imputation_matrix.iterrows():
+        condition = (df[grouping_columns] == row[grouping_columns]).all(axis=1)
+        df.loc[condition & df[for_col].isnull(), for_col] = row[for_col]
+    return df
+</code></pre>
+<p>But before we apply the function, let's examine some of the passenger data where the passenger's age is unknown (we can then check the imputation has been applied correctly).</p>
+<pre><code class="language-python">missing_passengers = titanic_data[titanic_data["Age"].isnull()]
+missing_passengers_ids = missing_passengers["PassengerId"].tolist()
+missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre>
+<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass  Age
+5             6               Moran, Mr. James    male       3  NaN
+17           18   Williams, Mr. Charles Eugene    male       2  NaN
+19           20        Masselmani, Mrs. Fatima  female       3  NaN
+26           27        Emir, Mr. Farred Chehab    male       3  NaN
+28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  NaN
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Pclass</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Moran, Mr. James</td>
+      <td>male</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>Williams, Mr. Charles Eugene</td>
+      <td>male</td>
+      <td>2</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>Masselmani, Mrs. Fatima</td>
+      <td>female</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>27</td>
+      <td>Emir, Mr. Farred Chehab</td>
+      <td>male</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>29</td>
+      <td>O'Dwyer, Miss. Ellen "Nellie"</td>
+      <td>female</td>
+      <td>3</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+Right, now let's create a copy of the data frame with imputed ages and verify that the missing data has been replaced.
+<pre><code class="language-python">titanic_data_with_imputed_age = apply_imputation_matrix(titanic_data, age_impute_matrix, "Age")
+missing_counts(titanic_data_with_imputed_age)</code></pre>
+<pre><code class="language-text">  ColumnName  MissingCount
+0      Cabin           687
+1   Embarked             2
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ColumnName</th>
+      <th>MissingCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Cabin</td>
+      <td>687</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Embarked</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+Great. No more missing ages. Let's verify that the imputations are what we expect be looking at the updated passenger data.
+<pre><code class="language-python">(titanic_data_with_imputed_age[
+    titanic_data_with_imputed_age["PassengerId"].isin(missing_passengers_ids)]
+    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre>
+<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass        Age
+5             6               Moran, Mr. James    male       3  26.507589
+17           18   Williams, Mr. Charles Eugene    male       2  30.740707
+19           20        Masselmani, Mrs. Fatima  female       3  21.750000
+26           27        Emir, Mr. Farred Chehab    male       3  26.507589
+28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  21.750000
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PassengerId</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Pclass</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>Moran, Mr. James</td>
+      <td>male</td>
+      <td>3</td>
+      <td>26.507589</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>Williams, Mr. Charles Eugene</td>
+      <td>male</td>
+      <td>2</td>
+      <td>30.740707</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>Masselmani, Mrs. Fatima</td>
+      <td>female</td>
+      <td>3</td>
+      <td>21.750000</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>27</td>
+      <td>Emir, Mr. Farred Chehab</td>
+      <td>male</td>
+      <td>3</td>
+      <td>26.507589</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>29</td>
+      <td>O'Dwyer, Miss. Ellen "Nellie"</td>
+      <td>female</td>
+      <td>3</td>
+      <td>21.750000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+Perfect. Cross-referencing the imputation matrix above with the `Sex` and `Pclass` of each passenger we can see our imputation has been applied correct.
+<p>New let's retrain the model on the new data and check the accuracy.</p>
+<pre><code class="language-python">train_and_evaluate_model(titanic_data_with_imputed_age, ["Age", "Fare"])</code></pre>
+<pre><code class="language-text">Model trained with predictors: ['Age', 'Fare', 'Sex_male', 'Sex_female', 'Pclass_3', 'Pclass_1', 'Pclass_2']
+Feature importances:
+ - Age: 0.290
+ - Fare: 0.328
+ - Sex_male: 0.151
+ - Sex_female: 0.132
+ - Pclass_3: 0.049
+ - Pclass_1: 0.033
+ - Pclass_2: 0.017
+Number of trees: 100
+Model accuracy: 84.36%
+
+</code></pre>
+<p>Hmm. Hang on. This model has <strong>exactly the same</strong> model accuracy as the model without any fancy imputed data.</p>
+<p><em>Why is this?</em></p>
+<p>In version <code>1.3</code> SciKit Learn introduced support for <a href="https://github.com/scikit-learn/scikit-learn/pull/23595" target="_blank">missing values in trees</a>.</p>
+<p>In fact, in versions prior to <code>1.3</code> (release July 2023), attempting to train a <code>DecisionTreeClassifier</code> or <code>RandomForestClassifier</code> on data that contain missing values would throw a <code>ValueError</code>. To train a model in earlier versions you would have to impute or remove any data with missing values.</p>
+<h3 id="how-scikit-learn-trees-support-missing-data">How SciKit Learn Trees Support Missing Data</h3>
+<p>The <a href="https://scikit-learn.org/stable/modules/tree.html#tree-missing-value-support" target="_blank">SciKit Learn documentation</a> provides some details how missing data is supported for decision trees (and by extension for random forests that are a collection of trees).</p>
+<p>In simple terms, during prediction, if all training data with missing values at a particular split ended up in the same class, then that class will be predicted for new any sample with missing values:</p>
+<pre><code class="language-python">def explain_how_decision_trees_handle_missing_data(features : list[float], labels: list[int]):
+    X = np.array(features).reshape(-1, 1)
+    decision_tree = tree.DecisionTreeClassifier(random_state=0).fit(X, labels)
+
+    print(tree.export_text(decision_tree, feature_names=["X"]))
+    prediction = decision_tree.predict(np.array([np.nan]).reshape(-1, 1))
+    print(f"Prediction for NaN input: {prediction[0]}")
+
+explain_how_decision_trees_handle_missing_data([0, 1, 6, np.nan], [0, 0, 1, 1])
+print("Expected 1 for NaN input, since this is the only class label with a NaN value in the data.")</code></pre>
+<pre><code class="language-text">|--- X &lt;= 3.50
+|   |--- class: 0
+|--- X &gt;  3.50
+|   |--- class: 1
+
+Prediction for NaN input: 1
+Expected 1 for NaN input, since this is the only class label with a NaN value in the data.
+
+</code></pre>
+<p>If the split quality (criterion evaluation) is the same for both child nodes, the model breaks the tie for missing values during prediction by defaulting to the <strong>right node</strong>. During training, the splitter also considers a special case: placing all missing values in one child and all non-missing values in the other to determine if that produces a better split:</p>
+<pre><code class="language-python">explain_how_decision_trees_handle_missing_data([np.nan, -1, np.nan, 1], [0, 0, 1, 1])
+print("Expected 1 for NaN input, since the right node predicts a class label of 1.")</code></pre>
+<pre><code class="language-text">|--- X &lt;= 0.00
+|   |--- class: 0
+|--- X &gt;  0.00
+|   |--- class: 1
+
+Prediction for NaN input: 1
+Expected 1 for NaN input, since the right node predicts a class label of 1.
+
+</code></pre>
+<p>If no missing values are seen during training for a given feature, then during prediction missing values are mapped to the child with the most samples:</p>
+<pre><code class="language-python">explain_how_decision_trees_handle_missing_data([1, 2, 3, 4], [0, 1, 1, 1])
+print("Expected 1 for NaN input, since we have more 1 labels in the training data.")</code></pre>
+<pre><code class="language-text">|--- X &lt;= 1.50
+|   |--- class: 0
+|--- X &gt;  1.50
+|   |--- class: 1
+
+Prediction for NaN input: 1
+Expected 1 for NaN input, since we have more 1 labels in the training data.
+
+</code></pre>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>Random Forests are a powerful and flexible machine learning algorithm that build on the simplicity of decision trees while addressing many of their limitations. By training an ensemble of trees on different subsets of the data and averaging their predictions, Random Forests reduce the risk of overfitting and significantly improve accuracy and generalization.</p>
+<p>Compared to a single decision tree, a Random Forest is:</p>
+<ul>
+<li>More robust to noise and outliers,</li>
+<li>Less prone to overfitting due to its averaging nature,</li>
+<li>And better at handling complex data patterns, thanks to the diversity of trees in the ensemble.</li>
+</ul>
+<p>A particularly useful feature of SciKit Learn's <code>RandomForestClassifier</code> (v1.4 and later) is its built-in support for missing values. This is different from older approaches, such as those found in early Kaggle Titanic tutorials, which manually fill in missing data before model training and prediction.</p>
+<p>Whether you're building your first classifier or developing a production-grade model, Random Forests are a reliable and interpretable choice worth adding to your machine learning toolkit.
+The full source code of this notebook can be accessed on <a href="https://github.com/LeeSanderson/MLByExample/blob/main/RandomForestClassifier.ipynb" target="_blank">GitHub</a>.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>

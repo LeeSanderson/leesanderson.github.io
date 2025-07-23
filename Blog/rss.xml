@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 15 Jul 2025 15:04:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Jul 2025 09:13:59 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -144,6 +144,14 @@
       <link>https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html</link>
       <title>Decision Tree Classifiers By Example</title>
       <pubDate>Tue, 15 Jul 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>An introduction to Scikit-Learn’s Random Forest Classifiers, covering how they reduce overfitting and sensitivity to noise compared to decision trees, how feature importance reveals which inputs most influence predictions, and why handling missing data is often less critical.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html</guid>
+      <link>https://www.sixsideddice.com/Blog/MLByExample/RandomForestClassifiersByExample.html</link>
+      <title>Random Forest Classifiers By Example</title>
+      <pubDate>Wed, 23 Jul 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
