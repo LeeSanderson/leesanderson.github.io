@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Getting Started With Kiro - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Exploring Kiro, Amazon’s spec-driven AI development tool, by bootstrapping a greenfield project.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices CodingAssistants AI Kiro">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Getting Started With Kiro">
+    <meta name="twitter:description" content="Exploring Kiro, Amazon’s spec-driven AI development tool, by bootstrapping a greenfield project.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Getting Started With Kiro">
+    <meta name="description" property="og:description" content="Exploring Kiro, Amazon’s spec-driven AI development tool, by bootstrapping a greenfield project.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Sep 19, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">Kiro</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="getting-started-with-kiro" class="sr-only" data-hero-heading="true">Getting Started With Kiro</h1>
+<img class="hero-image" src="GettingStartedWithKiro.png" alt="Getting Started With Kiro"/>
+<p><a href="https://kiro.dev/" target="_blank">Kiro</a> is Amazon’s new <strong>spec-driven AI development tool</strong> that is currently in <strong>beta</strong>. It claims to be able to help developers move from high-level ideas to production-ready code by following a structured workflow and leveraging LLMs for the bulk of a projects code generation.</p>
+<p>Because <strong>Kiro</strong> is in an <strong>early release state</strong>, documentation is sparse and getting started can be difficult. This tutorial is designed to fill some of those gaps and walks through creating a new greenfield project from empty directory to working skeleton.</p>
+<p>If you are interested in trying <strong>Kiro</strong>, you can <a href="https://kiro.dev/waitlist/" target="_blank">sign up for the beta waitlist</a> to get early access.</p>
+<h2 id="about-spec-driven-development">About Spec-driven Development</h2>
+<p><strong>Spec-Driven AI Development</strong> is an emerging approach in which AI generates code based on a set of formal specifications and rules rather than freely interpreting high-level or vague prompts. These specifications may encompass the product vision, architecture, coding standards, technology stack, and workflow, providing the AI with a structured guide for code generation.</p>
+<p>There is currently <strong>no universally accepted definition</strong> of spec-driven development. Different vendors and practitioners place varying emphasis on the role of specifications versus code itself. Some hold <strong>extreme views</strong>, suggesting that detailed specifications could eventually replace traditional coding entirely, while <strong>moderate perspectives</strong> see specs as a way to enhance and guide code generation without eliminating the need for human-written code.</p>
+<p>Although there is no universal agreement, most agree that a key benefit of spec-driven development is adding structure to AI-assisted coding and reducing the uncertainties of <a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank">vibe coding</a>. In vibe coding, a developer provides a high-level prompt to an LLM, allows it to generate code without manual review, and iteratively requests improvements based on execution results. This process can produce unpredictable, inconsistent, or inefficient code, which spec-driven development seeks to mitigate by grounding AI generation in formal specifications.</p>
+<p>However, tools supporting this approach are <strong>very new</strong> and the approach itself is <strong>very experimental</strong>. From my experience, hallucinations, inconsistencies, and the need for manual correction are still common, and the method is not yet a proven improvement over traditional coding. Its success depends heavily on the quality of the specifications, prompt engineering, and ongoing developer oversight, as assumptions about the environment and tooling can still introduce friction.</p>
+<h2 id="how-kiro-approaches-spec-driven-development">How Kiro Approaches Spec-driven Development</h2>
+<p><strong>Kiro's</strong> approach to spec-driven development is anchored in three foundational steering documents: <code>product.md</code>, <code>structure.md</code>, and <code>tech.md</code>. These markdown files, stored in the <code>.kiro/steering/</code> directory, provide <strong>Kiro</strong> with persistent project context, ensuring that AI-generated code aligns with your team's standards and objectives.</p>
+<ul>
+<li><strong><code>product.md</code></strong>: This document articulates the project's purpose, target audience, key features, and business goals. It serves as the &quot;why&quot; behind the technical decisions, guiding <strong>Kiro</strong> to suggest solutions that are aligned with your product vision.</li>
+<li><strong><code>structure.md</code></strong>: Here, you define the organisation of your codebase, including folder structures, naming conventions, and architectural patterns. This helps <strong>Kiro</strong> navigate your project efficiently, ensuring that generated code integrates seamlessly into your existing setup.</li>
+<li><strong><code>tech.md</code></strong>: This file outlines your chosen technology stack, including frameworks, libraries, and development tools. By specifying your tech preferences, you enable <strong>Kiro</strong> to adhere to your established tools and avoid recommending divergent options.</li>
+</ul>
+<p>By utilising these steering documents, <strong>Kiro</strong> claims to be able to consistently generate code that adheres to your project's specifications, reducing the need for manual corrections and enhancing team alignment. This structured approach transforms <strong>Kiro</strong> from a reactive code generator into an intelligent agent that understands and executes your development intentions.</p>
+<p>In this article, we will focus on these three structured specification documents as we set up a greenfield project, but <strong>Kiro</strong> also supports several other key features, including:</p>
+<ul>
+<li><strong>Agent Hooks</strong>: Automated triggers that perform tasks such as generating unit tests, updating documentation, or running security scans in response to code changes.</li>
+<li><strong>Multimodal Input Support</strong>: The ability to incorporate images and diagrams into the development process, enhancing context understanding.</li>
+<li><strong>Model Context Protocol (MCP) Integration</strong>: Seamless connection to external tools like documentation, design systems, and APIs, enabling agents to work with live context</li>
+<li><strong>Transparent Code Diffs</strong>: Visual representation of code changes, allowing developers to review and approve modifications before implementation.</li>
+</ul>
+<h2 id="kiro-workflow-for-greenfield-projects">Kiro Workflow for Greenfield Projects</h2>
+<p>To properly evaluate the capabilities and limitations of <strong>Kiro</strong>, we need a non-trivial project with real complexity. After brainstorming ideas with <a href="https://chatgpt.com/" target="_blank">ChatGPT</a>, I decided to build a multi-tenant task and project management platform. The goal was to create something functionally similar to a lightweight version of <a href="https://asana.com/" target="_blank">Asana</a> or <a href="https://trello.com/" target="_blank">Trello</a>.</p>
+<p>I’ve called this platform <strong>Yello</strong>, and it is designed to:</p>
+<ul>
+<li>Be <strong>feature-rich</strong> enough to stress-test specification-driven workflows</li>
+<li>Support <strong>incremental feature additions</strong>, allowing us to see how well <strong>Kiro</strong> adapts to evolving specs</li>
+<li>Span <strong>multiple domains</strong> (API, persistence, UI, integrations, etc.)</li>
+<li>Include <strong>edge cases</strong> that test validation, error handling, and automated test generation</li>
+</ul>
+<p>From my experience bootstrapping <strong>Yello</strong>, I’ve developed a workflow that I’ve found effective for setting up a greenfield project:</p>
+<ol>
+<li>Create <strong>steering files</strong></li>
+<li>Refine the <strong>product spec</strong></li>
+<li>Define <strong>structure and tech specs</strong></li>
+<li>Generate a <strong>skeleton frontend and backend</strong></li>
+</ol>
+<p>You can explore how this workflow unfolds by reviewing the commit history of the <a href="https://github.com/LeeSanderson/Yello" target="_blank">Yello project</a>.</p>
+<h2 id="step-1.bootstrap-with-steering-files">Step 1. Bootstrap with steering files</h2>
+<p>When you open a blank folder in <strong>Kiro</strong>, the <strong>“Generate Steering Docs”</strong> button will appear in the <strong>Agent Steering</strong> section. This option is visible because no steering files exist yet.</p>
+<p>Clicking <strong>Generate</strong> creates a set of basic boilerplate steering files. These files provide the initial structure Kiro uses to understand your project’s intent, architecture, and technical direction.</p>
+<p><strong>Kiro</strong> may also make <strong>assumptions about the project type</strong> based on the name of the parent folder. For example:</p>
+<ul>
+<li>If you generate steering files in a folder named <code>go-cache</code>, <strong>Kiro</strong> may infer that the project is written in <strong>Go</strong> and intended to be a <strong>high-performance data storage and retrieval system</strong>.</li>
+<li>If the folder name is more generic, such as <code>project</code> or <code>app</code>, then the initial steering files will also be <strong>generic and tech-agnostic</strong>.</li>
+</ul>
+<p>To be honest it doesn't really matter at this stage what the contents of the steering files contains as we will be refining in the following steps.</p>
+<p>This bootstrapping process ensures you always start with a structured foundation, even in the absence of detailed specifications. From there, you can refine the generated steering files (<code>product.md</code>, <code>structure.md</code>, and <code>tech.md</code>) to align them with your project vision and requirements.</p>
+<h2 id="step-2.refine-the-product-spec">Step 2. Refine the product spec</h2>
+<p>Now that the bootstrap process has generated the boilerplate steering files, the next step is to refine them, starting with <strong><code>product.md</code></strong>.</p>
+<p>The <code>product.md</code> file captures the high-level vision of your project: what it is, who it is for, and why it exists. A well-written <code>product.md</code> gives <strong>Kiro</strong> important context so that all future code generation aligns with your intended goals.</p>
+<p>Like all steering files, there are several ways to refine <code>product.md</code>:</p>
+<ol>
+<li><strong>Manual editing</strong>. You can open the file directly and write or revise the content yourself.</li>
+<li><strong>AI-assisted refinement</strong>. You can ask the AI assistant to help refine the content using a prompt.</li>
+<li><strong>Hybrid approach</strong>. You can manually make edits to the file and then click <strong>Refine</strong> to have the AI build upon your changes, turning a rough outline into something more detailed and polished.</li>
+</ol>
+<p>This hybrid approach is the one I prefer. It allows me to set the direction in my own words while letting the AI enrich and structure the details.</p>
+<p>For the <strong>Yello</strong> project, to kick things off, I created a basic product overview using <a href="https://chatgpt.com/" target="_blank">ChatGPT</a>, which I then fed into <code>product.md</code> as the starting point for refinement.</p>
+<pre><code class="language-markdown"># Product Overview
+
+Yello is a multi-tenant project and task management platform that helps teams organize work, collaborate, and track progress across projects within shared workspaces.
+
+## High-Level requiremetns
+- Support multi-tenant workspaces with secure data isolation.
+- Provide user authentication and role-based access control (admin, member, guest).
+- Allow project creation and management within a workspace.
+- Enable task management (creation, assignment, due dates, statuses).
+- Provide a basic activity feed for task and project updates.
+- Ensure scalability to support multiple organizations and users concurrently.
+- Deliver fast, reliable performance with secure data storage.</code></pre>
+<p>Then after clicking <strong>Refine</strong> I ended up with a highly detailed product that includes:</p>
+<ul>
+<li>Core product requirements including
+<ul>
+<li>Strong requirements around multi-tenancy and security</li>
+<li>Clearly defined user management and access control rules</li>
+<li>A diagram outlining the relationships between core entities</li>
+<li>Conventions for task management</li>
+<li>Requirements for the activity feed</li>
+</ul>
+</li>
+<li>Development guidelines including:
+<ul>
+<li>API design</li>
+<li>Data validation</li>
+<li>Performance considerations</li>
+<li>Security requirements</li>
+</ul>
+</li>
+</ul>
+<p>You can view the full <code>product.md</code> in the <strong>Yello</strong> <a href="https://github.com/LeeSanderson/Yello/blob/main/.kiro/steering/product.md" target="_blank">GitHub repo</a>.</p>
+<h2 id="step-3.define-the-structure-and-tech-specs">Step 3. Define the structure and tech specs</h2>
+<p>The difference between <code>tech.md</code> and <code>structure.md</code> is not clear cut and there is some overlap. The <strong>Kiro</strong> documentation defines the purpose of these steering files as:</p>
+<ul>
+<li><code>tech.md</code> - Documents your chosen frameworks, libraries, development tools, and technical constraints. When Kiro suggests implementations, it will prefer your established stack over alternatives.</li>
+<li><code>structure.md</code> - Outlines file organisation, naming conventions, import patterns, and architectural decisions. This ensures generated code fits seamlessly into your existing codebase.</li>
+</ul>
+<p>However in order to organise files correctly and have idiomatic naming and patterns, the <code>structure.md</code> file must know about the underlying tech being used in the application which is defined in the <code>tech.md</code>.</p>
+<p>And in order understand the development tooling, the <code>tech.md</code> file needs to know about the file structure (especially if using a mono repo pattern) and this is defined in <code>structure.md</code>.</p>
+<p>As it turns out, this circular dependency doesn't matter too much. We can simply generate one and then update the other to reflect the contents of the first.</p>
+<p>For example, when building the <strong>Yello</strong> application I started with the <code>structure.md</code> file and used this prompt to generate it:</p>
+<blockquote class="blockquote">
+<p>Update #structure.md to include best practices for a bun / typescript application using the bun server for backend APIs and a separate bun / vite / react / typescript client front end</p>
+</blockquote>
+<p>And then updated the <code>tech.md</code> file using the prompt:</p>
+<blockquote class="blockquote">
+<p>Update #tech.md to reference tooling identified in #structure.md</p>
+</blockquote>
+<p>See the full versions of <a href="https://github.com/LeeSanderson/Yello/blob/main/.kiro/steering/structure.md" target="_blank">Yello/.kiro/steering/structure.md</a> and <a href="https://github.com/LeeSanderson/Yello/blob/main/.kiro/steering/tech.md" target="_blank">Yello/.kiro/steering/tech.md</a> for more details.</p>
+<h2 id="step-4.generate-an-initial-skeleton">Step 4. Generate an Initial Skeleton</h2>
+<p>With all the steering files in place, we can now generate the skeleton application code. This is as simple as running the prompt:</p>
+<blockquote class="blockquote">
+<p>Generate basic skeleton app with just a simple home page and &quot;hello world&quot; REST API</p>
+</blockquote>
+<p>Once this completes the initial bootstrapping process is done and you can move on to using specs (which I will cover in a future post).</p>
+<h2 id="problems-integrating-database-support">Problems Integrating Database Support</h2>
+<p>After getting the basic skeleton in place, I needed to add a database to the <strong>Yello</strong> app to store uses, workspaces, tasks etc. <a href="https://www.postgresql.org/" target="_blank">Postgres</a> seemed like a reasonable choice. I also wanted to make development frictionless so orchestrating this infrastructure with <a href="https://podman.io/" target="_blank">Podman</a> also seemed sensible.</p>
+<p>I ran this prompt to see how much of this set up could be done by the AI:</p>
+<blockquote class="blockquote">
+<p>Add a backend postgres database and use podman when running locally to launch a local database</p>
+</blockquote>
+<p>This did a lot. It did what I expected:</p>
+<ul>
+<li>Created some scripts to start, stop, and reset a Postgres container using Podman.</li>
+</ul>
+<p>But it also did a bunch of things that I didn't expect:</p>
+<ul>
+<li>Created a initial database schema based on the entities outlined in the <code>product.md</code>. This was nice, but I'd probably want tighter control of the schema in a real project.</li>
+<li>Added the <a href="https://www.npmjs.com/package/drizzle-orm" target="_blank">drizzle-orm</a> package to the backend server to manage database queries. This is a reasonable choice I guess but I may have wanted to pick something else.</li>
+<li>Updated the API health check to verify that the database was running. This was nice.</li>
+<li>Created a bunch of API endpoints to get all the data from the database. These seem wrong given as they break the security requirements of the project (e.g. I shouldn't be able query all projects, only those I have access to).</li>
+</ul>
+<p>Despite doing all these nice things, the thing I wanted it to do most (create the scripts) was the most disappointing since I was running the prompt on my Windows development laptop and yet the LLM chose to generate bash scripts which I could not run.</p>
+<p>I tried to fix this using the prompt:</p>
+<blockquote class="blockquote">
+<p>Update database scripts to work on Windows development machines as well as Mac. Ensure database is running when bun run dev command is executed</p>
+</blockquote>
+<p>This converted the bash scripts to JavaScript files that could by run via <code>bun run</code> commands. However, <strong>Kiro</strong> suggested a hallucinated  package (<code>concurrently.cmd</code>) and the new scripts needed to be manually fixed before they would work correctly.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Working with <strong>Kiro</strong> has been an eye-opening look at the potential of spec-driven AI development. The structured approach, anchored in steering documents, brings more consistency and alignment than ad-hoc prompt engineering and can accelerate the early stages of a project. At the same time, <strong>Kiro</strong> is still very much in its beta phase. It makes assumptions, introduces unexpected dependencies, and sometimes produces code that requires manual correction.</p>
+<p>In helping me build my <strong>Yello</strong> sample project, <strong>Kiro</strong> has been useful for scaffolding and getting an initial framework in place, but its attempts at database setup and tooling demonstrated how unreliable and inconsistent the outputs can be.</p>
+<p>For now, I see spec-driven AI tools like <strong>Kiro</strong> as interesting experiments for accelerating engineers and a definite advance over vibe coding, but they remain far from being capable of replacing the critical thinking, decision-making, and problem-solving that real engineering requires.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>

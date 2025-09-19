@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Fri, 19 Sep 2025 16:17:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Sep 2025 16:44:42 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -32,6 +32,14 @@
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/EvaulatingAgentsByBuildingGames.html</link>
       <title>Evaluating Agents By Building Games</title>
       <pubDate>Sun, 27 Apr 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Exploring Kiro, Amazon’s spec-driven AI development tool, by bootstrapping a greenfield project.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/GettingStartedWithKiro.html</link>
+      <title>Getting Started With Kiro</title>
+      <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
