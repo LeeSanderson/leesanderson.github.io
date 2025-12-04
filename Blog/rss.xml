@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Wed, 03 Dec 2025 09:24:05 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Dec 2025 17:18:03 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -184,6 +184,14 @@
       <link>https://www.sixsideddice.com/Blog/Thoughts/VibeCodingTheEmperorsNewClothes.html</link>
       <title>Vibe Coding: The Emperor's New Clothes</title>
       <pubDate>Thu, 01 May 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Following on from my Getting Started with Kiro blog post, we start investigating the spec-driven development flow with Kiro.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.html</link>
+      <title>Spec-driven Development with Kiro</title>
+      <pubDate>Thu, 04 Dec 2025 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

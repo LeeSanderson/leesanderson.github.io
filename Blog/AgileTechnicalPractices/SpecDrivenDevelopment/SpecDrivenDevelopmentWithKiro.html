@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Spec-driven Development with Kiro - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Following on from my Getting Started with Kiro blog post, we start investigating the spec-driven development flow with Kiro.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices CodingAssistants AI Kiro">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Spec-driven Development with Kiro">
+    <meta name="twitter:description" content="Following on from my Getting Started with Kiro blog post, we start investigating the spec-driven development flow with Kiro.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Spec-driven Development with Kiro">
+    <meta name="description" property="og:description" content="Following on from my Getting Started with Kiro blog post, we start investigating the spec-driven development flow with Kiro.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/SpecDrivenDevelopment/SpecDrivenDevelopmentWithKiro.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Dec 04, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">Kiro</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="spec-driven-development-with-kiro" class="sr-only" data-hero-heading="true">Spec-driven Development with Kiro</h1>
+<img class="hero-image" src="SpecDrivenDevelopmentWithKiro.png" alt="Spec-driven Development with Kiro"/>
+<p>In my previous blog post <a href="..//GettingStartedWithKiro.html">Getting Started With Kiro</a>, I introduced Amazon’s new <strong>spec-driven AI development tool</strong> and showed you how to create a boilerplate application.</p>
+<p>In this follow up post, we will explore <strong>Kiro</strong>'s spec-driven development workflow by building the very first feature for my multi-tenant task and project management platform, <strong>Yello</strong>.</p>
+<h2 id="spec-driven-development-flow">Spec-driven Development Flow</h2>
+<p>The development flow in <strong>Kiro</strong> consists of 4 steps:</p>
+<ol>
+<li>Generating a <code>requirements.md</code></li>
+<li>Creating a technical <code>design.md</code></li>
+<li>Defining the implementation plan (<code>tasks.md</code>)</li>
+<li>Executing each of the tasks in the implementation plan</li>
+</ol>
+<p>The general approach to executing the first 3 steps will be defined in the next section before we get into implementing an example by generating the detailed tasks for the <strong>Yello</strong> user authentication feature.</p>
+<h3 id="generating-requirements">Generating Requirements</h3>
+<p>As all the application features are already defined (at a high level) in the <code>product.md</code> steering file (see <a href="..//GettingStartedWithKiro.html">my previous article</a> for more details), all we need to do is activate spec mode and ask <strong>Kiro</strong> to implement the feature we want to build.</p>
+<p>Open a chat window and select <code>Spec</code></p>
+<p><img src="KiroSpecMode.png" class="img-fluid" alt="" /></p>
+<p>You can now describe the feature you want to build using the chat interface.</p>
+<p>For example, all I did to kick off the <strong>Yello</strong> user authentication feature was type the prompt:</p>
+<blockquote class="blockquote">
+<p>Implement the login and registration feature</p>
+</blockquote>
+<p><strong>Kiro</strong> then generated a <a href="https://github.com/LeeSanderson/Yello/commit/fa41a620473f1e358629763c88977efcbfe4eb99" target="_blank">requirements.md</a> in the feature spec directory (in this case <code>.kiro/specs/user-authentication</code>). By default, a generated requirements file contains an introduction and one or more requirements. Each requirement is written as a <a href="https://en.wikipedia.org/wiki/User_story" target="_blank">User story</a> with a set of acceptance criteria.</p>
+<p>You can then inspect the contents of the <code>requirements.md</code> file and make any necessary adjustments. Changes can be made by manually editing the text, clicking the <code>Refine</code> button, or using the chat interface to ask <strong>Kiro</strong> to make updates.</p>
+<h3 id="creating-the-technical-design">Creating the Technical Design</h3>
+<p>Once you are happy that the <code>requirements.md</code> adequately describes the feature that you want to build you can move to creating the technical design by clicking the <code>Design</code> button at the top of the requirements window and then clicking on the <code>Generate design based on requirements</code> link in the empty <code>design.md</code> file.</p>
+<p><img src="KiroGenerateDesign.png" class="img-fluid" alt="" /></p>
+<p>Again, as with the <code>requirements.md</code>, you can then inspect the contents of the <code>design.md</code> file and make any necessary adjustments either by manually editing the text, clicking the <code>Refine</code> button, or using the chat interface to ask <strong>Kiro</strong> to make updates.</p>
+<p>For the <strong>Yello</strong> user authentication feature the initial <a href="https://github.com/LeeSanderson/Yello/commit/b8949ef041cbbd40aa7c55e62b53da12e8368cfc" target="_blank">design.md</a> file contained the technical translation of the requirements, including: a simple text-based architecture diagrams, the technology stack to be used, a list of components and interfaces, data models, error handling strategies, security considerations, testing strategy, and other implementation notes.</p>
+<p>Weirdly the <code>design.md</code> did not contain any components for the front-end (despite <strong>Yello</strong> being a full stack monorepo). I decided not to make any changes to the <code>design.md</code> and defer creating the full vertical slice until later.</p>
+<h3 id="defining-the-implementation-plan">Defining the Implementation Plan</h3>
+<p>Now that we have our technical <code>design.md</code>, we can create a plan to implement this design.</p>
+<p><strong>Kiro</strong> breaks down the implementation of a feature into into small, focused tasks to in an attempt to improve clarity, and reduce ambiguity. This approach is intended to generate better results from the LLM than attempting to implement an entire feature all at once, as it allows the system to focus on one well-defined objective at a time. Each step can be validated and refined before moving on, reducing compounding errors and ensuring a higher overall quality of output. This structured workflow also keeps the developer-in-the-loop, enabling them to review intermediate results, adjust the plan as each task is completed.</p>
+<p>Creating a <code>tasks.md</code> can be done by clicking the <code>Task list</code> button at the top of the design window and then clicking on the <code>Generate task list based on the requirements and design</code> link in the empty file.</p>
+<p><img src="KiroGenerateTasks.png" class="img-fluid" alt="" /></p>
+<p>The initial <a href="https://github.com/LeeSanderson/Yello/commit/464d118f13edfc679f97c38d396e1035d2d09f9e" target="_blank">tasks.md</a> file generated for the user authentication feature had 7 tasks with some broken down into 2-4 sub tasks (15 in total). Each task links back to the numbered requirements in the <code>requirements.md</code> for traceability.</p>
+<p>As with other markdown files created in the spec-driven development flow, you can edit the <code>tasks.md</code> file manually or refine it using <strong>Kiro</strong>.</p>
+<h2 id="implementing-user-authentication-in-yello">Implementing User Authentication in Yello</h2>
+<p>Having followed the <strong>Kiro</strong>'s spec-driven development flow and created <code>requirements.md</code>, <code>design.md</code>, and <code>task.md</code> files we can now have <strong>Kiro</strong> generate the code and tests for this feature.</p>
+<p>It is recommended to implement each task and sub task one at a time so we start with task 1.</p>
+<p>To implement a task all we need to do it click the <code>Start task</code> button above the task in the <code>task.md</code> file.</p>
+<p><img src="KiroTaskList.png" class="img-fluid" alt="" /></p>
+<h3 id="task-1-install-authentication-dependencies-and-setup-utilities">Task 1: Install authentication dependencies and setup utilities</h3>
+<p>The <a href="https://github.com/LeeSanderson/Yello/commit/54e65fefc42efe96d11fe1dd7d177f53ad1fea7b" target="_blank">first task</a> installs authentication and validation dependencies (<code>bcrypt</code>, <code>jsonwebtoken</code>, and <code>zod</code>) and then creates two utility classes for managing JWT tokens and hashing passwords.</p>
+<p>Inspecting the generated code, I immediately see a problem. Kiro has implemented the <code>generateToken</code> method incorrectly and the call to <code>jwt.sign()</code> is generating a TypeScript error due to the value being passed as the <code>expiresIn</code> parameter being the wrong type.</p>
+<p>I try and <a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank">vibe code</a> around the problem by explaining the error to <strong>Kiro</strong> and asking it to fix the problem. Unfortunately the <a href="https://github.com/LeeSanderson/Yello/commit/c8bffb0d7ba25265585de0c09fc644c7168f93d3" target="_blank">fix</a> isn't great. <strong>Kiro</strong>'s solution to the TypeScript error is to cast the value to <code>any</code> to get around problem rather than ensuring the correct type is passed. Clearly this is a bad fix as the reason I'm using TypeScript in the first place is to avoid type ambiguity.</p>
+<p>I fix the issue manually.</p>
+<p>But then I realise that maybe the problem is that I haven't told <strong>Kiro</strong> <em>how it should</em> use TypeScript. I use the chat interface and ask <strong>Kiro</strong> to update the steering files to follow TypeScript best practices and avoid using <code>any</code>. This <a href="https://github.com/LeeSanderson/Yello/commit/f14add3030a7801a831bd88770e35773d7159759" target="_blank">change</a> updates the <code>tech.md</code> file and also generates a new <code>typescript.md</code> steering file. Hopefully this change to the steering files will mean this kind of issue won't occur in the future.</p>
+<p>The next problem I notice is that there are no tests. I ask <strong>Kiro</strong> to <a href="https://github.com/LeeSanderson/Yello/commit/ee0e32a8064a6b1de5d10b92d4044bd0d61e42e0" target="_blank">generate tests</a> for the new utilities. It does an OK job, but some of the tests look verbose.</p>
+<p>Building on the success of the TypeScript fix, I decide to use the chat interface again to ask <strong>Kiro</strong> to updated the steering files to ensure unit tests are generated as part of building features. Again, the <a href="https://github.com/LeeSanderson/Yello/commit/ac2c170efc135b1d3755e22cd85baa57c6a6a759" target="_blank">change</a> updated the <code>tech.md</code> file to record my preferences and generates two new steering files: <code>spec-development.md</code> (which seems to be instructions on how to include tests in implementation plans when building a <code>tasks.md</code>) and <code>testing.md</code> (which define the testing approach for the project, which includes unit, integration, and end-to-end tests).</p>
+<p>I also ask <strong>Kiro</strong> to update the <code>tasks.md</code> file for the user authentication feature based on the new steering files. This adds several more subtasks around unit testing.</p>
+<p>Task 1 is now complete and the generated code isn't that different from the initial code generated by <strong>Kiro</strong>. And, as a bonus, I've updating the steering files so that, in future tasks, <strong>Kiro</strong> <em>should</em> behave in a way that is more aligned to the way I want it to generated code.</p>
+<h3 id="task-2-create-authentication-service-layer">Task 2: Create authentication service layer</h3>
+<p>Buoyed by the (eventual) success of task 1, I move on to task 2 - implementing the creating the authentication service layer.</p>
+<p><strong>Kiro</strong>'s <a href="https://github.com/LeeSanderson/Yello/commit/1ee8da75a63ca34165a75478bf93c63d387e4365" target="_blank">first attempt</a> is terrible and has numerous issues:</p>
+<ul>
+<li>A new <code>AuthService</code> is created with password hashing and token generation utilities but, for some reason, <strong>Kiro</strong> decides <em>not</em> to use the existing JWT or password classes created in task 1</li>
+<li>Unnecessary changes are made to JWT class. Not sure why the agent made these changes as the JWT class is not being used by the new auth service.</li>
+<li>Comprehensive unit tests are created for the <code>AuthService</code>, but these break other tests because mocking was not cleaned up correctly.</li>
+</ul>
+<p>I rollback.</p>
+<p>Clearly <strong>Kiro</strong> needs more guidance. I ask <strong>Kiro</strong> to update the steering files to <a href="https://github.com/LeeSanderson/Yello/commit/caf227e8c7cc876420b29488a84d0036f1a6cdfc" target="_blank">add guidance on reusing components rather than implementing everything from scratch</a>. This updates the <code>spec-development.md</code> and creates a new <code>component-reuse.md</code> steering file. I inspect the files and these look reasonable.</p>
+<p>I also ask <strong>Kiro</strong> to update the steering files to <a href="https://github.com/LeeSanderson/Yello/commit/62aaaeaeda80ab8291761161244648b7c2abfdeb" target="_blank">explicitly run all tests after developing a task to catch regressions</a> and <a href="https://github.com/LeeSanderson/Yello/commit/8da711809ad1f41c8cb13143ae31ee47ede832fc" target="_blank">updates task plan to reflect recent steering changes</a>.</p>
+<p>Finally, I notice that the testing of the new <code>AuthService</code> has been made much more complex due to the use of static classes and global state. Clearly I need to tell <strong>Kiro</strong> about using
+<a href="https://github.com/LeeSanderson/Yello/commit/0cd20c23cab04f8aa079ad745c195db954ffb1ec" target="_blank">the dependency injection pattern for testability</a> (which generates a new <code>dependency-injection.md</code> steering file).</p>
+<p>I ask <strong>Kiro</strong> to implement the <a href="https://github.com/LeeSanderson/Yello/commit/61fcfead08c121bda5b22a73c96ddee4f421aa79" target="_blank">dependency injection feature</a> . Interestingly, <strong>Kiro</strong> decides to generate its own solution to solve the DI problem rather than reusing an existing, established library such as <a href="https://inversify.io/" target="_blank">Inversify</a>or  <a href="https://github.com/nicojs/typed-inject" target="_blank">typed-inject</a>. This behaviour highlights a wider pattern in agentic coding systems: they often default to producing bespoke solutions, even when mature and widely adopted alternatives already exist. While this demonstrates creativity and an ability to reason about a problem from first principles, it can also introduce long term maintenance costs and subtle inconsistencies within a codebase.</p>
+<p>I decide to keep <strong>Kiro</strong>'s initial DI solution and focus on the task at hand.</p>
+<p><strong>Kiro</strong>'s <a href="https://github.com/LeeSanderson/Yello/commit/51c8c40239c3e1431cb6f4dbcae577e262d9a7f1" target="_blank">second go</a> at implementing the authentication layer service is much cleaner and well tested.</p>
+<p>As I was checking <strong>Kiro</strong>'s work, I noticed some of the packages being used were significantly out of date and spent some time <a href="https://github.com/LeeSanderson/Yello/commit/3c5f33d32875f2855015b08cbc98504a7ae32ad9" target="_blank">manually updating the packages to current versions</a>. This seemed odd given that <strong>Yello</strong> is a newly generated green field project but it reflects a pattern that can appear when agents scaffold software. They often rely on internal heuristics or examples drawn from older templates, rather than performing a full contemporary survey of the ecosystem at the moment of generation. As a result, they may select versions that are technically valid yet already superseded, missing recent improvements, performance gains or important security fixes.</p>
+<p>Finally, before moving to the next task, I refactored the repository tests. They were messy and fragile because they relied on several layers of mocks. I replaced that setup with a simpler and more reliable approach by switching the tests to an <a href="https://github.com/LeeSanderson/Yello/commit/697c342ccbc065aa03b4d7c07eeb27894c862852#diff-5d6d362e68501e8b726b9b2a4a2233f6c3454618eab5b363d883666033596f21" target="_blank">in-memory database</a>.</p>
+<h3 id="task-3-create-input-validation-schemas">Task 3:  Create input validation schemas</h3>
+<p>Task 3 involved creating a library of validation schemas using <a href="https://www.npmjs.com/package/zod" target="_blank">Zod</a> to validate requests when registering with or logging in to the application.</p>
+<p><strong>Kiro</strong>'s <a href="%5Binitial%20implementation%5D(https://github.com/LeeSanderson/Yello/commit/ebed603b83a1e813a27dc13ffb6fdf05c2f5e13a)">implementation</a> of this feature used old and deprecated APIs leading to TypeScript errors.</p>
+<p>I attempted to get <strong>Kiro</strong> to fix this issues several times.</p>
+<p>It first suggested Zod 4.x was unstable and reverted to 3.x. This is untrue and I reverted the change.</p>
+<p>Then <strong>Kiro</strong> got itself into a loop of TypeScript linting errors (by trying to still use the deprecated feature) or test failures.</p>
+<p>I eventually gave up and <a href="https://github.com/LeeSanderson/Yello/commit/353768b99806032de8ae5c9346e8f9b4f853cbab" target="_blank">manually fixed</a> the issue by simply replacing the deprecate <code>z.string().email()</code> code with <code>z.email()</code>.</p>
+<p>The experience shows that agents can struggle when a library introduces breaking changes or reworks core patterns. They may cling to outdated examples even when up to date documentation is available. Until agents develop a more reliable understanding of version transitions and deprecations, human review will remain essential to ensure that generated code keeps pace with the evolving ecosystem.</p>
+<p>Whist all the code for this feature had been implemented, several of the sub tasks (3.3 Implement login validation schema and 3.4 Write unit tests for login validation schema) were still marked as incomplete and needed to be <a href="https://github.com/LeeSanderson/Yello/commit/115f4f56ea2edbcc79b7934e06a7a7ec3c5fce52" target="_blank">manually marked as done</a>.</p>
+<h3 id="task-4-create-authentication-middleware">Task 4: Create authentication middleware</h3>
+<p>For task 4, <strong>Kiro</strong> needed to <a href="https://github.com/LeeSanderson/Yello/commit/4e061e846db44fc10f35fb19d85b01b6b5b5836a" target="_blank">implement the JWT authentication middleware</a> that would be used to secure each of the REST endpoints and ensure only registered and logged in users could access secure routes.</p>
+<p>Again tasks that had been completed by <strong>Kiro</strong> had not been marked as completed and needed to be <a href="https://github.com/LeeSanderson/Yello/commit/848a4f87f7c09c30c26092c7c4c2348c33dd5a06" target="_blank">manually marked as completed</a>.</p>
+<p>Looking at the generated code, there was a lot of duplication between the <code>createAuthMiddleware()</code> and <code>createOptionalAuthMiddleware()</code> functions. To fix this I  <a href="https://github.com/LeeSanderson/Yello/commit/aefbd4ed0e0fdbb252000c0c2e5317c043e8e3d3" target="_blank">manually implemented an abstraction to reuse the core logic</a>.</p>
+<p>As part of this refactor it became clear that <strong>Kiro</strong> was adding tests that did not belong in the unit under test. For example, it checked whether the middleware detected an invalid or expired token, even though that behaviour is handled by the <code>JWTUtils</code> module used by the middleware. These tests added noise and blurred the boundary between unit and integration testing. They also created a false sense of coverage by exercising logic in the wrong place, which would make the test suite harder to understand and harder to maintain.</p>
+<p>This highlights yet another broader challenge with coding agents. Agents often try to increase coverage by testing every visible branch, yet they may lack a firm grasp of responsibility boundaries within a system. Effective unit testing depends on isolating components and verifying only what they control. When that principle is ignored, the test suite becomes brittle and harder to trust.</p>
+<h3 id="task-5-implement-authentication-api-routes">Task 5: Implement authentication API routes</h3>
+<p>In task 5 we introduce the core code for the REST endpoints that the frontend will use for login, registration, getting the user's own profile, and logging out.</p>
+<p><strong>Kiro</strong>'s initial <a href="https://github.com/LeeSanderson/Yello/commit/f5102f18cb9221fb6399579888c243c0f3b8325e" target="_blank">implementation</a> is of low quality. The tests are overly verbose, with extensive duplication and excessive mock assertions, resulting in 872 lines of code for just four simple endpoints. Additionally, many of the generated test scenarios cover behaviour that is outside the responsibility of the unit being tested.</p>
+<p>Given that both task 4 and 5 resulted in poorly structured tests, I spend some time <a href="https://github.com/LeeSanderson/Yello/commit/cfabe9266e60e4f5b4d9934cf8fa3ae75350d840" target="_blank">updating the  steering files</a> to hopefully create better tests by focusing on testing the behaviour of the unit under test and minimising duplication by extracting common setup code and assertions into helper functions.</p>
+<p>This change <a href="https://github.com/LeeSanderson/Yello/commit/ede56565d0a66d9f048bdd9b61f45631c51be9e9" target="_blank">resulted</a> in cleaner, more readable tests and reduced the test files size by almost two-thirds.</p>
+<h3 id="task-6-integrate-authentication-routes-with-main-application">Task 6: Integrate authentication routes with main application</h3>
+<p>Now all the building blocks are in place, we can finally expose the REST endpoints via the <a href="https://hono.dev/" target="_blank">Hono</a> application layer and create <em>integration tests</em> to test the building blocks work together as expected.</p>
+<p>Again, <strong>Kiro</strong>'s <a href="https://github.com/LeeSanderson/Yello/commit/899f140eb668006086106547bb3ff24da19b1852" target="_blank">implementation</a> was excessively complex. It mocked a bunch of dependencies (so the tests were not really integration test) and didn't cover all the routes.</p>
+<p><a href="https://github.com/LeeSanderson/Yello/commit/d41faf74c5a11d75a835f481aeb5b60086685200#diff-32cba5a8fc7b633f2d1de067e9cb99887a2e91484aa8cd8f651091ae545523db" target="_blank">I manually refactor the code</a> to centralise the creating of the app routes and rewrote the integration test so they are now much simpler (53 lines of code instead of 271). These new integration tests also only mock the external dependencies (in this case the database is mocked with an in-memory db) and so exercise a lot more of the system components.</p>
+<h3 id="task-7-create-comprehensive-integration-tests-for-authentication-flow">Task 7: Create comprehensive integration tests for authentication flow</h3>
+<p>Although this task is labelled as creating integration tests, those were already completed in the previous task. The actual aim here is to produce end to end tests for authentication flows, such as a user registering, logging in, and then trying to access protected routes.</p>
+<p>I'm was hoping Kiro will be inspired by my simple approach to integration testing and follow the same pattern for creating an end-to-end API test for the authentication flow.</p>
+<p>However, Kiro <a href="https://github.com/LeeSanderson/Yello/commit/e07a44b5a02c0d4fa3867a13c0edccff5ce80e18" target="_blank">generated</a> nearly 500 lines of code and 11 end-to-end tests. Many of these tests cover low level scenarios covered by the unit and integration tests. Clearly more guidance in needed on creating useful tests aligned with a pragmatic <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank">test pyramid</a>.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>In working through the first feature for <strong>Yello</strong>, it became difficult to avoid a more sceptical view of spec driven development as it currently stands. Although <strong>Kiro</strong> provides a structured workflow, the tool frequently produced code and tests that were unfocused, outdated, or misaligned with the goals of the feature. Instead of streamlining development, the process often introduced extra friction, with significant time spent correcting misunderstandings, rolling back misguided changes, and dealing with an agent that tended to generate noise rather than clarity.</p>
+<p>It also raised a concern about how tools like this may influence less experienced developers. Not because of any lack of ability, but because an agent that confidently produces detailed yet questionable solutions can quietly steer someone towards design choices they may not have the background to challenge. With enough generated code in place, it becomes hard to rethink the approach without unpicking a great deal of scaffolding, which risks leaving developers boxed into patterns they never consciously selected.</p>
+<p>What became increasingly clear is that <strong>Kiro</strong> only approaches usefulness when given heavy, continuous guidance. Steering files do help, but only after repeated rounds of refinement, and even then the improvements were uneven. The amount of effort needed to shape <strong>Kiro</strong>’s behaviour raises real questions about whether the approach scales or genuinely reduces workload. Much of the time saved by automating boilerplate was consumed by diagnosing odd decisions, correcting poor test suites, and compensating for the tool’s tendency to invent bespoke solutions to problems that already have mature answers.</p>
+<p>Taken together, this experience casts doubt on the practical value of spec driven development in its current form. If the tool’s outputs demand this level of supervision, it becomes hard to see it as an accelerator rather than a distraction. Still, this is only one data point. Further experimentation with different projects, more refined steering files, or future improvements to <strong>Kiro</strong> itself may yet reveal a more promising path. For now, though, the gap between the theory and the lived reality remains difficult to ignore.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
