@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 06 Jan 2026 17:05:29 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 06 Jan 2026 18:01:58 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -80,6 +80,14 @@
       <link>https://www.sixsideddice.com/Blog/DataScienceForDevs/Part2-Fundamentals.html</link>
       <title>Data Science for Developers: Part 2 - Fundamentals</title>
       <pubDate>Thu, 27 Jun 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Explore the evolution of code quality tooling in the dotnet ecosystem and get practical best practices for using modern Roslyn based analysers effectively. Use centralised configuration, build enforcement, and incremental adoption help teams maintain consistent, high quality C# codebases as they scale.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.html</link>
+      <title>Maintaining Code Quality in Modern C# Codebases</title>
+      <pubDate>Tue, 06 Jan 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

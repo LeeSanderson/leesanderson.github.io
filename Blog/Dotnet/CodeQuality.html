@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Maintaining Code Quality in Modern C# Codebases - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Explore the evolution of code quality tooling in the dotnet ecosystem and get practical best practices for using modern Roslyn based analysers effectively. Use centralised configuration, build enforcement, and incremental adoption help teams maintain consistent, high quality C# codebases as they scale.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="dotnet quality">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Maintaining Code Quality in Modern C# Codebases">
+    <meta name="twitter:description" content="Explore the evolution of code quality tooling in the dotnet ecosystem and get practical best practices for using modern Roslyn based analysers effectively. Use centralised configuration, build enforcement, and incremental adoption help teams maintain consistent, high quality C# codebases as they scale.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Maintaining Code Quality in Modern C# Codebases">
+    <meta name="description" property="og:description" content="Explore the evolution of code quality tooling in the dotnet ecosystem and get practical best practices for using modern Roslyn based analysers effectively. Use centralised configuration, build enforcement, and incremental adoption help teams maintain consistent, high quality C# codebases as they scale.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/Dotnet/CodeQuality.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jan 06, 2026</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">dotnet</span>
+        <span class="badge badge-info">quality</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="maintaining-code-quality-in-modern-c-codebases" class="sr-only" data-hero-heading="true">Maintaining Code Quality in Modern C# Codebases</h1>
+<img class="hero-image" src="CodeQuality.png" alt="Maintaining Code Quality in Modern C# Codebases"/>
+<p>Over the years, dotnet has supported a number of different tools to enable developers to ensure that codebases remain consistent in style and free from common design, security, and performance issues.</p>
+<p>Maintaining code quality has always been a concern for teams building long lived C# systems. As codebases grow, contributors multiply and requirements evolve, informal conventions and ad hoc reviews are rarely sufficient. Tooling has therefore played a central role in helping teams encode standards, detect problems early, and keep quality signals visible throughout the development lifecycle.</p>
+<h2 id="a-brief-history-of-code-quality-tooling">A Brief History of Code Quality Tooling</h2>
+<p>Early versions of the dotnet ecosystem relied heavily on post compilation analysis. One of the most influential tools was <a href="https://en.wikipedia.org/wiki/FxCop" target="_blank">FxCop</a>, first released in the mid 2000s. FxCop analysed compiled assemblies rather than source code, checking them against a large set of Microsoft defined rules covering design guidelines, naming conventions, security practices, performance pitfalls, and correct API usage. This approach had the advantage of language independence and a deep understanding of the runtime, but it also meant feedback arrived relatively late and rule customisation was cumbersome.</p>
+<p>Alongside FxCop, <a href="https://en.wikipedia.org/wiki/StyleCop" target="_blank">StyleCop</a> emerged to address a different class of problems. StyleCop focused on source level consistency, enforcing rules around formatting, naming, ordering, and documentation. Its goal was not to find bugs but to ensure that all code looked and felt the same, reducing cognitive load for readers. For many teams, FxCop and StyleCop together formed the backbone of static analysis, even though they were separate tools with different configuration models and developer experiences.</p>
+<p>As Visual Studio evolved, these tools became increasingly integrated, but they still reflected an older model of static analysis. Rules were largely fixed, extensibility was limited, and performance could suffer on large solutions. The real shift came with the introduction of the <a href="https://en.wikipedia.org/wiki/Roslyn_(compiler)" target="_blank">Roslyn compiler platform</a>.</p>
+<p>Roslyn fundamentally changed how C# code could be analysed. By exposing the compiler pipeline and syntax trees as APIs, it enabled analysers to run directly as part of compilation, both inside the IDE and on the build server, with rich semantic information available. FxCop rules were gradually ported to Roslyn, first as FxCop analysers and later consolidated into the <code>Microsoft.CodeAnalysis.NetAnalyzers</code> package. StyleCop also evolved, with <code>StyleCop.Analyzers</code> bringing familiar style rules into the Roslyn world.</p>
+<p>Today, Roslyn analysers are the standard mechanism for static analysis in modern C# projects.</p>
+<h2 id="the-modern-analyser-landscape">The Modern Analyser Landscape</h2>
+<p>The current analyser ecosystem is both richer and more fragmented than in the past. At its core are the built in dotnet analysers, which ship with the SDK and provide a baseline set of rules for correctness, reliability, security, performance, and maintainability. These can be configured via <code>.editorconfig</code> files, allowing rule severity to be tuned per project or solution.</p>
+<p>On top of this baseline, many teams adopt additional analyser packages. <code>StyleCop.Analyzers</code> remains popular for enforcing consistent code style and documentation rules. There are also specialised analysers targeting particular concerns, such as threading correctness, async usage, security vulnerabilities, or misuse of specific frameworks. A search of NuGet for <a href="https://www.nuget.org/packages?q=Analyzer&amp;sortBy=relevance" target="_blank">packages matching &quot;Analyzer&quot;</a> shows over <strong>2000 results</strong>.</p>
+<p>Commercial tools and platforms add another layer, often combining Roslyn analysers with deeper data flow analysis, architectural rules, and historical insights. These tools typically integrate with CI pipelines and dashboards, helping teams track trends over time rather than just individual violations.</p>
+<p>A key characteristic of modern analysis is immediacy. Developers now expect feedback as they type, with squiggles, quick fixes, and clear explanations in the IDE. This shifts static analysis from a gatekeeping activity at the end of the process to a continuous, developer centric experience.</p>
+<h2 id="best-practices-for-code-analysis">Best Practices For Code Analysis</h2>
+<p>Modern C# code analysis is most effective when it is treated as an integral part of development rather than a bolt on quality gate. The following practices focus on making analysis actionable, sustainable, and aligned with how teams actually work.</p>
+<h3 id="align-rules-with-team-conventions-and-workflows">Align Rules With Team Conventions And Workflows</h3>
+<p>Static analysis is most effective when it reinforces conventions the team already agrees on. Before enforcing style or maintainability rules, align on the underlying principles and document them. Once agreed, encode them in analyser configuration so that reviews focus on design and intent rather than formatting or preference.</p>
+<p>Encourage developers to address analyser feedback early, using IDE diagnostics and code fixes as part of normal development. Teams that fix issues at the point of introduction tend to see far fewer CI failures and repetitive review comments.</p>
+<h3 id="establish-a-deliberate-rule-strategy">Establish a Deliberate Rule Strategy</h3>
+<p>Not all analyser rules are equal, and enabling everything by default is rarely effective. Start by categorising rules into broad areas such as correctness, security, performance, reliability, maintainability, and style.</p>
+<p>Correctness and security rules are usually strong candidates for higher severities, often errors, as they frequently indicate real defects or vulnerabilities. Performance and reliability rules often work well as warnings, while maintainability and style rules tend to be most effective when introduced initially as suggestions.</p>
+<p>This prioritisation makes analyser output easier to reason about and helps developers focus on issues that genuinely matter. It also avoids the common failure mode where large numbers of low value warnings are ignored entirely.</p>
+<p>The best place to start it to enable the built in <code>Microsoft.CodeAnalysis.NetAnalyzers</code> analysers and review the <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview?tabs=net-10" target="_blank">default rule set</a>.</p>
+<h3 id="centralise-analyser-configuration">Centralise Analyser Configuration</h3>
+<p>As solutions grow, managing quality related settings on a per project basis quickly becomes unsustainable. Modern dotnet projects should centralise common configuration using <code>Directory.Build.props</code> and <code>Directory.Build.targets</code> files, which automatically apply project settings to all projects beneath their directory (see <a href="https://learn.microsoft.com/en-us/visualstudio/msbuild/customize-by-directory?view=visualstudio" target="_blank">Customize your build by folder or solution</a> documentation).</p>
+<p><code>Directory.Build.props</code> is typically used for defining global defaults such as language version, nullable context, analyser enablement, and warning behaviour. Placing these settings centrally ensures that every project starts from the same baseline and that new projects inherit the expected standards automatically.</p>
+<p><code>Directory.Build.targets</code> is useful when configuration needs to run later in the build pipeline or when composing inputs from multiple sources. One practical use is controlling how <code>.editorconfig</code> files are applied across the repository (see below).</p>
+<h3 id="structure.editorconfig-files-by-concern">Structure .editorconfig Files By Concern</h3>
+<p>Rather than relying on a single, monolithic <code>.editorconfig</code> file, larger codebases benefit from splitting configuration into multiple, well named files organised by concern. For example:</p>
+<ul>
+<li><code>FileDefaults.editorconfig</code> for indentation, tabs versus spaces, line endings, and file level defaults</li>
+<li><code>CodeStyle.editorconfig</code> for C# style preferences such as var usage, expression bodied members, and naming conventions</li>
+<li><code>Analyzers.editorconfig</code> for analyser rule severities and analyser specific options</li>
+</ul>
+<p>Using the <code>&lt;EditorConfigFiles /&gt;</code> element in <code>Directory.Build.targets</code>, these files can be explicitly referenced and ordered. This makes configuration intent clear, avoids accidental dependence on directory structure, and allows teams to layer shared organisational defaults with solution specific rules.</p>
+<p>Treat these files as first class assets. Keep them readable, commented, and reviewed like any other code, as changes can affect the entire solution.</p>
+<h3 id="enforce-code-quality-through-the-build">Enforce Code Quality Through The Build</h3>
+<p>For analysis to be effective, important findings must be able to stop the build. Relying solely on IDE feedback is insufficient. Coding standards must also to be enforced by the CI pipeline.</p>
+<p>Two <code>MSBuild</code> properties are central to build time enforcement:</p>
+<ul>
+<li><code>&lt;TreatWarningsAsErrors /&gt;</code> ensures that compiler and analyser warnings fail the build unless explicitly downgraded or suppressed.</li>
+<li><code>&lt;MSBuildTreatWarningsAsErrors /&gt;</code> performs the same role for <code>MSBuild</code> warnings related to project configuration and build logic.</li>
+</ul>
+<p>A widely adopted best practice is to enable both properties at least for Release builds (e.g. <code> &lt;MSBuildTreatWarningsAsErrors Condition=&quot;'$(Configuration)' == 'Release'&quot;&gt;true&lt;/MSBuildTreatWarningsAsErrors&gt;</code>). This preserves some flexibility during local development while ensuring that anything built, merged, or shipped meets a stricter quality bar. These settings are best defined centrally in <code>Directory.Build.props</code> and optionally scoped by configuration as shown above.</p>
+<p>In addition, setting <code>&lt;EnforceCodeStyleInBuild /&gt;</code> to true ensures that code style rules defined in <code>.editorconfig</code> are evaluated during the build, not just in the IDE. This elevates style from a local preference to a shared, enforceable standard and removes ambiguity from code reviews.</p>
+<p>Together, these settings turn analyser output into a clear contract. Rule severities are defined in <code>.editorconfig</code>, while the build determines how seriously those severities are treated.</p>
+<h3 id="introduce-and-evolve-analysis-incrementally">Introduce And Evolve Analysis Incrementally</h3>
+<p>Applying modern analysers to an existing codebase often surfaces a large backlog of issues. Attempting to fix everything at once is rarely realistic. Instead, baseline existing violations and focus enforcement on new or modified code.</p>
+<p>Over time, rules can be tightened, severities increased, and suppressions removed as areas of the codebase are touched. Periodically review analyser output to ensure that each rule continues to provide value, adjusting or removing those that generate noise or false positives.</p>
+<h3 id="balance-automation-with-human-judgement">Balance Automation With Human Judgement</h3>
+<p>Finally, static analysis should complement, not replace, human review. Analysers excel at consistency and well defined patterns, but they cannot fully capture architectural intent or business correctness.</p>
+<p>By using analysers to handle routine quality concerns and enforcing them consistently through the build, teams free up code reviews to focus on design, clarity, and long term maintainability. This balance is what allows modern C# codebases to scale without sacrificing quality.</p>
+<h3 id="bonus-keep-package-management-separate-but-consistent">Bonus: Keep Package Management Separate But Consistent</h3>
+<p>You will probably be using <code>Directory.Build.props</code> and <code>Directory.Build.targets</code> for build and analysis settings, so why not introduce <code>Directory.Packages.props</code> for <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management" target="_blank">centralised package management </a> at the same time?</p>
+<p>Dependency management becomes increasingly complex as the number of projects in a solution grows. Central Package Management (CPM) allow you to manage common dependencies for many different projects all of this from a single, central location.</p>
+<p>Although this is unrelated to static analysis configuration itself, it plays an important supporting role by ensuring that analyser packages and tooling dependencies are aligned across the solution.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Maintaining code quality in modern C# codebases is no longer about choosing a single tool or running a checker at the end of the build. It is about establishing a coherent system where standards are explicit, feedback is timely, and enforcement is consistent across developers, projects, and pipelines.</p>
+<p>The evolution from <code>FxCop</code> and <code>StyleCop</code> to <code>Roslyn</code> based analysers has given teams far more power and flexibility, but it has also increased the importance of good configuration and discipline. Centralising settings, structuring analyser rules thoughtfully, and enforcing them through the build ensures that quality expectations are clear and non negotiable, while still allowing teams to evolve incrementally.</p>
+<p>Perhaps most importantly, modern static analysis works best when it supports developers rather than policing them. When rules reflect shared conventions, when feedback appears early, and when automation handles the routine concerns, teams can focus their human effort where it matters most: design, intent, and long term maintainability.</p>
+<p>Used well, today’s tooling does not just prevent problems. It helps teams scale their codebases and their practices with confidence, ensuring that quality remains a property of the system rather than a heroic effort by individuals.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
