@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Pair Programming, Properly Understood - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A practitioner deep-dive into what the data actually says about pair programming, why most teams "do pair programming" and get few of the benefits, and what the discipline looks like when it is done well.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices PairProgramming XP">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/PairProgrammingProperlyUnderstood.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Pair Programming, Properly Understood">
+    <meta name="twitter:description" content="A practitioner deep-dive into what the data actually says about pair programming, why most teams "do pair programming" and get few of the benefits, and what the discipline looks like when it is done well.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/PairProgrammingProperlyUnderstood.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Pair Programming, Properly Understood">
+    <meta name="description" property="og:description" content="A practitioner deep-dive into what the data actually says about pair programming, why most teams "do pair programming" and get few of the benefits, and what the discipline looks like when it is done well.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/PairProgrammingProperlyUnderstood.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/PairProgrammingProperlyUnderstood.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">May 28, 2025</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">PairProgramming</span>
+        <span class="badge badge-info">XP</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="pair-programming-properly-understood" class="sr-only" data-hero-heading="true">Pair Programming, Properly Understood</h1>
+<img class="hero-image" src="PairProgrammingProperlyUnderstood.png" alt="Pair Programming, Properly Understood"/>
+<p><a href="https://en.wikipedia.org/wiki/Pair_programming" target="_blank">Pair programming</a> is one of the most-cited and least-understood practices in our industry. It has been part of <a href="https://en.wikipedia.org/wiki/Extreme_programming" target="_blank">Extreme Programming</a> since <a href="https://en.wikipedia.org/wiki/Kent_Beck" target="_blank">Kent Beck</a> first wrote it down, it has more empirical research behind it than almost any other agile technical practice, and it is still the practice that most teams claim to do but very few actually do well.</p>
+<p>I keep coming back to it because the <strong>gap</strong> between <em>what the research found</em> and <em>what most teams report doing</em> is enormous. The research reports a small but real quality benefit, a meaningful boost in confidence and knowledge transfer, and a modest cost premium. The teams I work with report long stretches of two people sat at one screen with one of them on Slack and the other slowly losing the will to live. Both of these things get filed under the same label.</p>
+<p>This article is a deep-dive, not a tutorial. The aim is to look at the evidence honestly, to understand why so few teams realise what the data promises, and to be specific about the disciplines that separate the pairing that works from the pairing that gets quietly abandoned.</p>
+<p><em>If pair programming is so well-evidenced, why do so few teams seem to get the benefit?</em></p>
+<h2 id="what-the-evidence-actually-says">What the Evidence Actually Says</h2>
+<p>There is a respectable body of empirical research on pair programming, and reading it carefully gives a more nuanced picture than either the cheerleaders or the sceptics tend to offer.</p>
+<h3 id="the-utah-study">The Utah study</h3>
+<p>The foundational study is <a href="http://ivizlab.sfu.ca/arya/Papers/IEEE/Software/2000/July/Pair%20Programming.pdf" target="_blank">Williams, Kessler, Cunningham and Jeffries 2000</a>, often called the <em>Utah study</em> after the institution where it was run. Forty-one undergraduate students were split into thirteen solo developers and fourteen pairs working on the same set of programming assignments. The headline numbers, repeated everywhere since, were:</p>
+<ul>
+<li>Pairs spent roughly <strong>15% more time</strong> than solos on the same problems.</li>
+<li>Pair-produced code passed <strong>15% more of the test cases</strong> than solo-produced code.</li>
+<li><strong>96%</strong> of the participants in the pair condition said they enjoyed their work more in pairs than they had alone.</li>
+</ul>
+<p>Those numbers are real, but the study is a small undergraduate experiment and should be read as evidence of a <em>direction</em>, not a precise effect size. It is also worth noting that the time premium and the quality premium are not symmetric: a 15% time penalty on construction is a poor proxy for total cost of ownership when defects ship to production and have to be fixed later by someone with no context.</p>
+<h3 id="the-norwegian-replication">The Norwegian replication</h3>
+<p>The most-cited industrial replication is <a href="https://www.researchgate.net/publication/3189715_Evaluating_Pair_Programming_with_Respect_to_System_Complexity_and_Programmer_Expertise" target="_blank">Arisholm, Gallis, Dybå and Sjøberg 2007</a>, which is sometimes wheeled out by sceptics as proof that pair programming does not work. It is a more careful study than the Utah one. 295 professional Java developers from 29 companies were paid to work on a set of refactoring tasks, in solos and pairs, with the experimenters varying the difficulty of the task and the seniority mix of the pair.</p>
+<p>The Arisholm result is genuinely interesting. The headline finding was that pairing produced <em>no</em> statistically significant improvement in correctness on the easier tasks, and required substantially more effort overall. Pairing did, however, materially improve the proportion of correct solutions on the <em>complex</em> tasks, which is where the hard money in software actually lives.</p>
+<p>I read this as evidence that pairing is a tool with a sweet spot, not a universal multiplier. If you pair two seniors on a CRUD form, the data is going to laugh at you.</p>
+<h3 id="the-2009-meta-analysis">The 2009 meta-analysis</h3>
+<p>The closest thing we have to a settled view is <a href="https://www.sciencedirect.com/science/article/abs/pii/S0950584909000123" target="_blank">Hannay, Dybå, Arisholm and Sjøberg's 2009 meta-analysis</a>, which pulled together 18 controlled experiments. Their findings, summarised pragmatically:</p>
+<ul>
+<li>A <strong>positive effect on quality</strong>, robust across studies.</li>
+<li>A <strong>small-to-medium positive effect on duration</strong> for low-complexity tasks (pairs finish faster).</li>
+<li>A <strong>medium negative effect on effort</strong>: pairs spend more total person-hours, even when they finish in less wall-clock time.</li>
+<li>Evidence of <strong>publication bias</strong> in the underlying corpus, which the authors flagged honestly.</li>
+</ul>
+<p>The meta-analysis does not say pair programming is magic. It says pairing is a real, measurable intervention that buys you better quality and faster wall-clock delivery on suitable work, at the cost of more total effort. Whether that trade is worthwhile depends entirely on what you are optimising for.</p>
+<h3 id="what-the-data-does-not-measure">What the data does not measure</h3>
+<p>What none of the controlled experiments measure well is the thing most experienced practitioners value most: <strong>knowledge transfer</strong>, <strong><a href="https://en.wikipedia.org/wiki/Bus_factor" target="_blank">bus factor</a></strong>, and <strong>collective code ownership</strong>. <a href="https://www.microsoft.com/en-us/research/publication/pair-programming-whats-in-it-for-me/" target="_blank">Andrew Begel and Nachiappan Nagappan's 2008 Microsoft survey</a> of internal pair programming usage at Microsoft found that the benefits engineers reported most often were <em>learning the codebase faster</em>, <em>finishing tasks with fewer bugs</em>, and <em>transferring knowledge to colleagues</em>, in that order. Those are exactly the things that controlled experiments on undergraduate refactoring tasks are least equipped to detect.</p>
+<h3 id="what-the-evidence-adds-up-to">What the evidence adds up to</h3>
+<p>Taken together, the research paints a more consistent picture than the popular reading suggests. Pair programming, when it is run as the studies intended, produces:</p>
+<ul>
+<li><strong>Higher quality code</strong>, with a small but real reduction in defects.</li>
+<li><strong>Faster wall-clock delivery</strong> on suitable work, even when total person-hours go up.</li>
+<li><strong>Materially better outcomes on complex tasks</strong>, which is where the cost of getting it wrong is highest.</li>
+<li><strong>Faster onboarding, lower bus factor, and stronger collective ownership</strong> of the codebase, on the evidence of the practitioner surveys that did try to measure those things.</li>
+</ul>
+<p>The benefits are real, and they compound over the lifetime of a system in ways the experiments cannot capture.</p>
+<p>If you take the evidence at face value, you should expect pairing to make your team better. Quietly, measurably, and over time.</p>
+<p>So why do so few teams report seeing those benefits?</p>
+<h2 id="what-teams-commonly-report">What Teams Commonly Report</h2>
+<p>Walk a floor of teams who say they pair, ask them in retrospectives whether it works, and listen carefully to the answers you get back. The pattern is consistent enough to be its own story:</p>
+<ul>
+<li><em>&quot;We tried it for a sprint and it slowed us down.&quot;</em></li>
+<li><em>&quot;It works for the hard problems but it's overkill for normal work.&quot;</em></li>
+<li><em>&quot;My junior just zones out after twenty minutes.&quot;</em></li>
+<li><em>&quot;I get more done with my headphones on.&quot;</em></li>
+<li><em>&quot;We do it sometimes but not regularly.&quot;</em></li>
+</ul>
+<p>Press a little further on what they were actually doing, and the version of pair programming that emerges has a fairly consistent shape:</p>
+<ul>
+<li><strong>Roles are unspoken</strong>: one person types because they always type, the other watches because they always watch. The driver and navigator labels never come out of anyone's mouth.</li>
+<li><strong>Roles never swap</strong>: the same person holds the keyboard for the entire session, sometimes for the whole day.</li>
+<li><strong>The same two people are glued together</strong>: the <em>pair</em> is in fact a <em>relationship</em>, often determined by which two desks happen to be next to each other, and it persists for weeks.</li>
+<li><strong>Sessions sprawl</strong>: pairs sit together for as long as the day will allow, with no breaks and no rhythm.</li>
+<li><strong>The second screen is on Slack</strong>: the non-typer is half-present, fielding messages, scrolling email, occasionally re-engaging.</li>
+</ul>
+<p>This is the version of pair programming that gets quietly abandoned at the first sign of a deadline. It is also the version that fuels most of the scepticism, and it is the version that the <a href="https://www.red-gate.com/simple-talk/blogs/comparing-apples-and-pairs/" target="_blank">Capers Jones</a> critique cleanly demolishes. Jones argues that pairing costs roughly 2.5 times more than solo work and produces no measurable quality benefit. Read against the picture above, that conclusion is broadly correct. The teams reporting <em>pair programming did not work for us</em> are, almost without exception, describing this version.</p>
+<p>If this were the practice the research had been measuring, the sceptics would be right. Almost none of the documented benefits would survive contact with this version of pairing.</p>
+<h2 id="why-the-gap-exists-two-kinds-of-pair-programming">Why The Gap Exists: Two Kinds Of Pair Programming</h2>
+<p>The single biggest source of confusion in any conversation about pair programming is that the term covers two structurally different activities. The version that teams commonly drift into, described above, is one of them. The version the research was actually measuring is the other.</p>
+<p>A team that is <em>actually</em> pairing looks structurally different from the outside. Two people still share one keyboard, but the rest of it does not look the same:</p>
+<ul>
+<li><strong>Roles are explicit</strong>: one person is <em>driving</em> (typing, focused on the line in front of them), one is <em>navigating</em> (focused on the next move and the larger pattern). Both people know which role they are in, and both can name the role the other is in.</li>
+<li><strong>Sessions are time-boxed</strong>: <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">Pomodoro</a> work blocks of 25 minutes with proper breaks, capped at four or five hours of paired work in a day. The remainder is for solo thinking, reading, and asynchronous work.</li>
+<li><strong>Roles swap on a known cadence</strong>: every test cycle in TDD, or every Pomodoro interval otherwise. The same person does not hold the keyboard for hours.</li>
+<li><strong>Pairs rotate</strong>: across a feature, across a day, or at minimum across a sprint. The same two people are not glued together indefinitely.</li>
+<li><strong>Distractions are closed</strong>: Slack is shut, email is shut, the second person is not on their phone. Pairing is <em>the</em> work, not a backdrop to other work.</li>
+</ul>
+<p>The point I want to land on, and the thread the rest of the article will pull, is that the <strong>practice</strong> is <em>two people, one screen</em>. The <strong>discipline</strong> is what the two people actually do while they are sitting there. Almost every interesting result in the literature is a result about the discipline, not the practice. The practice is cheap. The discipline is what teams drop first.</p>
+<p>This also explains why the research literature looks confused at first glance. Most studies hold the discipline axes constant by accident: they pick whatever pairing style the participating company happened to use and call it <em>pair programming</em>. So when we say <em>the evidence on pair programming is mixed</em>, what we really mean is <em>the evidence on whatever vague thing the experiment chose to call pair programming is mixed</em>. Once you filter for the discipline, the picture sharpens considerably.</p>
+<h2 id="the-disciplines-that-make-pairing-work">The Disciplines That Make Pairing Work</h2>
+<p>Below is the spectrum I have in my head when I am watching a team pair, ordered roughly from <em>least disciplined and least valuable</em> to <em>most disciplined and most valuable</em>.</p>
+<pre class="mermaid">flowchart TB
+    A[Co-located but parallel] --> B[Driver / observer]
+    B --> C[Driver / navigator]
+    C --> D[Strong-style pairing]
+    D --> E[Strong-style with rotation and rest]
+    style A fill:#f8d7da,stroke:#842029
+    style B fill:#fff3cd,stroke:#664d03
+    style C fill:#d1e7dd,stroke:#0f5132
+    style D fill:#cfe2ff,stroke:#084298
+    style E fill:#d6c9f5,stroke:#3d3470
+    classDef sameSize padding: 280px;
+    class A,B,C,D,E sameSize;
+</pre>
+<p>Each step up the ladder corresponds to a discipline that the team has agreed to, and each one closes off a specific failure mode that empirical studies have flagged. None of these are my inventions; all of them are well-documented in the practitioner literature.</p>
+<h3 id="driver-and-navigator">Driver and Navigator</h3>
+<p>The first <em>real</em> discipline is that the two people in the pair play <strong>different roles</strong>. The <strong>driver</strong> has the keyboard and is concerned with the line in front of them: syntax, the next test, the next refactor. The <strong>navigator</strong> is concerned with the route: where this is heading, what the next move is, whether the pattern fits the rest of the codebase.</p>
+<p>This is the framing <a href="https://martinfowler.com/articles/on-pair-programming.html" target="_blank">Martin Fowler describes in &quot;On Pair Programming&quot;</a> and it is the minimum viable separation of concerns. Without it, both people end up trying to do the same job at slightly different speeds, which is exhausting and produces almost none of the benefits the research measured.</p>
+<p>The roles must actually swap. A pair that never swaps roles is not pairing; it is one person typing and one person watching. A reasonable cadence is <em>every test cycle</em> in <a href="StylesOfTestDrivenDevelopment.html">classicist TDD</a>, or roughly Pomodoro interval if your work is not test-driven.</p>
+<h3 id="strong-style-pairing">Strong-Style Pairing</h3>
+<p><a href="https://llewellynfalco.blogspot.com/2014/06/llewellyns-strong-style-pairing.html" target="_blank">Llewellyn Falco's strong-style pairing</a> inverts the usual power dynamic. Falco's rule is short and worth memorising:</p>
+<blockquote class="blockquote">
+<p>&quot;For an idea to go from your head into the computer it must go through someone else's hands.&quot;</p>
+</blockquote>
+<p>The navigator decides what to do; the driver translates the navigator's intention into code. This is uncomfortable at first, and that is the point. It forces the navigator to articulate intent precisely, and it forces the driver to engage with what is being asked rather than autopiloting.</p>
+<p>Strong-style pairing is the version I reach for when the expertise gap in the pair is wide. If you put a senior in the driver's seat with a junior navigating, the senior will type the answer in twelve seconds and the junior will have learned nothing. Reverse the seats and the senior has to <em>explain</em>, and the junior has to <em>think</em>, and an hour later you have a working feature <em>and</em> a more capable junior. That is the bus-factor benefit the controlled studies struggle to measure.</p>
+<h3 id="pair-rotation">Pair Rotation</h3>
+<p><a href="http://csis.pace.edu/%7Egrossman/dcs/XR4-PromiscuousPairing.pdf" target="_blank">Arlo Belshee's &quot;Promiscuous Pairing and Beginner's Mind&quot;</a>, presented at Agile 2005, makes the case for rotating pairs aggressively. Belshee's recommendation was <em>every 90 minutes</em>, deliberately sooner than the pair feels comfortable rotating.</p>
+<p>The argument is counterintuitive but worth taking seriously. The longer two people pair on the same problem, the more shared assumptions they accumulate, and the harder it becomes for either of them to question those assumptions. Rotation forces the new arrival into the <em>beginner's mind</em> state where they ask the obvious questions and re-ground the work in what is actually written down rather than what is in the heads of the previous pair.</p>
+<p>Rotation is also the only mechanism I have seen reliably distribute knowledge across a team. Without it, knowledge concentrates in the person who has been on the feature longest, and you reproduce the bus-factor problem you were trying to solve.</p>
+<p>The empirical evidence for promiscuous pairing specifically is thinner than for the foundations: it is mostly practitioner-reported and not yet validated at scale. I include it because the underlying mechanism (countering shared blind spots) is well-understood and matches what I have seen on the teams that pair seriously.</p>
+<h3 id="time-boxing-and-rest">Time-Boxing and Rest</h3>
+<p>The last discipline is the most easily overlooked. Pairing is <strong>cognitively expensive</strong>. Two people maintaining a shared model of the same problem, articulating intent, and challenging each other's choices is much more demanding than the equivalent solo work, even though it looks the same from the outside.</p>
+<p>In practice this means pair sessions need rest. The teams I have seen sustain pairing over months structure their day around the Pomodoro Technique: 25 minutes of focused paired work, a 5-minute break, repeated four times before a longer break of fifteen to thirty minutes. They cap the day at four to five hours of paired work. The remainder is for the asynchronous work, the reading, the email, the thinking, etc. Teams that try to pair eight hours a day without a structure burn out within a fortnight, and then conclude that pair programming does not work.</p>
+<p>Twenty-five minutes can feel short, particularly when you have just got something working and want to push on. That is the point. The interval forces a small reset that, in a pairing context, doubles as a natural moment to swap driver and navigator and take stock of where the work is heading. The discipline of explicit work blocks with explicit breaks does more for sustained pairing than any amount of willpower.</p>
+<h2 id="where-pairing-does-not-pay-off">Where Pairing Does Not Pay Off</h2>
+<p>Strong views need honest exceptions. Here are the cases where I would not pair, even with full discipline in place:</p>
+<ul>
+<li><strong>Trivial, well-understood work.</strong> A two-line config change does not need two heads. Pairing on it is theatre.</li>
+<li><strong>Pure exploratory spikes.</strong> When the goal is to learn quickly whether something is even possible, the back-and-forth of pairing can slow down the cycle of trying things. Spike alone, then pair on the production implementation that comes out of the spike.</li>
+<li><strong>Wildly mismatched expertise without strong-style.</strong> Senior plus junior in plain driver / navigator mode usually devolves into senior typing while junior watches. Either commit to strong-style or do not pair.</li>
+<li><strong>Sustained for more than four or five hours a day.</strong> Beyond that, you are buying fatigue, not quality.</li>
+</ul>
+<p>The Capers Jones critique I discussed earlier deserves a more honest engagement here. I think his analysis is wrong as applied to disciplined pairing, for the reasons throughout the article: it implicitly models the driver / observer style and ignores rotation and knowledge transfer entirely. But his caveat applies cleanly to the failure modes listed in this section. Pair programming done badly is exactly as expensive as Jones says it is.</p>
+<p>The answer, as with many things in software engineering, is <em>it depends</em>. Your context may be different.</p>
+<h2 id="a-note-on-ai">A Note On AI</h2>
+<p>The obvious next question, and the one I am asked every time I talk about this, is what happens when one of the chairs at the keyboard is taken by an AI coding assistant. The marketing for <a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a>, Cursor, and the rest leans heavily on the <em>pair programmer</em> metaphor, and that claim is worth taking seriously rather than dismissing.</p>
+<p>It is also a big enough topic to deserve its own article rather than being tacked on here. I will be writing a companion piece on  Pair Programming In The Age Of AI that I will publish soon.</p>
+<h2 id="summary">Summary</h2>
+<p>To pull all of this together:</p>
+<ul>
+<li>The empirical evidence on pair programming is real but conditional. <strong>Quality goes up, wall-clock time on suitable work goes down, total effort goes up.</strong> The trade is favourable when the work is hard enough to warrant two heads.</li>
+<li>Most teams who report that pair programming did not work for them are describing a version of the practice that the research was never measuring. The discipline is what the studies were measuring; the practice is what teams drop to first.</li>
+<li>Disciplined pairing rests on a small number of habits: role separation, role swapping, strong-style framing where appropriate, pair rotation, time-boxed sessions, and respect for the cognitive cost of pairing.</li>
+<li>The benefits that compound over the lifetime of a system (faster onboarding, lower bus factor, distributed ownership) are exactly the ones controlled experiments struggle to measure, and exactly the ones experienced practitioners value most.</li>
+</ul>
+<p>Of course this is my view based on my experience and your views may be different. I am open to expanding my view, and if you feel that you have insights worth sharing, please <a href="https://www.linkedin.com/in/lee-sanderson-codurance/" target="_blank">contact me</a> to continue the conversation.</p>
+<p>The tools at our keyboards keep changing. The reasons we pair do not.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
