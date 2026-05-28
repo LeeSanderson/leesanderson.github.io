@@ -150,19 +150,13 @@
 <p>This also explains why the research literature looks confused at first glance. Most studies hold the discipline axes constant by accident: they pick whatever pairing style the participating company happened to use and call it <em>pair programming</em>. So when we say <em>the evidence on pair programming is mixed</em>, what we really mean is <em>the evidence on whatever vague thing the experiment chose to call pair programming is mixed</em>. Once you filter for the discipline, the picture sharpens considerably.</p>
 <h2 id="the-disciplines-that-make-pairing-work">The Disciplines That Make Pairing Work</h2>
 <p>Below is the spectrum I have in my head when I am watching a team pair, ordered roughly from <em>least disciplined and least valuable</em> to <em>most disciplined and most valuable</em>.</p>
-<pre class="mermaid">flowchart TB
-    A[Co-located but parallel] --> B[Driver / observer]
-    B --> C[Driver / navigator]
-    C --> D[Strong-style pairing]
-    D --> E[Strong-style with rotation and rest]
-    style A fill:#f8d7da,stroke:#842029
-    style B fill:#fff3cd,stroke:#664d03
-    style C fill:#d1e7dd,stroke:#0f5132
-    style D fill:#cfe2ff,stroke:#084298
-    style E fill:#d6c9f5,stroke:#3d3470
-    classDef sameSize padding: 280px;
-    class A,B,C,D,E sameSize;
-</pre>
+<ol>
+<li>Co-located but parallel</li>
+<li>Driver / observer</li>
+<li>Driver / navigator</li>
+<li>Strong-style pairing</li>
+<li>Strong-style with rotation and rest</li>
+</ol>
 <p>Each step up the ladder corresponds to a discipline that the team has agreed to, and each one closes off a specific failure mode that empirical studies have flagged. None of these are my inventions; all of them are well-documented in the practitioner literature.</p>
 <h3 id="driver-and-navigator">Driver and Navigator</h3>
 <p>The first <em>real</em> discipline is that the two people in the pair play <strong>different roles</strong>. The <strong>driver</strong> has the keyboard and is concerned with the line in front of them: syntax, the next test, the next refactor. The <strong>navigator</strong> is concerned with the route: where this is heading, what the next move is, whether the pattern fits the rest of the codebase.</p>
