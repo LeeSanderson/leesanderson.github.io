@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Fri, 19 Jun 2026 10:12:05 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 15:53:37 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -200,6 +200,14 @@
       <link>https://www.sixsideddice.com/Blog/Thoughts/AIAndTheDeathOfTheJuniorDeveloper.html</link>
       <title>AI and The Death of The Junior Developer</title>
       <pubDate>Thu, 10 Jul 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>There is a popular claim that AI coding assistants are the next rung on the ladder of abstraction, sitting above high-level languages just as those languages sat above assembly. I take the strongest version of that argument seriously, then argue it does not hold. A compiler is a deterministic, specified, reproducible abstraction you can stop thinking about. An LLM is none of those things. It does not move us up the ladder so much as sideways into nondeterminism.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.html</link>
+      <title>Sideways, Not Up: Why AI Is Not a New Abstraction Layer</title>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

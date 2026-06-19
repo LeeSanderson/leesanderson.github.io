@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Sideways, Not Up: Why AI Is Not a New Abstraction Layer - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="There is a popular claim that AI coding assistants are the next rung on the ladder of abstraction, sitting above high-level languages just as those languages sat above assembly. I take the strongest version of that argument seriously, then argue it does not hold. A compiler is a deterministic, specified, reproducible abstraction you can stop thinking about. An LLM is none of those things. It does not move us up the ladder so much as sideways into nondeterminism.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="Thoughts AI CodingAssistants Abstraction">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Sideways, Not Up: Why AI Is Not a New Abstraction Layer">
+    <meta name="twitter:description" content="There is a popular claim that AI coding assistants are the next rung on the ladder of abstraction, sitting above high-level languages just as those languages sat above assembly. I take the strongest version of that argument seriously, then argue it does not hold. A compiler is a deterministic, specified, reproducible abstraction you can stop thinking about. An LLM is none of those things. It does not move us up the ladder so much as sideways into nondeterminism.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Sideways, Not Up: Why AI Is Not a New Abstraction Layer">
+    <meta name="description" property="og:description" content="There is a popular claim that AI coding assistants are the next rung on the ladder of abstraction, sitting above high-level languages just as those languages sat above assembly. I take the strongest version of that argument seriously, then argue it does not hold. A compiler is a deterministic, specified, reproducible abstraction you can stop thinking about. An LLM is none of those things. It does not move us up the ladder so much as sideways into nondeterminism.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Jun 18, 2026</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">Thoughts</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">Abstraction</span>
+    </span>
+</div>
+<div data-pagefind-body>
+<h1 id="sideways-not-up-why-ai-is-not-a-new-abstraction-layer" class="sr-only" data-hero-heading="true">Sideways, Not Up: Why AI Is Not a New Abstraction Layer</h1>
+<img class="hero-image" src="SidewaysNotUpWhyAIIsNotANewAbstractionLayer.png" alt="Sideways, Not Up: Why AI Is Not a New Abstraction Layer"/>
+<p>There is a tidy story doing the rounds, and like all tidy stories it is mostly told as if it were obvious. The story goes like this. Software has always climbed a ladder of <a href="https://en.wikipedia.org/wiki/Abstraction_layer" target="_blank">abstraction</a>. We started with machine code, then <a href="https://en.wikipedia.org/wiki/Assembly_language" target="_blank">assembly</a> gave us mnemonics instead of raw opcodes, then <a href="https://en.wikipedia.org/wiki/High-level_programming_language" target="_blank">high-level languages</a> and their <a href="https://en.wikipedia.org/wiki/Compiler" target="_blank">compilers</a> let us write <code>for</code> loops and forget about registers entirely. Each rung let us say more while caring about less. And now, the story concludes, AI is simply the next rung. You describe what you want in English, the model writes the code, and one day soon you will no more read that code than you currently read the assembly your compiler emits.</p>
+<p>It is a compelling narrative because it has a true part welded to a false part. Andrej Karpathy put the true-feeling part memorably when he declared that <a href="https://x.com/karpathy/status/1617979122625712128" target="_blank">&quot;the hottest new programming language is English&quot;</a>, and earlier still framed neural networks as <a href="https://karpathy.medium.com/software-2-0-a64152b37c35" target="_blank">&quot;Software 2.0&quot;</a> in which &quot;the process of training the neural network compiles the dataset into the binary&quot;. Matt Welsh took it to its logical extreme in the Communications of the ACM, arguing that <a href="https://cacm.acm.org/opinion/the-end-of-programming/" target="_blank">&quot;the conventional idea of 'writing a program' is headed for extinction&quot;</a>. The ladder, the compiler, the next layer up. It all rhymes nicely.</p>
+<p><strong>I write this not as a cynic, but as a software craftsperson with over 30 years of experience</strong> building, maintaining, and occasionally rescuing systems that other people's abstractions had quietly betrayed. I have a great deal of time for AI coding assistants. I use them daily. But I think the abstraction-layer framing is the wrong mental model, and getting the mental model wrong is how teams end up surprised.</p>
+<p><em>If high-level languages are an abstraction over machine code, is AI really an abstraction over high-level languages, or is it something else entirely wearing the same costume?</em></p>
+<h2 id="the-ladder-and-why-it-is-so-seductive">The Ladder, and Why It Is So Seductive</h2>
+<p>Let me make the case for the other side properly, because it is stronger than the lazy version suggests.</p>
+<p>The honest core of the argument is that programming has always been the act of compressing intent. We do not write in machine code because expressing intent that way is slow, error-prone, and unbearable. Every layer we have added has been a more humane notation for saying the same thing to the same silicon. Seen this way, natural language is just the most humane notation yet. Marc Brooker makes this point well, and disarms the obvious objection in the process. Critics say natural language is too ambiguous to be a programming medium, to which he replies that <a href="https://brooker.co.za/blog/2025/12/16/natural-language.html" target="_blank">&quot;almost all programs are already specified in natural language. And always have been.&quot;</a> The requirements document, the ticket, the conversation with the product owner: these were always the real source, and code was merely the transcription. AI just removes a transcription step.</p>
+<p><a href="https://martinfowler.com/articles/2025-nature-abstraction.html" target="_blank">Martin Fowler</a> is, as usual, the most careful voice here, and he does not undersell the magnitude of the shift. He reckons LLMs &quot;will change software development to a similar degree as the change from assembler to the first high-level programming languages&quot;, and that &quot;talking to the machine in prompts is as different to Ruby as Fortran to assembler&quot;. That is not a small claim, and it is not made by someone prone to hype. If you want the strongest case for the other side, that is it: a transition as significant as the one that gave us the compiler in the first place.</p>
+<p>I agree with the magnitude. I disagree about the direction. And the difference between those two things is the whole argument.</p>
+<h2 id="what-a-real-abstraction-actually-does">What a Real Abstraction Actually Does</h2>
+<p>Before we can ask whether AI is a new abstraction layer, we have to be precise about what an abstraction layer <em>is for</em>. The point of a good abstraction is not that it hides complexity. The point is that it lets you <strong>stop thinking about the layer below</strong>. That is the load-bearing property. When I write C# and hand it to a compiler, I genuinely do not think about the IL code that is generate or the x86 instructions it emits at execution time. I do not read them. I do not review them. I do not keep a copy in case the compiler has a bad day. The abstraction has earned my trust, and that trust is what buys me the productivity.</p>
+<p>It earns that trust through three properties that we tend to take for granted precisely because they are so reliable. It is <strong>deterministic</strong>: the same source compiled with the same compiler and flags produces the same output, every single time, which is the entire premise behind <a href="https://reproducible-builds.org/" target="_blank">reproducible builds</a>. It is <strong>specified</strong>: the language has a grammar and a semantics, so the translation from source to machine code is defined behaviour I can reason about, not a surprise. And it is <strong>verifiable</strong>: when something goes wrong, I can reason backwards through a defined mapping to find out why.</p>
+<h2 id="the-compiler-keeps-its-promises.the-model-does-not">The Compiler Keeps Its Promises. The Model Does Not.</h2>
+<p>Here is the property that breaks the ladder. When I wrote a Fortran function in 1995, I could compile it a hundred times and get the same binary with the same bugs a hundred times. The bugs were mine, they were stable, and stability is what let me hunt them down. A <a href="https://en.wikipedia.org/wiki/Large_language_model" target="_blank">large language model</a> offers no such promise. Ask it the same question twice and you may get two different programs, because the model works by sampling tokens from a probability distribution, and sampling is, by construction, a roll of the dice.</p>
+<p>You might assume this is just the <code>temperature</code> setting and that turning it to zero buys you determinism. It does not, and the reason is instructive. The team at Thinking Machines Lab <a href="https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/" target="_blank">demonstrated</a> that even at temperature zero, &quot;LLM APIs are still not deterministic in practice&quot;. They ran the same prompt through a model a thousand times at temperature zero and got eighty distinct completions, identical for the first hundred-odd tokens and then diverging. The culprit turned out not to be the usual floating-point folklore but a lack of <em>batch invariance</em>: the numerical result of the model's own kernels depends on how many other people's requests happen to be batched alongside yours on the server at that instant. Your output depends on a stranger's traffic. Let that sink in as a foundation to build engineering on.</p>
+<p>Fowler saw exactly this and named it better than I could. He points out that he cannot &quot;just store my prompts in git and know that I'll get the same behaviour each time&quot;, and then quotes his colleague Birgitta Böckeler with the line that gives this article its title:</p>
+<blockquote class="blockquote">
+<p>we're not just moving up the abstraction levels, we're moving sideways into non-determinism at the same time.</p>
+</blockquote>
+<p>That is the crux. The ladder image is wrong not because the jump is small, but because it is not a jump <em>up</em>. Every previous rung preserved determinism while raising expressiveness. This one trades determinism away to get expressiveness, which is a sideways move into a genuinely new and stranger place. You can call that a revolution, and I would not argue. But a revolution that abandons reproducibility is not the same <em>kind</em> of thing as a compiler, and pretending it is will get teams hurt.</p>
+<h2 id="determinism-is-not-even-the-whole-problem">Determinism Is Not Even the Whole Problem</h2>
+<p>Now, a sharp reader and an honest one will push back here, so let me push back on myself. The Thinking Machines work does not only diagnose the nondeterminism; it largely <em>fixes</em> it. With batch-invariant kernels, all thousand completions came out identical. So a determined opponent can say: fine, nondeterminism is a deployment artefact, not a law of physics, and once the inference stack is built properly your objection evaporates.</p>
+<p>It does not evaporate, because determinism was never the deepest problem. It was the <em>visible</em> one. Imagine the best case: a perfectly reproducible model that returns byte-identical code for an identical prompt forever. You still do not have a <strong>specification</strong>, and you still have no <strong>correctness guarantee</strong>. A compiler is bound by a language standard; if it miscompiles conforming code, that is a bug in the compiler and the standard tells you so. A model is bound by nothing. It is not translating your English into code according to defined rules. It is predicting plausible code, and plausible is not the same as correct. You cannot reason from the prompt to the output through any defined mapping, which means you cannot do the one thing that an abstraction is supposed to let you do: stop reading the layer below.</p>
+<p>And that is the test, restated as a challenge. A real abstraction layer lets you stop reading the layer below. Can you stop reading the code an LLM writes for you? You cannot, and you know you cannot, and the better the model gets the more dangerous it becomes to try, because the failures get rarer and subtler and more confidently wrong. Determinism would make the output <em>stable</em>. It would not make it <em>trustworthy</em>. Those are different virtues, and only one of them is on offer.</p>
+<h2 id="we-have-been-here-before">We Have Been Here Before</h2>
+<p>None of this is new, which is the part I find most telling. The dream of programming in plain English is roughly as old as programming itself. <a href="https://en.wikipedia.org/wiki/COBOL" target="_blank">COBOL</a> was deliberately designed in 1959 to be English-like so that managers might read it, building on Grace Hopper's <a href="https://en.wikipedia.org/wiki/FLOW-MATIC" target="_blank">FLOW-MATIC</a>, &quot;the first English-like data processing language&quot;. The <a href="https://en.wikipedia.org/wiki/Fourth-generation_programming_language" target="_blank">fourth-generation languages</a> of the 1980s were sold on exactly the promise we hear today, that they would &quot;empower end-users, such as business analysts, to create and modify applications independently, minimizing reliance on specialized IT personnel&quot;. I wrote about how that played out in <a href="VibeCodingTheEmperorsNewClothes.html">Vibe Coding: The Emperor's New Clothes</a>, and the short version is that the English-like syntax never removed the need for someone who could think precisely about edge cases. It just made the programs longer.</p>
+<p>The most withering verdict came from <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra" target="_blank">Edsger Dijkstra</a>, writing in <a href="https://www.cs.utexas.edu/%7EEWD/transcriptions/EWD06xx/EWD667.html" target="_blank">1978</a> against that very wave of enthusiasm. His central insight was that the formal notation of programming is a feature and not a burden, because the discipline of formal symbols is exactly what stops us writing nonsense without noticing. His line has aged disgracefully well:</p>
+<blockquote class="blockquote">
+<p>When all is said and told, the &quot;naturalness&quot; with which we use our native tongues boils down to the ease with which we can use them for making statements the nonsense of which is not obvious.</p>
+</blockquote>
+<p>That is the deepest reason natural language is a poor abstraction and a marvellous interface, which are not the same thing. The ambiguity that makes English so wonderfully expressive is the same ambiguity that lets us, and the model, produce confident plausible rubbish whose wrongness is not obvious until production. Dijkstra signed off with a prophecy that machines programmed in our native tongues would be &quot;as damned difficult to make as they would be to use&quot;. Brooker, to his credit, argues 2025 has finally built them. I would say we have built something extraordinary that is nonetheless exactly as difficult to use safely as Dijkstra warned.</p>
+<h2 id="what-this-means">What This Means</h2>
+<p>I want to be careful not to swing from over-claim to dismissal, because the tool in front of us is genuinely remarkable. So here is where I land.</p>
+<p>Prompting an LLM is a powerful new <em>interface</em> to the act of producing code. It is probably the most significant change to how we work since the IDE, and arguably since the high-level language. But an interface is not an abstraction layer. The defining promise of an abstraction layer is that you may forget what is beneath it, and AI cannot make that promise, today or in principle, because it offers neither a specification you can reason against nor a guarantee you can rely on. What it offers instead is a brilliant, fast, occasionally brilliant-and-wrong draft that you remain wholly responsible for. The code it generates is still your code. You own it, you review it, you debug it, you maintain it at three in the morning when it falls over. That is not what owning compiler output feels like, and the gap between those two feelings is the entire point.</p>
+<p>This is also why I keep coming back to the idea that the durable skill is no longer typing the code but <em>specifying and verifying</em> it, which I explored in <a href="IsSpecCentricDevelopmentTheFuture.html">Is Spec-Centric Development the Future?</a>. If the model writes the first draft, then the human's value moves to the parts the model cannot be trusted with: the precise specification of what is wanted, and the disciplined verification that the draft actually delivers it. Tests, types, reviews, and observability stop being hygiene and start being the load-bearing walls. The model raised the ceiling on how fast we can produce code. It did nothing whatsoever to lower the floor on how carefully we must check it.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The compiler earned the right to be called an abstraction layer by keeping its promises so reliably that we forgot it was making them. It is deterministic, specified, and verifiable, and so we stopped reading what it produced. The AI assistant on my screen this morning is faster, friendlier, and far more impressive than any compiler, and it keeps none of those promises. It moves us sideways into nondeterminism, not up the ladder, and it hands us back a draft we are still on the hook for.</p>
+<p>Use it. I do, gladly. Just do not mistake the friendly voice for a layer you can stop watching.</p>
+<p>An abstraction you cannot stop checking is not an abstraction. It is just more code, wearing a better disguise.</p>
+
+</div>
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
