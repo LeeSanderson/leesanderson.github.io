@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 23 Jun 2026 10:53:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Aug 2026 10:40:11 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -208,6 +208,14 @@
       <link>https://www.sixsideddice.com/Blog/Thoughts/SidewaysNotUpWhyAIIsNotANewAbstractionLayer.html</link>
       <title>Sideways, Not Up: Why AI Is Not a New Abstraction Layer</title>
       <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Spec-driven development now means at least three different things, and the tools that wear the label are quietly very different from one another. I argue that only the lightest of the three, spec-first, is genuinely useful, and that spec-anchored and spec-as-source repeat mistakes we have already made with code comments and model-driven development.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/Thoughts/ThreeLevelsOfSpecDrivenDevelopment.html</guid>
+      <link>https://www.sixsideddice.com/Blog/Thoughts/ThreeLevelsOfSpecDrivenDevelopment.html</link>
+      <title>Three Levels of Spec-Driven Development</title>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
