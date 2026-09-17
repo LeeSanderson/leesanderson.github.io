@@ -12,11 +12,19 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Thu, 17 Sep 2026 08:42:06 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 08:52:21 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
     <webMaster>lee@sixsideddice.com (Lee Sanderson)</webMaster>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>Handing the coding to an agent takes away three things from the engineer: ownership, understanding, and pushback. This article works through what each loss costs a delivery team, why the workflow frameworks, skill collections, vibe coding tools and software factories built so far do not close the gaps, and what a practice that does would have to look like.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgenticCraftsmanship/Argument.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgenticCraftsmanship/Argument.html</link>
+      <title>An Argument For Agentic Craftsmanship</title>
+      <pubDate>Thu, 17 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <author>lee@sixsideddice.com</author>
       <description>A practitioner's view of where contract testing belongs in the test pyramid, why it should replace most (but not all) end-to-end tests across a microservice estate, and the organisational discipline most teams underestimate when they adopt it.</description>
