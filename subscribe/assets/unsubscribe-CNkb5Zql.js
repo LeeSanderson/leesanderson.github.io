@@ -1,0 +1,1 @@
+import{l as e,u as t}from"./signup-record-lJQZ10Rm.js";import{n}from"./subscriber-link-actions-9u9p9j9_.js";e(t`<six-sided-subscriber-link-page .action="${n}"></six-sided-subscriber-link-page>`,document.getElementById(`six-sided-signup-root`));
