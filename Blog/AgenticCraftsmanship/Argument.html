@@ -70,7 +70,7 @@
     </span>
 </div>
 <div data-pagefind-body>
-<h1 id="an-argument-for-agent-craftsmanship" class="sr-only" data-hero-heading="true">An Argument For Agent Craftsmanship</h1>
+    <h1 id="an-argument-for-agent-craftsmanship" class="sr-only" data-hero-heading="true">An Argument For Agent Craftsmanship</h1>
 <img class="hero-image" src="Argument.png" alt="An Argument For Agent Craftsmanship"/>
 <p>If you are reading this, then an agent is probably writing a significant portion of your code already. Maybe, like me, you think that the tooling has evolved much faster than our collective understanding of how to use it well in a delivery team. By which I mean adding value faster without giving up quality. I have felt that most of the guidance so far has been about getting more out of the agents, rather than what they change about the way you work. If that sounds familiar, you are probably shipping more than you used to. Just not by as much as the hype promised, and with more of the gain going back into fixing bugs that you accidentally shipped.</p>
 <p>It is worth being precise about what has actually changed, because it comes down to one main change rather than many. A developer used to decide what to build, design it, write it, test it, and either pair with a colleague throughout or hand it off to review at the end. Now, in the age of <strong>Agentic Software Development</strong>, an agent does the coding. The tests are code, so the agent writes those too. And because it can produces far more change than a person can read, agents have started taking on part of the review as well. The deciding, the accepting and the answering for it when it breaks all stay exactly where they were. So the person moves from author to specifier and reviewer, and a lot more code gets written. That is the promise: typing is taken to be the constraint, so removing it ought to multiply what a team can deliver.</p>
@@ -106,6 +106,7 @@
 <p>All of that is only available where the code allows it. A check has to have something to attach to: a seam you can observe behaviour at, a type that can be wrong, a module boundary a tool can police, a test suite fast enough to run on every change. Badly structured code offers none of those, which is why it cannot be harnessed. So the claim underneath all of this is narrower than &quot;clean code is good&quot;, and much harder to argue with. Well-made software is better context for an agent because it is easier to verify. So craft is not the thing a team gives up to go faster. It is what lets the checks exist at all, and what lets a reviewer follow a change without holding the whole system in their head. Agents produce more than anyone can check by reading, so most of the checking has to be automatic. What is left over is judgement, and craft is what keeps that judgement quick enough to keep doing on every change.</p>
 
 </div>
+
         </main>
     </div>
 
@@ -116,7 +117,7 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
-    
+    <script type="module" src="/subscribe/widget.js"></script>
     <script>
         $(function() {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });

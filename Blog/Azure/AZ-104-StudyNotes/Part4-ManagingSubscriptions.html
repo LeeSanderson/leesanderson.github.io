@@ -68,7 +68,7 @@
     </span>
 </div>
 <div data-pagefind-body>
-<h1 id="managing-subscriptions" class="sr-only" data-hero-heading="true">Managing Subscriptions</h1>
+    <h1 id="managing-subscriptions" class="sr-only" data-hero-heading="true">Managing Subscriptions</h1>
 <img class="hero-image" src="Part4-ManagingSubscriptions.png" alt="Managing Subscriptions"/>
 <p>The <a href="https://docs.microsoft.com/en-us/certifications/azure-administrator/" target="_blank">AZ-104: Azure Administrator Associate</a> certification requires subject matter expertise in implementing, managing, and monitoring an organization's Microsoft Azure environment, including virtual networks, storage, compute, identity, security, and governance.</p>
 <p>In part 4 of the guide we will cover managing Subscriptions.</p>
@@ -141,6 +141,7 @@ New-AzPolicyAssignment -Name 'TestRG_AllowVMSize' -DisplayName 'TestRG Allowed V
 <p>Blueprints (not covered in the AZ-104 exam) enable quick creation of governed subscriptions. This allows Cloud Architects to design environments that comply with organizational standards and best practices – enabling your app teams to get to production faster. A number of predefined Blueprints are available to cover common usage scenarios that require locked down policies (e.g UK NHS, ISO 27001, etc.)</p>
 
 </div>
+
         </main>
     </div>
 
@@ -151,7 +152,7 @@ New-AzPolicyAssignment -Name 'TestRG_AllowVMSize' -DisplayName 'TestRG Allowed V
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
-    
+    <script type="module" src="/subscribe/widget.js"></script>
     <script>
         $(function() {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });

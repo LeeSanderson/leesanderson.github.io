@@ -68,7 +68,7 @@
     </span>
 </div>
 <div data-pagefind-body>
-<h1 id="random-forest-classifiers-by-example" class="sr-only" data-hero-heading="true">Random Forest Classifiers By Example</h1>
+    <h1 id="random-forest-classifiers-by-example" class="sr-only" data-hero-heading="true">Random Forest Classifiers By Example</h1>
 <img class="hero-image" src="RandomForestClassifiersByExample.png" alt="Random Forest Classifiers By Example"/>
 <p>Random forests build on the simplicity of <a href="https://www.sixsideddice.com/Blog/MLByExample/DecisionTreeClassifiersByExample.html" target="_blank">decision trees</a> to create a more powerful and robust classification algorithm. They are widely used for classification tasks where accuracy and generalization are important, such as predicting customer churn or detecting fraud.</p>
 <p>In this article, we will explore how <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html" target="_blank">SciKit Learn's Random Forests</a> can improve classification by combining many decision trees to predict survivors of the Titanic. As part of this journey we will examine additional features of the Titanic dataset and their predictive power, we will look at feature importance, and we will end with a discussion on handling missing data (and whether it is needed for Random Forests).</p>
@@ -197,13 +197,7 @@ Model accuracy: 84.36%
                 .rename(columns={"index": "ColumnName"}))
     return missing[missing["MissingCount"] > 0]
 
-missing_counts(titanic_data)</code></pre>
-<pre><code class="language-text">  ColumnName  MissingCount
-0      Cabin           687
-1        Age           177
-2   Embarked             2
-</code></pre>
-<div>
+missing_counts(titanic_data)</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -271,17 +265,7 @@ missing_counts(titanic_data)</code></pre>
 
 matrix = create_correlation_matrix(titanic_data)
 matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=False)
-</code></pre>
-<pre><code class="language-text">   Feature1     Feature2  Correlation
-24      Age          Age     1.000000
-23      Age       Pclass     0.369226
-25      Age        SibSp     0.308247
-26      Age        Parch     0.189119
-27      Age         Fare     0.096067
-22      Age     Survived     0.077221
-21      Age  PassengerId     0.036847
-</code></pre>
-<div>
+</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -360,16 +344,7 @@ matrix[matrix["Feature1"] == "Age"].sort_values(by="Correlation", ascending=Fals
     return df.groupby(with_grouping)[for_col].mean().reset_index()
 
 age_impute_matrix = create_mean_imputation_matrix(titanic_data, "Age", ["Pclass", "Sex"])
-age_impute_matrix</code></pre>
-<pre><code class="language-text">   Pclass     Sex        Age
-0       1  female  34.611765
-1       1    male  41.281386
-2       2  female  28.722973
-3       2    male  30.740707
-4       3  female  21.750000
-5       3    male  26.507589
-</code></pre>
-<div>
+age_impute_matrix</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -450,15 +425,7 @@ age_impute_matrix</code></pre>
 <p>But before we apply the function, let's examine some of the passenger data where the passenger's age is unknown (we can then check the imputation has been applied correctly).</p>
 <pre><code class="language-python">missing_passengers = titanic_data[titanic_data["Age"].isnull()]
 missing_passengers_ids = missing_passengers["PassengerId"].tolist()
-missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre>
-<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass  Age
-5             6               Moran, Mr. James    male       3  NaN
-17           18   Williams, Mr. Charles Eugene    male       2  NaN
-19           20        Masselmani, Mrs. Fatima  female       3  NaN
-26           27        Emir, Mr. Farred Chehab    male       3  NaN
-28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  NaN
-</code></pre>
-<div>
+missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -529,12 +496,7 @@ missing_passengers[["PassengerId", "Name", "Sex", "Pclass", "Age"]].head()</code
 </div>
 <p>Right, now let's create a copy of the data frame with imputed ages and verify that the missing data has been replaced.</p>
 <pre><code class="language-python">titanic_data_with_imputed_age = apply_imputation_matrix(titanic_data, age_impute_matrix, "Age")
-missing_counts(titanic_data_with_imputed_age)</code></pre>
-<pre><code class="language-text">  ColumnName  MissingCount
-0      Cabin           687
-1   Embarked             2
-</code></pre>
-<div>
+missing_counts(titanic_data_with_imputed_age)</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -573,15 +535,7 @@ missing_counts(titanic_data_with_imputed_age)</code></pre>
 <p>Great. No more missing ages. Let's verify that the imputations are what we expect be looking at the updated passenger data.</p>
 <pre><code class="language-python">(titanic_data_with_imputed_age[
     titanic_data_with_imputed_age["PassengerId"].isin(missing_passengers_ids)]
-    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre>
-<pre><code class="language-text">    PassengerId                           Name     Sex  Pclass        Age
-5             6               Moran, Mr. James    male       3  26.507589
-17           18   Williams, Mr. Charles Eugene    male       2  30.740707
-19           20        Masselmani, Mrs. Fatima  female       3  21.750000
-26           27        Emir, Mr. Farred Chehab    male       3  26.507589
-28           29  O'Dwyer, Miss. Ellen &quot;Nellie&quot;  female       3  21.750000
-</code></pre>
-<div>
+    [["PassengerId", "Name", "Sex", "Pclass", "Age"]].head())</code></pre><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -729,6 +683,7 @@ Expected 1 for NaN input, since we have more 1 labels in the training data.
 The full source code of this notebook can be accessed on <a href="https://github.com/LeeSanderson/MLByExample/blob/main/RandomForestClassifier.ipynb" target="_blank">GitHub</a>.</p>
 
 </div>
+
         </main>
     </div>
 
@@ -739,7 +694,7 @@ The full source code of this notebook can be accessed on <a href="https://github
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
-    
+    <script type="module" src="/subscribe/widget.js"></script>
     <script>
         $(function() {
             mermaid.initialize({ startOnLoad: true, theme: 'dark' });
