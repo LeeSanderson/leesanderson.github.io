@@ -574,7 +574,7 @@ function Oe(e, t) {
 }
 //#endregion
 //#region src/in-flight-button.js
-var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : L, q = "six-sided-signup-heading", J = "Get new posts by email", je = "six-sided-signup-submitted", Y = "six-sided-signup-email", X = {
+var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : L, q = "six-sided-signup-heading", J = "Get new posts by email", je = "six-sided-signup-submitted", Y = "six-sided-signup-email", Me = (e) => `form-control d-inline-block w-auto align-middle mr-2 mb-2${e ? " is-invalid" : ""}`, X = {
 	body: "At most one email a week, and only when something new goes up. No tracking, no other mail, unsubscribe in one click.",
 	emailLabel: "Email address",
 	emailPlaceholder: "you@example.com",
@@ -583,11 +583,11 @@ var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : 
 	success: "Check your inbox — there's a confirmation link waiting. You're not subscribed until you click it.",
 	networkError: "That didn't go through. Check your connection and try again.",
 	invalidEmail: "That doesn't look like an email address."
-}, Me = {
+}, Ne = {
 	sending: X.sending,
 	invalid: X.invalidEmail,
 	error: X.networkError
-}, Ne = class extends K {
+}, Pe = class extends K {
 	static properties = {
 		headingLevel: {
 			type: Number,
@@ -611,7 +611,7 @@ var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : 
 		return this.headingLevel === 1 ? F`<h1 id="${q}">${J}</h1>` : F`<h2 id="${q}">${J}</h2>`;
 	}
 	#t() {
-		let e = this.state === "sending";
+		let e = this.state === "sending", t = this.state === "invalid";
 		return F`
       <p>${X.body}</p>
       <form novalidate @submit="${this.#r}">
@@ -621,16 +621,17 @@ var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : 
           required
           id="${Y}"
           name="email"
+          class="${Me(t)}"
           autocomplete="email"
           placeholder="${X.emailPlaceholder}"
-          aria-invalid="${this.state === "invalid" ? "true" : L}">
+          aria-invalid="${t ? "true" : L}">
         <input type="text" name="website" hidden autocomplete="off">
         <button
           type="submit"
-          class="${ke(e)}"
+          class="${ke(e)} mb-2"
           aria-disabled="${Ae(e)}">${X.submit}</button>
       </form>
-      <p role="status">${Me[this.state] ?? ""}</p>
+      <p role="status">${Ne[this.state] ?? ""}</p>
     `;
 	}
 	#n() {
@@ -656,16 +657,16 @@ var ke = (e) => `btn btn-info${e ? " disabled" : ""}`, Ae = (e) => e ? "true" : 
 		r("submitted"), this.state = "success", this.dispatchEvent(new CustomEvent(je, { bubbles: !0 })), await this.updateComplete, this.querySelector("[tabindex=\"-1\"]").focus({ preventScroll: !0 });
 	}
 };
-customElements.define("six-sided-signup-form", Ne);
+customElements.define("six-sided-signup-form", Pe);
 //#endregion
 //#region src/widget/signup-widget.js
-var Z = "border-top border-bottom text-center py-4 my-4", Pe = 200, Q = {
+var Fe = "border-top border-bottom text-center py-4 my-4", Z = "btn btn-link p-0 align-baseline", Ie = 200, Q = {
 	notNow: "Not now",
 	alreadySubscribed: "I'm already subscribed",
 	pendingNote: "Still waiting on a confirmation click — the link is in your inbox.",
 	dismissedAcknowledgement: "No problem — we won't ask again for a while.",
 	confirmedAcknowledgement: "Thanks — we won't ask again in this browser."
-}, Fe = class extends K {
+}, Le = class extends K {
 	static properties = {
 		decision: { type: String },
 		state: { state: !0 },
@@ -681,7 +682,7 @@ var Z = "border-top border-bottom text-center py-4 my-4", Pe = 200, Q = {
 	}
 	render() {
 		return this.decision === "pendingNote" ? this.#t(Q.pendingNote, { focusable: !1 }) : this.state === "collapsed" ? this.#t(this.acknowledgement, { focusable: !0 }) : F`
-      <aside class="${Z}" aria-labelledby="${q}">
+      <aside class="${Fe}" aria-labelledby="${q}">
         <six-sided-signup-form heading-level="2"></six-sided-signup-form>
         ${this.state === "submitted" ? L : this.#e()}
       </aside>
@@ -690,15 +691,21 @@ var Z = "border-top border-bottom text-center py-4 my-4", Pe = 200, Q = {
 	#e() {
 		return F`
       <p>
-        <button type="button" @click="${() => this.#n("dismissed")}">${Q.notNow}</button>
+        <button
+          type="button"
+          class="${Z}"
+          @click="${() => this.#n("dismissed")}">${Q.notNow}</button>
         <span>·</span>
-        <button type="button" @click="${() => this.#n("confirmed")}">${Q.alreadySubscribed}</button>
+        <button
+          type="button"
+          class="${Z}"
+          @click="${() => this.#n("confirmed")}">${Q.alreadySubscribed}</button>
       </p>
     `;
 	}
 	#t(e, { focusable: t }) {
 		return F`
-      <aside class="${Z}" aria-labelledby="${q}">
+      <aside class="${Fe}" aria-labelledby="${q}">
         <h2 class="sr-only" id="${q}">${J}</h2>
         <p tabindex="${t ? "-1" : L}">${e}</p>
       </aside>
@@ -712,12 +719,12 @@ var Z = "border-top border-bottom text-center py-4 my-4", Pe = 200, Q = {
 	#r(e) {
 		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 		let t = this.querySelector("aside"), n = t.scrollHeight;
-		t.style.overflow = "hidden", t.style.height = `${e}px`, t.style.transition = `height ${Pe}ms ease-out`, t.addEventListener("transitionend", () => {
+		t.style.overflow = "hidden", t.style.height = `${e}px`, t.style.transition = `height ${Ie}ms ease-out`, t.addEventListener("transitionend", () => {
 			t.style.removeProperty("overflow"), t.style.removeProperty("height"), t.style.removeProperty("transition");
 		}, { once: !0 }), t.offsetHeight, t.style.height = `${n}px`;
 	}
 };
-customElements.define("six-sided-signup-widget", Fe);
+customElements.define("six-sided-signup-widget", Le);
 //#endregion
 //#region src/widget/widget.js
 function $(e = document) {
