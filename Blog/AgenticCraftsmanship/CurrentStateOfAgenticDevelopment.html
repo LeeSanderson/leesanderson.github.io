@@ -166,29 +166,29 @@
 <p>It is also worth noticing what the model providers are claiming and what they are not. Google, Anthropic and OpenAI all shipped security-focused models in September 2026, and every one of them is aimed at finding vulnerabilities rather than at not writing them. Nobody is currently selling more secure generation, which suggests the gap is both real and known.</p>
 <h2 id="summary">Summary</h2>
 <p>The evidence is in better shape than the discourse around it suggests. Where the reports disagree, the disagreement almost always tracks the instrument rather than the truth, and knowing that is enough to read the next vendor report properly. Here is everything above that I think the evidence will carry, in the order the article makes the case. The figures and the sources behind each one are in the sections above.</p>
-<p><strong>On delivery</strong></p>
+<h3 id="on-delivery">On delivery</h3>
 <ul>
-<li><strong>Output is up and delivery is not.</strong> More tasks are finished and more code is written, but deployments and the time from commit to production have not improved. On the typical team, activity on feature branches rose while work reaching the main branch actually fell. AI increases production rather than delivery.</li>
+<li><strong>Organisational output is up and delivery is not.</strong> More tasks are finished and more code is written, but deployments and the time from commit to production have not improved. On the typical team, activity on feature branches rose while work reaching the main branch actually fell. The work rate itself genuinely rises, and the trials further down corroborate it from a different instrument. What does not follow is that any of the extra work reaches customers.</li>
 <li><strong>The constraint has moved to review and integration.</strong> Pull requests wait much longer to be picked up, spend much longer in review once they are, and fail on the main branch more often than at any point in the past five years.</li>
 <li><strong>Reviewers avoid AI pull requests, then skim them.</strong> AI work sits in the queue longer, gets a quicker pass once somebody starts, and a growing share merges with no review at all. Avoidance does not respond to adding reviewers.</li>
 <li><strong>Changes got bigger, and size drives much of the bottleneck.</strong> Pull requests are larger and reach into more files. Bigger changes are slower to review, carry a wider blast radius when they break, and accumulate structural problems roughly in proportion to their size.</li>
 <li><strong>Refactoring has collapsed and is impacting quality.</strong> Copy-paste has overtaken restructuring, and updates to older code have nearly stopped. Agents do refactor, but they rename and annotate rather than consolidate. No delivery metric will show this but it will compound over time and result in lower quality codebases.</li>
 </ul>
-<p><strong>On what is being measured</strong></p>
+<h3 id="on-what-is-being-measured">On what is being measured</h3>
 <ul>
 <li><strong>The adoption statistics measure attribution, not autonomy.</strong> They count who opened a pull request, because that is all git records. Work an agent wrote and a human submitted is counted as assisted development by every published source.</li>
 <li><strong>The invisible middle tier is probably the largest one.</strong> The assisted category contains the biggest pull requests of the three, which is the shape of long unsupervised agent sessions rather than autocomplete.</li>
 <li><strong>The evidence that agentic work is rare is the oldest evidence in the set.</strong> It was gathered before agent-mode tooling reached anything like its current share.</li>
 <li><strong>Benchmark scores do not predict production outcomes.</strong> The best known agentic benchmark was withdrawn by its largest user after an audit found most of the sampled problems defective and confirmed that models were reproducing memorised answers. Agents score far higher on benchmarks than their pull requests achieve in a real delivery pipeline.</li>
 </ul>
-<p><strong>On whether good engineering practices protects you</strong></p>
+<h3 id="on-whether-good-engineering-practices-protects-you">On whether good engineering practices protects you</h3>
 <ul>
 <li><strong>Capability investment changes where you land, not whether you take the hit.</strong> The claim that good practice protects you rests on self-reported outcomes. The claim that it does not never measures the maturity it dismisses. Everybody takes the hit, and the question is how deep the trough goes and how long it lasts.</li>
 <li><strong>Small batches help the team but slow the individual.</strong> They improve product outcomes and reduce friction, while reducing the individual's sense of moving faster. That trade is the argument for engineering discipline, stated in someone else's data.</li>
 </ul>
-<p><strong>On speed and skill</strong></p>
+<h3 id="on-speed-and-skill">On speed and skill</h3>
 <ul>
-<li><strong>The speed gain is real, but no single number describes it.</strong> The best-powered trial, across several thousand developers in their actual jobs, found around 25% more work completed, with uncertainty wide enough that the true figure could sit somewhere between 16% and 33%. A second experiment found roughly 33% faster on a different measure. Experiments on experienced developers working in code they knew well found nothing measurable at all i.e. 0%. That spread is not just noise, and the next point explains it.</li>
+<li><strong>Individual work rate is up, but the impact is small and the range is wide.</strong> The best trial, across several thousand developers in their actual jobs, found around 25% more work completed, with uncertainty wide enough that the true figure could sit somewhere between 5% and 50%. A second experiment found roughly 33% faster on a different measure. Experiments on experienced developers working in code they knew well found nothing measurable at all i.e. 0%. That spread is not just noise, and the next point explains it.</li>
 <li><strong>The gain is largest where the human knows least.</strong> Less experienced developers benefit most, and so does anyone working in a codebase they do not know well. Experts working in code they have maintained for years gain little or nothing that anybody has managed to measure. That is not surprising, because the less you already hold in your head, the more there is for the tool to supply.</li>
 <li><strong>Which puts the speed exactly where the judgement to check it is thinnest.</strong> A junior cannot easily tell whether generated code is right, and neither can an experienced engineer in a part of the system they have never worked in. The acceleration arrives in the two situations where verification is hardest, and in the junior's case it arrives instead of the slow work through which that judgement would have formed.</li>
 <li><strong>Juniors ship more and learn less.</strong> A junior delivering at close to a mid-level rate looks like one who needs less support, so they get less of the pairing, review and difficult work through which capability forms. The gap appears years later.</li>
@@ -196,7 +196,7 @@
 <li><strong>Delegating to AI costs understanding.</strong> People who used AI to get a task done understood the work substantially less well afterwards, and gained no measurable speed for it. Those who used it to ask questions and build understanding did far better than those who simply handed the work over. How the tool is used decides the outcome.</li>
 <li><strong>AI-written code may not be harder to maintain.</strong> The one experiment designed to test it found no penalty when other developers later picked the code up without AI. The sample was small, so treat it as a weak result rather than reassurance, and it tested assistants rather than agents.</li>
 </ul>
-<p><strong>On security</strong></p>
+<h3 id="on-security">On security</h3>
 <ul>
 <li><strong>Security is improving from a very low base.</strong> Both model-generated and agent-generated code got measurably safer through 2026 after two flat years. Both remain failing grades against any standard an engineering organisation would set for itself.</li>
 <li><strong>A green build is not evidence that a vulnerability has gone.</strong> More than half the patches that passed a full functional test suite left the flaw exploitable.</li>
