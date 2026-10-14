@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Wed, 14 Oct 2026 14:55:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 15:06:29 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -24,6 +24,14 @@
       <link>https://www.sixsideddice.com/Blog/AgenticCraftsmanship/Argument.html</link>
       <title>An Argument For Agentic Craftsmanship</title>
       <pubDate>Thu, 17 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>A survey of what the published evidence actually shows about AI-assisted and agentic software development as of September 2026, drawing on five industry reports, controlled experiments, and code-level research. The short version is that the reports agree on more than they appear to and that most of their disagreements come down to how the measurement was taken.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgenticCraftsmanship/CurrentStateOfAgenticDevelopment.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgenticCraftsmanship/CurrentStateOfAgenticDevelopment.html</link>
+      <title>The Current State of Agentic Development</title>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>
