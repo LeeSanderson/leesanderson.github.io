@@ -274,7 +274,7 @@ Invoke-RestMethod `
 <p>Two details from poolside's documentation are worth knowing here. Tool calling relies on the model's chat template, which <code>llama-server</code> now applies by default (older guides tell you to pass <code>--jinja</code>). Poolside also warns that dropping the model's reasoning content between turns can stop it reasoning in later agentic turns, so check how your client handles it if behaviour degrades over a long session.</p>
 <p>The finished stack looks like this:</p>
 <pre class="mermaid">flowchart TD
-    A[OpenCode] -->|OpenAI-compatible API| B[llama-server / ROCmFPX]
+    A[OpenCode] -->|OpenAI-compatible API| B[llama-server and ROCmFPX]
     B -->|ROCm or Vulkan| C[Radeon 8060S, ~110 GB]
     C --> D[Laguna S 2.1 Q4_K_M]
 </pre>
