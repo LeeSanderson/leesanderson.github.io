@@ -12,7 +12,7 @@
       <title>Lee Sanderson</title>
       <url>https://www.sixsideddice.com/blog</url>
     </image>
-    <lastBuildDate>Tue, 22 Sep 2026 15:06:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 11:10:29 +0000</lastBuildDate>
     <link>https://www.sixsideddice.com/blog</link>
     <managingEditor>lee@sixsideddice.com (Lee Sanderson)</managingEditor>
     <title>SixSidedDice Blog</title>
@@ -72,6 +72,14 @@
       <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/PairProgrammingProperlyUnderstood.html</link>
       <title>Pair Programming, Properly Understood</title>
       <pubDate>Thu, 28 May 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <author>lee@sixsideddice.com</author>
+      <description>A walkthrough of getting poolside's Laguna S 2.1 coding model running locally on a GMKtec EVO-X2 under Windows, from building the ROCmFPX fork of llama.cpp through to serving the model to OpenCode. It covers the toolchain gotchas, the speeds I measured at different context sizes, and the OpenCode configuration.</description>
+      <guid isPermaLink="true">https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.html</guid>
+      <link>https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.html</link>
+      <title>Running Laguna S 2.1 on a GMKtec EVO-X2</title>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
       <author>lee@sixsideddice.com</author>

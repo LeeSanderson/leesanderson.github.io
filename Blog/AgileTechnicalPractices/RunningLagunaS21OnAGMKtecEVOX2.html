@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        http-equiv="Content-Security-Policy"
+          content="script-src 'self' 'unsafe-inline' https://www.sixsideddice.com https://cdn.jsdelivr.net https://kit.fontawesome.com https://code.jquery.com https://www.googletagmanager.com;" />
+
+    <link href="/favicon.ico" rel="icon" type="image/x-icon">
+    <title>Running Laguna S 2.1 on a GMKtec EVO-X2 - SixSidedDice.com - Blog</title>
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css//bootstrapdarkly.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism-okaidia.css" integrity="sha256-nwDipdLn93O1CZGoRDor0i4CLmDQb+mdg/yaYMUCuLM=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.sixsideddice.com/css/site.css">
+    <link rel="stylesheet" href="/Blog/site.css">
+    <script src="https://kit.fontawesome.com/d22effaf67.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/header.js"></script>
+    <script type="module" src="https://www.sixsideddice.com/js/footer.js"></script>
+    
+    
+    <!-- Meta -->
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="A walkthrough of getting poolside's Laguna S 2.1 coding model running locally on a GMKtec EVO-X2 under Windows, from building the ROCmFPX fork of llama.cpp through to serving the model to OpenCode. It covers the toolchain gotchas, the speeds I measured at different context sizes, and the OpenCode configuration.">
+    <meta name="author" content="Lee Sanderson">
+    <meta name="copyright" content="Lee Sanderson">
+    <meta name="keywords" content="AgileTechnicalPractices AI CodingAssistants LocalLLMs">
+    <link rel="me" type="text/html" href="https://twitter.com/SixSidedDev">
+    <link rel="me" type="text/html" href="https://github.com/LeeSanderson">
+    <link rel="me" type="text/html" href="https://www.linkedin.com/in/lee-sanderson">
+    <link rel="canonical" href="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.html">
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@SixSidedDev">
+    <meta name="twitter:creator" content="@SixSidedDev">
+    <meta name="twitter:title" content="Running Laguna S 2.1 on a GMKtec EVO-X2">
+    <meta name="twitter:description" content="A walkthrough of getting poolside's Laguna S 2.1 coding model running locally on a GMKtec EVO-X2 under Windows, from building the ROCmFPX fork of llama.cpp through to serving the model to OpenCode. It covers the toolchain gotchas, the speeds I measured at different context sizes, and the OpenCode configuration.">
+    <meta name="twitter:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.png">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta name="title" property="og:title" content="Running Laguna S 2.1 on a GMKtec EVO-X2">
+    <meta name="description" property="og:description" content="A walkthrough of getting poolside's Laguna S 2.1 coding model running locally on a GMKtec EVO-X2 under Windows, from building the ROCmFPX fork of llama.cpp through to serving the model to OpenCode. It covers the toolchain gotchas, the speeds I measured at different context sizes, and the OpenCode configuration.">
+    <meta name="image" property="og:image" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.png">
+    <meta property="og:url" content="https://www.sixsideddice.com/Blog/AgileTechnicalPractices/RunningLagunaS21OnAGMKtecEVOX2.html">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7PG42VD9X0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-7PG42VD9X0');
+    </script>
+    <!-- End Google Tag Manager -->
+</head>
+<body>
+    <six-sided-header></six-sided-header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            
+<div class="article-header">
+    <span class="article-date">Oct 14, 2026</span>
+    
+    <span class="article-tags">
+        <span class="badge badge-info">AgileTechnicalPractices</span>
+        <span class="badge badge-info">AI</span>
+        <span class="badge badge-info">CodingAssistants</span>
+        <span class="badge badge-info">LocalLLMs</span>
+    </span>
+</div>
+<div data-pagefind-body>
+    <h1 id="running-laguna-s-2.1-on-a-gmktec-evo-x2" class="sr-only" data-hero-heading="true">Running Laguna S 2.1 on a GMKtec EVO-X2</h1>
+<img class="hero-image" src="RunningLagunaS21OnAGMKtecEVOX2.png" alt="Running Laguna S 2.1 on a GMKtec EVO-X2"/>
+<p>Most of my agentic coding runs against hosted models. That works well, but it means every prompt and every line of source code leaves the machine, every session is metered, and the whole workflow stops when the API has a bad afternoon. I wanted to know whether a small box on my desk could take some of that load.</p>
+<p>This article walks through how I got <a href="https://poolside.ai/" target="_blank">poolside's</a> <strong>Laguna S 2.1</strong> running on a <a href="https://www.gmktec.uk/products/gmktec-evo-x2-amd-ryzen%e2%84%a2-ai-max-395-ai-mini-pc" target="_blank">GMKtec EVO-X2</a> under Windows, served through <code>llama-server</code> and wired into <a href="https://opencode.ai/" target="_blank">OpenCode</a>. It assumes you are comfortable in PowerShell and have built C++ projects before. The whole process took me an evening, most of which went on one compiler problem that I will save you from.</p>
+<h2 id="why-run-a-model-locally">Why Run a Model Locally?</h2>
+<p>The case for a local model is not mainly about cost, although that helps. For me it comes down to five things:</p>
+<ul>
+<li><strong>Privacy</strong>: Source code and prompts stay on the machine, which matters for client work.</li>
+<li><strong>Availability</strong>: No rate limits, no outages, and no internet connection required.</li>
+<li><strong>Experimentation</strong>: I can swap models, quantisations, context sizes and inference settings without watching a bill.</li>
+<li><strong>Predictable cost</strong>: Once the hardware is paid for, inference is effectively free.</li>
+<li><strong>Control</strong>: The model is just an HTTP endpoint, so I can point any tool at it and try different agentic workflows.</li>
+</ul>
+<p>None of this matters if the model is too weak to be useful. Until recently, a consumer GPU with 16 GB or 24 GB of VRAM limited you to small models, and small models make poor coding agents.</p>
+<h2 id="why-the-evo-x2">Why the EVO-X2?</h2>
+<p>The EVO-X2 is built around AMD's <a href="https://www.amd.com/en/products/processors/laptop/ryzen/ai-300-series/amd-ryzen-ai-max-plus-395.html" target="_blank">Ryzen AI Max+ 395</a> (&quot;Strix Halo&quot;), with an integrated <strong>Radeon 8060S</strong> GPU and 128 GB of <strong>unified memory</strong>. Because the CPU and GPU share one pool of memory, ROCm on my machine exposes roughly 110 GB of it to the GPU.</p>
+<p>That figure is the reason this experiment is possible at all. The 8060S will not compete with a high-end discrete card on raw compute, but it can hold a model that would never fit on one. In the UK the 128 GB model sells for well under £2,000, which is less than many single discrete GPUs.</p>
+<h2 id="why-laguna-s-2.1">Why Laguna S 2.1?</h2>
+<p><a href="https://huggingface.co/poolside/Laguna-S-2.1" target="_blank">Laguna S 2.1</a> is poolside's agentic coding model. It is a <strong>mixture of experts</strong> model with 118B total parameters but only around 8B active for each token, and a native context window of 1M tokens. That mix suits this hardware. The full weights fit in GPU memory, and I suspect the small active parameter count should mean that generation speed should holds up as well as it does on a memory system with far less bandwidth than a discrete card.</p>
+<p>I used the <strong>Q4_K_M</strong> quantisation. Poolside publishes <a href="https://huggingface.co/poolside/Laguna-S-2.1-GGUF" target="_blank">official GGUF files</a>, and <a href="https://huggingface.co/bartowski/Laguna-S-2.1-GGUF" target="_blank">bartowski</a> has a set too.</p>
+<h2 id="what-we-need-to-do">What We Need to Do</h2>
+<p>Before getting into commands, it helps to see the shape of the whole job. Running a large language model locally needs three layers: software that lets programs use the GPU, an engine that loads the model and runs it, and a way for coding tools to talk to that engine. The nine steps below build those layers from the bottom up.</p>
+<ol>
+<li><strong>Install the AMD HIP SDK</strong>: Programs cannot use a graphics chip for general work out of the box. <strong>ROCm</strong> is AMD's software layer that lets ordinary programs hand heavy maths to the GPU instead of the CPU, and <strong>HIP</strong> is the programming interface for it. Without ROCm, the model would run on the CPU and crawl.</li>
+<li><strong>Install the Vulkan SDK</strong>: <strong>Vulkan</strong> is a second, more general route to the GPU, originally built for games. Installing the Vulkan SDK gives us a fallback and lets us compare which route is faster.</li>
+<li><strong>Install the C++ toolchain and pin MSVC</strong>: We are building the engine from source code, so we need a compiler, the program that turns source code into something the computer can run. Microsoft's compiler is the standard one on Windows, and we have to ask for a slightly older version because the newest one clashes with AMD's code.</li>
+<li><strong>Build ROCmFPX</strong>: ROCmFPX is the engine that runs the model. It reads the model file, loads it into GPU memory and generates text one <strong>token</strong> (roughly a fragment of a word) at a time. ROCmFPX is a version of the popular llama.cpp engine tuned for this particular AMD chip.</li>
+<li><strong>Check both GPU backends</strong>: A quick sanity check that the engine can see the graphics chip through both ROCm and Vulkan, before we spend time downloading a very large file.</li>
+<li><strong>Download and run the model</strong>: The model is a single file of around 90 GB. It holds the billions of numbers the network learned during training, compressed (<strong>quantised</strong>) so they fit in memory. We load the file and ask the model a question to prove it works.</li>
+<li><strong>Find the right context size</strong>: <strong>Context</strong> is the model's working memory: how much text it can consider at once, such as the files in a codebase plus the conversation so far. More context costs memory and speed, so we measure where the trade-off sits.</li>
+<li><strong>Serve it with llama-server</strong>: Rather than typing into the engine directly, we run it as a small web service on the machine. Any program can then send it requests over HTTP, the same way it would talk to a hosted model over the internet.</li>
+<li><strong>Connect OpenCode</strong>: OpenCode is the coding agent, the tool that reads your project, decides what to change and makes the changes. We point OpenCode at the local service instead of a cloud provider.</li>
+</ol>
+<h2 id="step-1-install-the-amd-hip-sdk">Step 1: Install the AMD HIP SDK</h2>
+<p>ROCm on Windows ships as the <a href="https://www.amd.com/en/developer/resources/rocm-hub/hip-sdk.html" target="_blank">AMD HIP SDK</a>. I installed version 7.2, which officially lists the Ryzen AI Max+ 395 (<code>gfx1151</code>) as supported on Windows 11.</p>
+<p>The installer sets <code>HIP_PATH</code>, which is worth checking before going further:</p>
+<pre><code class="language-powershell">$env:HIP_PATH
+# C:\Program Files\AMD\ROCm\7.2</code></pre>
+<p><code>hipcc.exe</code>, <code>hipconfig.exe</code> and <code>clang++.exe</code> should all be in the <code>bin</code> folder underneath it.</p>
+<p>To confirm ROCm can see the GPU, run <code>hipinfo</code>. The lines that matter in my output were these:</p>
+<pre><code class="language-text">Name:            AMD Radeon(TM) 8060S Graphics
+gcnArchName:     gfx1151
+isIntegrated:    1
+totalGlobalMem:  107.87 GB
+memInfo.free:    107.72 GB
+</code></pre>
+<p>ROCm was not just reporting a theoretical number. Almost all of that memory was free and available to the GPU.</p>
+<h2 id="step-2-install-the-vulkan-sdk">Step 2: Install the Vulkan SDK</h2>
+<p>I also wanted the Vulkan backend for comparison, so I installed the <a href="https://vulkan.lunarg.com/sdk/home" target="_blank">LunarG Vulkan SDK</a>. Mine landed in <code>C:\VulkanSDK\1.4.357.0</code>, and again the environment variable is the thing to check:</p>
+<pre><code class="language-powershell">$env:VULKAN_SDK
+# C:\VulkanSDK\1.4.357.0</code></pre>
+<p>The build needs the shader compiler, so make sure <code>glslc.exe</code> exists in the SDK's <code>Bin</code> folder.</p>
+<h2 id="step-3-install-the-c-toolchain-and-pin-msvc">Step 3: Install the C++ toolchain, and pin MSVC</h2>
+<p>The build needs <a href="https://visualstudio.microsoft.com/" target="_blank">Visual Studio</a> with the C++ workload, plus CMake and Ninja. I had Visual Studio 2026 Community installed with two MSVC toolsets side by side: 14.44 and 14.51.</p>
+<p>This is where my evening went. The first time I compiled anything with <code>hipcc</code>, I got a wall of errors like this:</p>
+<pre><code class="language-text">__device__ function 'isgreater' cannot overload
+__host__ __device__ function 'isgreater'
+</code></pre>
+<p>The cause is a change in Microsoft's standard library. Newer versions of <code>&lt;cmath&gt;</code> declare <code>isgreater</code> and its relatives as <code>constexpr</code> under Clang, which makes them implicitly host and device functions, and they then clash with the device versions in ROCm's HIP headers. The problem is tracked in <a href="https://github.com/ggml-org/llama.cpp/issues/22570" target="_blank">llama.cpp issue #22570</a>, and the <a href="https://github.com/llvm/llvm-project/pull/201563" target="_blank">upstream fix</a> is in LLVM rather than ROCm.</p>
+<p>Until a HIP SDK ships with that fix, the simplest workaround is to build against an older toolset. Pinning the build to <strong>MSVC 14.44</strong> fixed it for me. Your experience may vary: one commenter on the llama.cpp issue reports hitting the error on 14.44 as well, and the issue thread describes header shims if pinning does not work for you.</p>
+<h2 id="step-4-build-rocmfpx">Step 4: Build ROCmFPX</h2>
+<p>The standard <a href="https://github.com/ggml-org/llama.cpp" target="_blank">llama.cpp</a> already supports AMD GPUs through ROCm and Vulkan. I chose to build <a href="https://github.com/charlie12345/ROCmFPX" target="_blank">ROCmFPX</a> instead. ROCmFPX is a llama.cpp derivative tuned specifically for Strix Halo, and it adds AMD-specific quantisation formats such as <code>Q4_0_ROCMFP4</code>, <code>Q6_0_ROCMFPX</code> and <code>Q8_0_ROCMFPX</code>. Stock llama.cpp cannot load those formats, so if you want to try them later you need this build.</p>
+<p>I used a PowerShell build script that does the following:</p>
+<ol>
+<li>Clones ROCmFPX.</li>
+<li>Locates the HIP SDK, the Vulkan SDK and Visual Studio.</li>
+<li>Pins MSVC to 14.44.</li>
+<li>Configures both the ROCm and Vulkan backends, targeting <code>gfx1151</code>.</li>
+<li>Builds <code>llama-cli</code>, <code>llama-server</code>, <code>llama-bench</code>, <code>llama-quantize</code> and the rest of the tools.</li>
+</ol>
+<p>If you are building by hand, the settings that matter are the two backends and the GPU architecture. The equivalent CMake options look like this:</p>
+<pre><code class="language-powershell">cmake -S . -B build -G Ninja `
+  -DGGML_HIP=ON `
+  -DGGML_VULKAN=ON `
+  -DAMDGPU_TARGETS=gfx1151 `
+  -DCMAKE_BUILD_TYPE=Release
+cmake --build build</code></pre>
+<p><code>gfx1151</code> is the architecture of the Radeon 8060S. Get that wrong and everything compiles but nothing runs on the GPU.</p>
+<h3 id="fixing-the-web-ui-build">Fixing the web UI build</h3>
+<p>My first build failed surprisingly late. All the C++ compiled successfully, but the build of the llama.cpp web UI failed on <code>npm install</code>, and the fallback that downloads pre-built assets from Hugging Face failed too.</p>
+<p>Installing <a href="https://nodejs.org/" target="_blank">Node.js</a> fixed it. Note that in PowerShell you may need to call <code>npm.cmd</code> rather than <code>npm</code> if script execution is restricted:</p>
+<pre><code class="language-powershell">npm.cmd install</code></pre>
+<p>After that the build completed, leaving <code>llama-cli.exe</code>, <code>llama-server.exe</code>, <code>llama-bench.exe</code> and <code>llama-quantize.exe</code> in the output folder.</p>
+<h2 id="step-5-check-both-gpu-backends">Step 5: Check both GPU backends</h2>
+<p>Before downloading a large model, it is worth checking that both backends can see the GPU:</p>
+<pre><code class="language-powershell">.\llama-bench.exe --list-devices</code></pre>
+<p>The end of my output looked like this:</p>
+<pre><code class="language-text">Available devices:
+  ROCm0:   AMD Radeon(TM) 8060S Graphics (110456 MiB)
+  Vulkan0: AMD Radeon(TM) 8060S Graphics (114507 MiB)
+</code></pre>
+<p>About 108 GB available to ROCm. That was the point at which the EVO-X2 stopped being an interesting piece of hardware and became a usable inference machine.</p>
+<h2 id="step-6-download-and-run-the-model">Step 6: Download and run the model</h2>
+<p>The Q4_K_M GGUF I used, <code>laguna-s-2.1-Q4_K_M.gguf</code>, is 89.44 GB. That fits comfortably inside the 110 GB the GPU can see, with room left for the KV cache.</p>
+<p>A quick run through <code>llama-cli</code> showed the model working:</p>
+<pre><code class="language-text">Prompt:     112.4 t/s
+Generation:  22.3 t/s
+</code></pre>
+<p>Later runs under different workloads came in lower, at around 34 t/s for prompt processing and 15 t/s for generation, so treat any single number with care. For interactive coding, the figure that matters most is generation speed, and somewhere around 20 tokens per second feels responsive.</p>
+<h2 id="step-7-find-the-right-context-size">Step 7: Find the right context size</h2>
+<p>Laguna S 2.1 supports a 1M token context, but supporting a context and running it at a usable speed on this machine are different things. I benchmarked a range of context sizes:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Context</th>
+<th>Prompt (t/s)</th>
+<th>Generation (t/s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16K</td>
+<td>115.7</td>
+<td>22.5</td>
+</tr>
+<tr>
+<td>32K</td>
+<td>109.1</td>
+<td>22.7</td>
+</tr>
+<tr>
+<td>64K</td>
+<td>108.8</td>
+<td>22.7</td>
+</tr>
+<tr>
+<td>128K</td>
+<td>102.9</td>
+<td>21.7</td>
+</tr>
+<tr>
+<td>256K</td>
+<td>101.0</td>
+<td>21.8</td>
+</tr>
+<tr>
+<td>512K</td>
+<td>61.3</td>
+<td>14.2</td>
+</tr>
+</tbody>
+</table>
+<p>Generation speed held steady all the way to 256K and only dropped sharply at 512K. Prompt processing followed the same shape.</p>
+<p>I settled on <strong>256K</strong>. It is a very large working context for a coding agent, and in these runs it cost almost nothing in speed. Poolside's GGUFs also default to 262,144, and going beyond that requires YaRN rope scaling, which poolside warns may cost some quality.</p>
+<h2 id="step-8-serve-it-with-llama-server">Step 8: Serve it with llama-server</h2>
+<p>A model in a CLI is a toy. A model behind an API is something other tools can use. <code>llama-server</code> exposes an <a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md" target="_blank">OpenAI-compatible API</a>, so I started it with the 256K context:</p>
+<pre><code class="language-powershell">.\llama-server.exe `
+  -m D:\models\laguna-s-2.1-Q4_K_M.gguf `
+  -c 262144 `
+  -ngl 99 `
+  --host 127.0.0.1 `
+  --port 8080</code></pre>
+<p>On startup the server reported both devices, <code>n_ctx = 262144</code>, and four parallel slots sharing a unified KV cache (<code>n_parallel = 4</code>, <code>kv_unified = true</code>).</p>
+<p>To confirm the API is up, ask it which models it is serving:</p>
+<pre><code class="language-powershell">Invoke-RestMethod http://127.0.0.1:8080/v1/models</code></pre>
+<p>Then send it a real request:</p>
+<pre><code class="language-powershell">$body = @{
+  model    = "laguna-s-2.1-Q4_K_M.gguf"
+  messages = @(
+    @{ role = "user"; content = "Write a Python function that reverses a string." }
+  )
+  temperature = 0.2
+} | ConvertTo-Json -Depth 5
+
+Invoke-RestMethod `
+  -Uri http://127.0.0.1:8080/v1/chat/completions `
+  -Method Post `
+  -ContentType "application/json" `
+  -Body $body</code></pre>
+<p>If that returns a sensible function, the model side is done.</p>
+<h2 id="step-9-connect-opencode">Step 9: Connect OpenCode</h2>
+<p>I am using OpenCode 1.18.23 as the coding agent. OpenCode supports <a href="https://opencode.ai/docs/providers/" target="_blank">custom OpenAI-compatible providers</a> through the <code>@ai-sdk/openai-compatible</code> package, so the local server can be registered as a provider in its own right rather than pretending to be OpenAI.</p>
+<p>I put the configuration in an <code>opencode.json</code> at the root of the project I want to work on:</p>
+<pre><code class="language-json">{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "rocmfpx/laguna-s-2.1",
+  "provider": {
+    "rocmfpx": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "ROCmFPX Local",
+      "options": {
+        "baseURL": "http://127.0.0.1:8080/v1"
+      },
+      "models": {
+        "laguna-s-2.1": {
+          "name": "Laguna S 2.1 Q4_K_M",
+          "limit": {
+            "context": 262144,
+            "output": 16384
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+<p>Three settings matter. <code>baseURL</code> points at the local server. The top-level <code>model</code> is the provider ID and model ID joined with a slash. <code>limit.context</code> matches the 262,144 tokens the server is actually running with, not the model's theoretical 1M. If OpenCode believes it has more context than the server provides, long sessions will fail in confusing ways.</p>
+<p>With <code>llama-server</code> running, start OpenCode from the project folder and run <code>/models</code>. <strong>ROCmFPX Local</strong> should appear in the list. You can also select it directly:</p>
+<pre><code class="language-powershell">opencode --model rocmfpx/laguna-s-2.1</code></pre><h2 id="testing-it">Testing it</h2>
+<p>Getting a response back is not the same as having a working coding agent. OpenCode depends on the model handling tool calls reliably: reading files, writing files, running commands and searching the codebase across many steps.</p>
+<p>My first test was deliberately harmless:</p>
+<pre><code class="language-text">Inspect this repository and tell me what the project does. Don't modify anything.
+</code></pre>
+<p>Two details from poolside's documentation are worth knowing here. Tool calling relies on the model's chat template, which <code>llama-server</code> now applies by default (older guides tell you to pass <code>--jinja</code>). Poolside also warns that dropping the model's reasoning content between turns can stop it reasoning in later agentic turns, so check how your client handles it if behaviour degrades over a long session.</p>
+<p>The finished stack looks like this:</p>
+<pre class="mermaid">flowchart TD
+    A[OpenCode] -->|OpenAI-compatible API| B[llama-server / ROCmFPX]
+    B -->|ROCm or Vulkan| C[Radeon 8060S, ~110 GB]
+    C --> D[Laguna S 2.1 Q4_K_M]
+</pre>
+<h2 id="next-steps">Next Steps</h2>
+<p>The setup works. Whether it is <em>useful</em> is a different question, and the answer depends on how the model behaves on real work rather than on benchmarks. These are the things I plan to try next:</p>
+<ul>
+<li><strong>OpenCode on a real codebase</strong>: Navigating an unfamiliar repository, changes across multiple files, running tests and responding to compiler errors.</li>
+<li><strong>ROCm against Vulkan</strong>: The build gives me both backends, and the ROCmFPX author reports Vulkan as the faster of the two for generation.</li>
+<li><strong>ROCmFPX tuning</strong>: The project includes Strix Halo specific build variants that I have not benchmarked yet.</li>
+<li><strong>Speculative decoding</strong>: The server currently runs without a draft model, and poolside publishes one for Laguna, so there may be a cheap speed win available.</li>
+<li><strong>Other models</strong>: 110 GB of GPU memory opens up much larger models than people associate with a mini PC.</li>
+</ul>
+<p>A local model is unlikely to replace the best hosted models for me. As a private, always-available coding assistant with a 256K context, it may turn out to be more capable than I expected when I started. If you are running something similar, I would be interested to compare notes.</p>
+
+</div>
+
+        </main>
+    </div>
+
+    <six-sided-footer></six-sided-footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script>
+    <script type="module" src="/subscribe/widget.js"></script>
+    <script>
+        $(function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        });
+    </script>
+</body>
+</html>
